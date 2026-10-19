@@ -70,9 +70,6 @@ with sync_playwright() as p:
         y = box['y'] + page.evaluate('window.scrollY') - 150
         shot(page, f'home-level-{code}', full_page=True,
              clip={'x': 0, 'y': y, 'width': 1440, 'height': 820})
-    page.get_by_role('tab', name=re.compile('^intermediate$', re.I)).click()
-    page.wait_for_timeout(1500)
-    shot(page, 'home-full', full_page=True)
 
     # Library: sorts, levels, durations, card close-up
     library(page)
