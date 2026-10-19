@@ -1,7 +1,7 @@
 # Dictation Daily user guide
 
 An illustrated guide to [Dictation Daily](https://dictationdaily.com), published with GitHub Pages:
-**https://syan-dev.github.io/dictationdaily-guide/**
+**https://dictationdaily.github.io/**
 
 One static page (`index.html`) styled with Tailwind CSS, with screenshots of the real app in `images/`.
 
