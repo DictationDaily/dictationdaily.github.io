@@ -1,0 +1,43 @@
+<!-- {"title": "Learning time and streaks", "description": "Exactly how learning time, active days and streaks are counted, including the UTC day boundary."} -->
+<h2 id="how-learning-time-is-counted">How learning time is counted</h2>
+<p>For every clip you answer correctly, the app counts the time from when the clip came up to <strong>the last key you pressed</strong> before the correct check.</p>
+<div class="not-prose my-6 overflow-x-auto">
+    <div class="flex min-w-[520px] items-stretch overflow-hidden rounded-xl border border-gray-200 text-center text-sm dark:border-gray-800">
+        <div class="flex-[3] bg-emerald-100 p-3 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-100">Clip appears → listening → typing → fixing hints<br><strong>counted</strong></div>
+        <div class="flex-1 bg-gray-100 p-3 text-gray-600 dark:bg-gray-800 dark:text-gray-400">last keystroke → Enter<br><strong>not counted</strong></div>
+    </div>
+</div>
+<ul>
+    <li>Listening, typing and fixing mistakes count.</li>
+    <li>Time after your last keystroke doesn't, so leaving the tab open doesn't inflate it.</li>
+    <li>Skipped clips don't count at all.</li>
+</ul>
+<p>It's a measure of active practice, not of time with the page open.</p>
+
+<h2>Active days</h2>
+<p>A day is <strong>active</strong> when you answered at least one clip correctly on it. One clip is enough.</p>
+
+<h2>Streaks</h2>
+<p>A streak is a run of consecutive active days.</p>
+<ul>
+    <li><strong>Current Streak</strong>: the run that includes today or yesterday.</li>
+    <li><strong>Longest Streak</strong>: your best run this year.</li>
+</ul>
+
+<h3>You have until the end of today</h3>
+<p>Your streak isn't lost at midnight. If you practised yesterday, the streak still shows yesterday's count all day today, and goes up when you answer a clip. It drops to 0 only after a whole day without practice.</p>
+
+<h3 id="utc">Days are counted in UTC</h3>
+<p>Days start and end at midnight <strong>UTC</strong> (Coordinated Universal Time), not your local midnight.</p>
+<table>
+    <thead><tr><th>You live in</th><th>A new streak day starts at</th></tr></thead>
+    <tbody>
+        <tr><td>London (UTC+0 in winter)</td><td>00:00 (midnight)</td></tr>
+        <tr><td>Berlin (UTC+1 in winter)</td><td>01:00</td></tr>
+        <tr><td>Ho Chi Minh City (UTC+7)</td><td>07:00</td></tr>
+        <tr><td>Tokyo (UTC+9)</td><td>09:00</td></tr>
+        <tr><td>New York (UTC−5 in winter)</td><td>19:00 the evening before</td></tr>
+        <tr><td>Los Angeles (UTC−8 in winter)</td><td>16:00 the afternoon before</td></tr>
+    </tbody>
+</table>
+<div class="callout not-prose callout-tip"><span class="callout-icon">💡</span><div>In Ho Chi Minh City, practice at 06:30 still counts for the <em>previous</em> day. In New York, practice at 20:00 already counts for the <em>next</em> day. Practising once around the middle of your day is the safest way to keep a streak.</div></div>

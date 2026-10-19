@@ -1,0 +1,81 @@
+<!-- {"title": "Your first lesson", "description": "The lesson screen, and the listen → type → check → continue loop, step by step."} -->
+<p>Every video is split into short <strong>clips</strong>, usually one sentence or part of a sentence. A 2-minute talk has about 45 clips; a 15-minute talk about 200. The lesson plays the <strong>whole video in order</strong>, so you never miss anything between two clips.</p>
+
+<div class="not-prose my-6 flex flex-wrap items-center gap-2 text-sm font-medium">
+    <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Listen</span><span aria-hidden="true">→</span>
+    <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Type</span><span aria-hidden="true">→</span>
+    <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Check</span><span aria-hidden="true">→</span>
+    <span class="rounded-full bg-brand px-3 py-1 text-white">Fix the hint</span><span aria-hidden="true">→</span>
+    <span class="rounded-full bg-green-700 px-3 py-1 text-white">Correct!</span><span aria-hidden="true">→</span>
+    <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Next clip</span>
+</div>
+
+<h2>The lesson screen</h2>
+<figure class="figure not-prose">
+    <img src="images/lesson-intro.webp" alt="Lesson start screen: YouTube player on the left, instructions and a Start button on the right" class="shot" width="1440" height="900">
+    <figcaption>Before you start.</figcaption>
+</figure>
+<ul>
+    <li><strong>Top bar:</strong> the logo (back to the library) and the video title.</li>
+    <li><strong>Left:</strong> the YouTube player.</li>
+    <li><strong>Right:</strong> the dictation area. Before you start it shows a short reminder.</li>
+    <li><strong>Bottom bar</strong> (once started): your position and <span class="btn-ui">Close</span>. See <a href="lesson-navigation.html">Moving around a lesson</a>.</li>
+</ul>
+<p>Press <span class="btn-ui">Start</span>. (<kbd class="kbd">Enter</kbd> works too once you've clicked the instructions box.) You can also just press play on the video.</p>
+
+<h2>Step 1: Listen</h2>
+<figure class="figure not-prose">
+    <img src="images/lesson-clip-playing.webp" alt="A clip is playing; the empty text box says Type what you hear" class="shot" loading="lazy" width="1440" height="900">
+    <figcaption>The bar under the box fills as the clip plays.</figcaption>
+</figure>
+<p>The clip plays and the video pauses at its end. If you don't answer, it <strong>repeats automatically</strong>, up to 3 times in total, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd> to hear it again whenever you like.</p>
+<div class="callout not-prose callout-note"><span class="callout-icon">ℹ️</span><div>YouTube subtitles are switched off during a lesson, so you can't read the answer off the video. If you drag the video outside the current clip, it jumps back to the clip.</div></div>
+
+<h2>Step 2: Type what you hear</h2>
+<figure class="figure not-prose">
+    <img src="images/lesson-typing.webp" alt="The learner has typed part of the sentence into the box" class="shot" loading="lazy" width="1440" height="900">
+    <figcaption>Type even if you're unsure of the spelling.</figcaption>
+</figure>
+<p>Capital letters and punctuation don't matter. Spelling does. The exact rules are on <a href="hints.html#what-counts-as-the-same-word">Checking answers and hints</a>.</p>
+
+<h2>Step 3: Check</h2>
+<p>Press <kbd class="kbd">Enter</kbd> or <span class="btn-ui">Check</span>. If a word is wrong, a hint appears and the wrong word is selected for you, so you can type straight over it.</p>
+<figure class="figure not-prose">
+    <img src="images/lesson-hint.webp" alt="Hint: ix should be is; ix is selected in the text box" class="shot" loading="lazy" width="1440" height="900">
+    <figcaption>“ix” is crossed out in red; the green “is” is what was said.</figcaption>
+</figure>
+<p>Fix it and press <kbd class="kbd">Enter</kbd> again. <a href="hints.html">How to read hints →</a></p>
+
+<h2>Step 4: You are correct!</h2>
+<figure class="figure not-prose">
+    <img src="images/lesson-correct.webp" alt="You are correct! with the full sentence and Continue and Undo buttons" class="shot" loading="lazy" width="1440" height="900">
+</figure>
+<p>The full sentence appears. As the clip plays, each word is highlighted as it's spoken, which helps you hear how words run together.</p>
+<table>
+    <thead><tr><th>Button</th><th>Key</th><th>Does</th></tr></thead>
+    <tbody>
+        <tr><td><span class="rounded bg-green-700 px-1.5 py-0.5 text-[0.78em] font-semibold uppercase text-white">Continue</span></td><td><kbd class="kbd">Enter</kbd></td><td>Next clip</td></tr>
+        <tr><td><span class="btn-ui">Replay</span></td><td><kbd class="kbd">Tab</kbd></td><td>Hear it again while following the words</td></tr>
+        <tr><td><span class="btn-ui">Undo</span></td><td></td><td>Clear the answer and do the clip again</td></tr>
+    </tbody>
+</table>
+<figure class="figure not-prose">
+    <img src="images/lesson-next-clip.webp" alt="Exercise 2 of 45 is playing with an empty text box" class="shot" loading="lazy" width="1440" height="900">
+    <figcaption>After Continue, the next clip (2/45) plays by itself.</figcaption>
+</figure>
+
+<h2>Finishing the lesson</h2>
+<p>After the last clip, the rest of the video plays as a <a href="listen-parts.html">listen part</a>, then you'll see:</p>
+<figure class="figure not-prose">
+    <img src="images/lesson-finished.webp" alt="Congratulations screen with Back to Browse and Redo the Lesson buttons" class="shot" loading="lazy" width="1440" height="900">
+</figure>
+<ul>
+    <li><span class="btn-ui">Back to browse</span> returns to the library.</li>
+    <li><span class="btn-ui">Redo the lesson</span> starts again from clip 1.</li>
+</ul>
+
+<h2>Videos without exercises</h2>
+<p>A few videos don't have a transcript yet. They open and play, but instead of the dictation area you'll see <em>“Dictation exercises for this video are not available yet”</em>. Pick another video.</p>
+<figure class="figure not-prose">
+    <img src="images/lesson-no-transcript.webp" alt="A lesson page saying exercises are not available yet" class="shot" loading="lazy" width="1440" height="900">
+</figure>

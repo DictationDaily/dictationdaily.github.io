@@ -1,0 +1,93 @@
+<!-- {"title": "Hidden settings and tips", "description": "Features that aren't obvious from the screen: slow-motion audio, filters in the address bar, how your place is saved, and more."} -->
+<p>Dictation Daily keeps its screen simple, so some useful behaviour isn't visible. Here's all of it.</p>
+
+<nav class="not-prose my-6 grid gap-2 rounded-2xl border border-gray-200 p-5 text-sm sm:grid-cols-2 dark:border-gray-800" aria-label="Jump to">
+    <a class="hover:text-brand" href="#slow-down-the-audio">🐢 Slow down the audio</a>
+    <a class="hover:text-brand" href="#filters-in-the-address-bar">🔗 Filters in the address bar</a>
+    <a class="hover:text-brand" href="#open-any-video-by-its-youtube-id">🎯 Open a video by its YouTube ID</a>
+    <a class="hover:text-brand" href="#start-from-the-video-player">▶️ Start from the video player</a>
+    <a class="hover:text-brand" href="#your-saved-place-is-the-last-clip-you-answered">📍 Your saved place</a>
+    <a class="hover:text-brand" href="#clips-repeat-three-times">🔁 Clips repeat three times</a>
+    <a class="hover:text-brand" href="#clips-are-trimmed-for-you">✂️ Clips are trimmed for you</a>
+    <a class="hover:text-brand" href="#subtitles-stay-off">🚫 Subtitles stay off</a>
+    <a class="hover:text-brand" href="#the-hint-hides-while-you-type">🙈 The hint hides while you type</a>
+    <a class="hover:text-brand" href="#listen-again-with-highlighted-words">✨ Highlighted words</a>
+    <a class="hover:text-brand" href="#video-quality-and-data">📶 Video quality and data</a>
+    <a class="hover:text-brand" href="#close-works-like-back">↩️ Close works like Back</a>
+    <a class="hover:text-brand" href="#what-you-can-t-change">⚙️ What you can't change</a>
+</nav>
+
+<h2 id="slow-down-the-audio">Slow down the audio <span class="badge badge-hidden">Hidden setting</span></h2>
+<p>The YouTube player has its own speed setting, and lessons keep working at any speed: the clip still loops at the slower speed and still stops at the end of the sentence.</p>
+<ol class="steps not-prose">
+    <li><span class="step-num">1</span><div>During a lesson, click the <strong>⚙ gear</strong> in the top-right corner of the video.</div></li>
+    <li><span class="step-num">2</span><div>Choose <strong>Speed</strong>.</div></li>
+    <li><span class="step-num">3</span><div>Pick <strong>0.5x</strong>, or use <strong>−</strong> for finer steps (e.g. 0.75x).</div></li>
+</ol>
+<div class="not-prose my-6 grid gap-4 md:grid-cols-2">
+    <figure><img src="images/youtube-settings.webp" alt="YouTube settings menu over the video: Quality, Speed, Captions, More options" class="shot" loading="lazy" width="704" height="720"><figcaption class="mt-2 text-center text-sm text-gray-500">The gear menu: choose <strong>Speed</strong>.</figcaption></figure>
+    <figure><img src="images/youtube-speed-menu.webp" alt="Speed slider with 0.5x, 1x, 1.25x, 1.5x, 1.75x and 2x buttons" class="shot" loading="lazy" width="704" height="720"><figcaption class="mt-2 text-center text-sm text-gray-500">Speed presets and a fine slider.</figcaption></figure>
+</div>
+<div class="callout not-prose callout-tip"><span class="callout-icon">💡</span><div>Try a hard clip at 0.75x, then <span class="btn-ui">Undo</span> and do it again at normal speed. Going above 1x is good practice for advanced learners.</div></div>
+
+<h2 id="filters-in-the-address-bar">Filters in the address bar <span class="badge badge-hidden">Hidden setting</span></h2>
+<p>Every filter can be set from the address, which is handy on phones where the filter panel is hidden, or for bookmarks.</p>
+<table>
+    <thead><tr><th>Parameter</th><th>Values</th></tr></thead>
+    <tbody>
+        <tr><td><code>sort</code></td><td><code>Latest</code> (default), <code>Popular</code>, <code>Slow</code></td></tr>
+        <tr><td><code>level</code></td><td><code>B1</code>, <code>B2</code>, <code>C1</code>, <code>C2</code></td></tr>
+        <tr><td><code>duration</code></td><td><code>under-4-minutes</code>, <code>4-20-minutes</code>, <code>over-20-minutes</code></td></tr>
+    </tbody>
+</table>
+<p>Combine them with <code>&amp;</code>: <a href="https://dictationdaily.com/videos?sort=Slow&amp;level=B2&amp;duration=4-20-minutes"><code>dictationdaily.com/videos?sort=Slow&amp;level=B2&amp;duration=4-20-minutes</code></a></p>
+<div class="callout not-prose callout-note"><span class="callout-icon">ℹ️</span><div>Use the capitals shown. Lower case (<code>level=b1</code>) still filters the videos, but the matching button on the left won't light up. An unknown value is simply ignored.</div></div>
+
+<h2 id="open-any-video-by-its-youtube-id">Open a video by its YouTube ID <span class="badge badge-hidden">Hidden</span></h2>
+<p>A lesson's address uses the same ID as YouTube. If you're watching <code>youtube.com/watch?v=<strong>g4IAa8wZlqU</strong></code>, try <a href="https://dictationdaily.com/videos/g4IAa8wZlqU"><code>dictationdaily.com/videos/<strong>g4IAa8wZlqU</strong></code></a>. It works for every video in the library; other videos show a “page not found” message.</p>
+
+<h2 id="start-from-the-video-player">Start from the video player <span class="badge badge-tip">Tip</span></h2>
+<p>Pressing the YouTube <strong>▶ play</strong> button does the same as <span class="btn-ui">Start</span>: the lesson begins at the current clip.</p>
+
+<h2 id="your-saved-place-is-the-last-clip-you-answered">Your saved place is the last clip you answered <span class="badge badge-hidden">Good to know</span></h2>
+<p>The app remembers the <strong>last</strong> clip you got right, not the furthest. Re-answering clip 5 after reaching clip 30 moves your saved place back to clip 5. <a href="progress.html#which-clip-is-saved">Full explanation</a>.</p>
+<p>Also: your place loads a moment after the lesson page opens. Wait a second before pressing <span class="btn-ui">Start</span>, or the lesson may begin at clip 1.</p>
+
+<h2 id="clips-repeat-three-times">Clips repeat three times <span class="badge badge-hidden">Good to know</span></h2>
+<p>If you don't answer, a clip plays up to <strong>3 times in total</strong>, then waits silently. <kbd class="kbd">Tab</kbd> or <span class="btn-ui">Replay</span> plays it again any number of times. Clips you've already answered don't replay by themselves when you go back to them.</p>
+
+<h2 id="clips-are-trimmed-for-you">Clips are trimmed for you <span class="badge badge-hidden">Behind the scenes</span></h2>
+<p>Each clip starts about a quarter of a second before the first word and ends about a third of a second after the last, but never far enough to catch the previous or next speaker. If you seek the video outside the clip, it snaps back.</p>
+
+<h2 id="subtitles-stay-off">Subtitles stay off <span class="badge badge-hidden">Good to know</span></h2>
+<p>YouTube captions are switched off during a lesson, and switched off again if you turn them on, so the answer can't appear on the video. You'll see the full transcript as soon as you answer correctly.</p>
+
+<h2 id="the-hint-hides-while-you-type">The hint hides while you type <span class="badge badge-tip">Tip</span></h2>
+<p>As soon as you type or press <span class="btn-ui">Replay</span>, the hint disappears so you can listen without reading. Press <kbd class="kbd">Enter</kbd> to see the next hint. Want to check one word? Type up to that word and press <kbd class="kbd">Enter</kbd>: if it's right, the hint points at the next missing word.</p>
+
+<h2 id="listen-again-with-highlighted-words">Listen again with highlighted words <span class="badge badge-tip">Tip</span></h2>
+<p>After a correct answer, press <kbd class="kbd">Tab</kbd>: the clip replays and each word lights up as it's spoken. It's the best way to hear how words link together in fast speech.</p>
+
+<h2 id="learning-time-only-counts-active-practice">Learning time only counts active practice <span class="badge badge-hidden">Good to know</span></h2>
+<p>Time stops at your last keystroke on a clip. Thinking before pressing <kbd class="kbd">Enter</kbd> isn't counted, and neither are skipped clips. <a href="streaks.html#how-learning-time-is-counted">Details</a>.</p>
+
+<h2 id="streak-days-follow-utc">Streak days follow UTC <span class="badge badge-hidden">Good to know</span></h2>
+<p>Streak days change at midnight UTC, not your local midnight. <a href="streaks.html#utc">See when that is where you live</a>.</p>
+
+<h2 id="video-quality-and-data">Video quality and data <span class="badge badge-tip">Tip</span></h2>
+<p>On a slow or metered connection, choose <strong>⚙ → Quality</strong> in the player and pick a low resolution. You only need the sound.</p>
+
+<h2 id="close-works-like-back">Close works like Back <span class="badge badge-hidden">Good to know</span></h2>
+<p><span class="btn-ui">Close</span> goes to the previous page in your browser history. If you opened the lesson from a link elsewhere, that's where you'll go. Click the <strong>DD</strong> logo to go to the library instead.</p>
+
+<h2 id="watch-only-videos">Watch-only videos <span class="badge badge-tip">Tip</span></h2>
+<p>Videos without exercises still play normally, so you can watch them like on YouTube.</p>
+
+<h2 id="what-you-can-t-change">What you can't change</h2>
+<p>There's no settings page. These are fixed for everyone:</p>
+<ul>
+    <li>the number of automatic repeats (3)</li>
+    <li>the answer rules (capitals and punctuation ignored, spelling must match)</li>
+    <li>showing one mistake at a time</li>
+    <li>the UTC day boundary for streaks</li>
+</ul>

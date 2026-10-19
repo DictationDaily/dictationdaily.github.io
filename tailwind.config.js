@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: ['./*.html'],
-    darkMode: 'media',
+    content: ['./src/**/*.html', './build.mjs', './assets/site.js'],
+    darkMode: 'class',
     theme: {
         extend: {
             colors: {
@@ -13,7 +13,19 @@ module.exports = {
                 sans: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
                 mono: ['"Roboto Mono"', 'ui-monospace', 'monospace'],
             },
+            typography: ({ theme }) => ({
+                DEFAULT: {
+                    css: {
+                        '--tw-prose-links': theme('colors.brand.DEFAULT'),
+                        '--tw-prose-invert-links': '#f87171',
+                        a: { fontWeight: '500' },
+                        'code::before': { content: 'none' },
+                        'code::after': { content: 'none' },
+                        code: { fontWeight: '500' },
+                    },
+                },
+            }),
         },
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography')],
 };

@@ -28,11 +28,6 @@ jobs:
                   cache: npm
             - run: npm ci
             - run: npm run build
-            - name: Collect site files
-              run: |
-                  mkdir _site
-                  cp -r index.html favicon.ico assets images _site/
-                  touch _site/.nojekyll
             - uses: actions/configure-pages@v5
             - uses: actions/upload-pages-artifact@v3
               with:
