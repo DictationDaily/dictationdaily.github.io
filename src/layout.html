@@ -44,14 +44,14 @@
 
         <button id="search-open" class="ml-auto flex h-10 min-w-0 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-500 hover:border-gray-300 sm:ml-6 sm:w-72 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700" aria-label="Search the guide">
             <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <span class="hidden sm:inline">Search the guide…</span>
+            <span class="hidden sm:inline">How do I…?</span>
             <kbd class="ml-auto hidden rounded border border-gray-300 px-1.5 font-mono text-xs sm:inline dark:border-gray-700">Ctrl K</kbd>
         </button>
 
         <nav class="hidden items-center gap-1 text-sm font-medium md:flex sm:ml-auto" aria-label="Main">
-            <a href="quick-start.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">Guide</a>
-            <a href="hidden-features.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">Tips</a>
-            <a href="faq.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">FAQ</a>
+            <a href="quick-start.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">First lesson</a>
+            <a href="tips.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">Tips</a>
+            <a href="faq.html" class="rounded-md px-3 py-2 hover:bg-gray-100 hover:text-ink dark:hover:bg-gray-800 dark:hover:text-white">Questions</a>
         </nav>
         <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark mode">
             <svg class="h-5 w-5 dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
@@ -81,9 +81,6 @@
         <nav class="sticky top-16 max-h-[calc(100vh-4rem)] space-y-6 overflow-y-auto py-10 pr-4" aria-label="Guide">{{sidebar}}</nav>
     </aside>
     <main id="content" class="doc-main">{{content}}</main>
-    <aside class="doc-toc">
-        <div id="toc" class="sticky top-16 max-h-[calc(100vh-4rem)] overflow-y-auto py-10">{{toc}}</div>
-    </aside>
 </div>
 
 <footer class="border-t border-gray-200 dark:border-gray-800">
@@ -95,17 +92,17 @@
         <div>
             <p class="font-semibold text-ink dark:text-white">Learn</p>
             <ul class="mt-2 space-y-1.5 text-gray-500">
-                <li><a class="hover:text-brand" href="quick-start.html">Quick start</a></li>
-                <li><a class="hover:text-brand" href="first-lesson.html">Your first lesson</a></li>
+                <li><a class="hover:text-brand" href="quick-start.html">Your first lesson</a></li>
+                <li><a class="hover:text-brand" href="find-a-video.html">Find a video</a></li>
                 <li><a class="hover:text-brand" href="keyboard-shortcuts.html">Keyboard shortcuts</a></li>
             </ul>
         </div>
         <div>
             <p class="font-semibold text-ink dark:text-white">Help</p>
             <ul class="mt-2 space-y-1.5 text-gray-500">
-                <li><a class="hover:text-brand" href="faq.html">FAQ</a></li>
-                <li><a class="hover:text-brand" href="troubleshooting.html">Troubleshooting</a></li>
-                <li><a class="hover:text-brand" href="hidden-features.html">Hidden settings and tips</a></li>
+                <li><a class="hover:text-brand" href="faq.html">Questions and answers</a></li>
+                <li><a class="hover:text-brand" href="help.html">Something's not working</a></li>
+                <li><a class="hover:text-brand" href="tips.html">Tips and tricks</a></li>
             </ul>
         </div>
         <div>
@@ -113,11 +110,10 @@
             <ul class="mt-2 space-y-1.5 text-gray-500">
                 <li><a class="hover:text-brand" href="https://dictationdaily.com">dictationdaily.com</a></li>
                 <li><a class="hover:text-brand" href="https://dictationdaily.com/videos">Video library</a></li>
-                <li><a class="hover:text-brand" href="https://github.com/DictationDaily/dictationdaily.github.io">This guide on GitHub</a></li>
-            </ul>
+                            </ul>
         </div>
     </div>
-    <p class="pb-8 text-center text-xs text-gray-400">Videos belong to their YouTube channels. Screenshots taken from the live app.</p>
+    <p class="pb-8 text-center text-xs text-gray-400">Videos belong to their YouTube channels.</p>
 </footer>
 
 <!-- Search -->
@@ -126,7 +122,7 @@
     <div class="relative mx-auto mt-[10vh] w-[calc(100%-2rem)] max-w-xl overflow-hidden rounded-2xl bg-white shadow-2xl dark:bg-gray-900">
         <div class="flex items-center gap-3 border-b border-gray-200 px-4 dark:border-gray-800">
             <svg class="h-5 w-5 shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search: shortcuts, streak, speed…" class="h-14 w-full bg-transparent text-base text-ink outline-none placeholder:text-gray-400 dark:text-white" aria-label="Search the guide">
+            <input id="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Type a question: slow down, skip, streak…" class="h-14 w-full bg-transparent text-base text-ink outline-none placeholder:text-gray-400 dark:text-white" aria-label="Search the guide">
             <kbd class="rounded border border-gray-300 px-1.5 font-mono text-xs text-gray-500 dark:border-gray-700">Esc</kbd>
         </div>
         <ul id="search-results" class="max-h-[60vh] overflow-y-auto p-2" role="listbox"></ul>

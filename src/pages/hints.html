@@ -1,59 +1,40 @@
-<!-- {"title": "Checking answers and hints", "description": "How your answer is compared with the transcript, how to read a hint, and what to do when you're stuck."} -->
-<h2>Reading a hint</h2>
-<p>When you check an answer, the app compares it word by word with the transcript and stops at the <strong>first</strong> word that doesn't match.</p>
-<figure class="figure not-prose">
-    <img src="images/hint-closeup.webp" alt="Matching 2/8 words. Hint: My contention ix is all kids" class="mx-auto block w-full max-w-md cursor-zoom-in rounded-xl border border-gray-200 bg-white p-4 shadow dark:border-gray-700" width="364" height="65">
-</figure>
-<table>
-    <thead><tr><th>You see</th><th>Meaning</th></tr></thead>
-    <tbody>
-        <tr><td><strong>Matching 2/8 words</strong></td><td>How many words in a row you got right from the start, out of the words in the clip.</td></tr>
-        <tr><td><span class="font-mono text-red-600 line-through">ix</span></td><td>A word you typed that is wrong or extra.</td></tr>
-        <tr><td><strong class="font-mono text-green-700 dark:text-green-400">is</strong></td><td>The word that should be there.</td></tr>
-        <tr><td><code>...</code></td><td>More words follow that aren't shown yet.</td></tr>
-    </tbody>
-</table>
+<!-- {"title": "Read the hint", "description": "Red words are wrong. Green words are right. Fix one word at a time.", "time": "1 minute"} -->
+<tour>
+    <step img="lesson-hint" x="59" y="53.3" title="How many words are right">“Matching 2/8 words” means: the first 2 words are right. The sentence has 8 words.</step>
+    <step img="lesson-hint" x="67.7" y="57.7" title="Red = wrong">You typed “ix”. That word is wrong.</step>
+    <step img="lesson-hint" x="69.2" y="57.7" title="Green = right">The right word is “is”.</step>
+    <step img="lesson-hint" x="64.1" y="41" title="Type over it">The wrong word is already selected for you. Type “is” and press <kbd class="kbd">Enter</kbd>.</step>
+</tour>
 
-<h2>The three kinds of mistake</h2>
-<div class="not-prose my-6 grid gap-4 md:grid-cols-2">
-    <figure><img src="images/lesson-hint.webp" alt="Wrong word: ix is selected in the box" class="shot" loading="lazy" width="1440" height="900"><figcaption class="mt-2 text-center text-sm text-gray-500"><strong>Wrong word.</strong> It's selected, so you can type straight over it.</figcaption></figure>
-    <figure><img src="images/lesson-hint-missing.webp" alt="Missing word: have shown in green" class="shot" loading="lazy" width="1440" height="900"><figcaption class="mt-2 text-center text-sm text-gray-500"><strong>Missing word.</strong> 5/8 match; the cursor waits where “have” belongs.</figcaption></figure>
+<div class="callout callout-note"><span class="callout-icon">☝️</span><div>The app shows <strong>one mistake at a time</strong>. Fix it, press <kbd class="kbd">Enter</kbd>, and it shows the next one.</div></div>
+
+<h2>Three kinds of mistake</h2>
+<div class="not-prose my-8" data-tabs>
+    <div class="flex flex-wrap gap-2" role="tablist">
+        <button role="tab" data-tab="0" class="tab-btn">❌ Wrong word</button>
+        <button role="tab" data-tab="1" class="tab-btn">➕ Missing word</button>
+        <button role="tab" data-tab="2" class="tab-btn">✂️ Extra word</button>
+    </div>
+    <figure class="mt-5" data-panel="0"><img src="images/lesson-hint.webp" alt="The wrong word ix is selected" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Wrong word:</strong> it's selected. Type the right one.</figcaption></figure>
+    <figure class="mt-5 hidden" data-panel="1"><img src="images/lesson-hint-missing.webp" alt="The missing word have is shown in green" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Missing word:</strong> the green word goes where the cursor is.</figcaption></figure>
+    <figure class="mt-5 hidden" data-panel="2"><img src="images/lesson-hint-extra.webp" alt="The extra word the is selected" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Extra word:</strong> it's selected. Press Backspace to delete it.</figcaption></figure>
 </div>
-<ul>
-    <li><strong>Wrong word:</strong> the word is selected in the box. Just type the right one.</li>
-    <li><strong>Missing word:</strong> the green word is shown and the cursor is placed where it goes.</li>
-    <li><strong>Extra word:</strong> a word you typed that isn't in the clip is selected so you can delete it.</li>
-</ul>
-<figure class="figure not-prose">
-    <img src="images/lesson-hint-extra.webp" alt="Extra word: 'the' in 'all the kids' is selected in the text box" class="shot" loading="lazy" width="1440" height="900">
-    <figcaption><strong>Extra word.</strong> “the” isn't in the clip, so it's selected: press Backspace and check again.</figcaption>
-</figure>
-<p>The words <em>before</em> the mistake are also rewritten in the transcript's spelling and capitals, so you can see the correct text growing.</p>
-<div class="callout not-prose callout-note"><span class="callout-icon">ℹ️</span><div>Only the first mistake is shown each time. A clip with three mistakes takes at least three checks. The hint disappears as soon as you start typing again.</div></div>
 
-<h2 id="what-counts-as-the-same-word">What counts as the same word</h2>
-<p>Before comparing, both your word and the transcript word are lower-cased and stripped of everything except letters and digits. So:</p>
-<table>
-    <thead><tr><th>You type</th><th>Transcript</th><th>Result</th></tr></thead>
-    <tbody>
-        <tr><td><code>my contention</code></td><td><code>My contention</code></td><td>✅ capitals ignored</td></tr>
-        <tr><td><code>talents</code></td><td><code>talents,</code></td><td>✅ punctuation ignored</td></tr>
-        <tr><td><code>dont</code></td><td><code>don't</code></td><td>✅ apostrophes ignored</td></tr>
-        <tr><td><code>wellknown</code></td><td><code>well-known</code></td><td>✅ hyphens inside a word ignored</td></tr>
-        <tr><td><em>(nothing)</em></td><td><code>--</code></td><td>✅ symbol-only “words” ignored on both sides</td></tr>
-        <tr><td><code>well known</code></td><td><code>well-known</code></td><td>❌ two words vs one</td></tr>
-        <tr><td><code>thirties</code></td><td><code>30s</code></td><td>❌ numbers must be written the same way</td></tr>
-        <tr><td><code>color</code></td><td><code>colour</code></td><td>❌ spelling must match</td></tr>
-    </tbody>
-</table>
-<div class="callout not-prose callout-tip"><span class="callout-icon">💡</span><div>Not sure how a number or name is written? Type your best guess. The hint will show the transcript's version, which you can copy.</div></div>
+<h2>What matters?</h2>
+<p>You don't need to worry about:</p>
+<div class="ok-list not-prose">
+    <span class="ok">✅ Capital letters</span>
+    <span class="ok">✅ Commas and full stops</span>
+    <span class="ok">✅ Question marks</span>
+    <span class="ok">✅ Apostrophes (dont = don't)</span>
+</div>
+<p>Be careful with:</p>
+<div class="ok-list not-prose">
+    <span class="no">⚠️ Spelling</span>
+    <span class="no">⚠️ Small words like “a”, “the”, “to”</span>
+    <span class="no">⚠️ Word endings (-s, -ed)</span>
+</div>
 
-<h2>When you're stuck</h2>
-<ul>
-    <li><span class="btn-ui">Replay</span> (<kbd class="kbd">Tab</kbd>) to listen again. It also hides the hint so you can concentrate.</li>
-    <li>Slow the video down with YouTube's speed setting. See <a href="hidden-features.html#slow-down-the-audio">Slow down the audio</a>.</li>
-    <li><span class="btn-ui">Skip</span> (<kbd class="kbd">Esc</kbd>) to move on. Skipped clips don't count as done and aren't saved.</li>
-</ul>
+<div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>Not sure how to spell a word?</strong> Type your best guess. The green word in the hint shows the right spelling.</div></div>
 
-<h2>When the transcript is wrong</h2>
-<p>Transcripts are created automatically from the audio, so occasionally a word is wrong. Type what the hint says, or skip the clip.</p>
+<p>Still stuck? See <a href="too-hard.html">When a sentence is too hard</a>.</p>

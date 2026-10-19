@@ -12,44 +12,46 @@
 }
 
 @layer components {
-    /* Page grids: docs have sidebar | content | contents; home is full width */
+    /* Page grids: docs have sidebar | content; home is full width */
     .layout-doc {
-        @apply mx-auto max-w-[90rem] px-4 sm:px-6 lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[15rem_minmax(0,1fr)_13rem];
+        @apply mx-auto max-w-[84rem] px-4 sm:px-6 lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12;
     }
     .layout-doc .doc-sidebar {
         @apply hidden border-r border-gray-200 lg:block dark:border-gray-800;
     }
     .layout-doc .doc-main {
-        @apply min-w-0 max-w-3xl py-10;
+        @apply min-w-0 max-w-4xl py-10;
     }
-    .layout-doc .doc-toc {
-        @apply hidden xl:block;
-    }
-    .layout-home .doc-sidebar,
-    .layout-home .doc-toc {
+    .layout-home .doc-sidebar {
         @apply hidden;
     }
 
     .nav-link {
-        @apply block rounded-lg px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 hover:text-ink dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white;
+        @apply flex items-center gap-2.5 rounded-lg px-3 py-2 text-[0.95rem] text-gray-600 transition hover:bg-gray-100 hover:text-ink dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white;
     }
     .nav-link.active {
         @apply bg-brand-soft font-medium text-brand dark:bg-red-950/50 dark:text-red-300;
     }
-    .toc-link {
-        @apply -ml-px block border-l border-transparent py-0.5 pr-2 text-gray-500 hover:border-gray-400 hover:text-ink dark:hover:text-white;
+    .nav-icon {
+        @apply w-5 text-center text-base;
     }
-    .toc-link.active {
-        @apply border-brand font-medium text-brand dark:text-red-300;
-    }
-    .anchor {
-        @apply ml-2 font-normal text-gray-300 no-underline opacity-0 transition group-hover:opacity-100 dark:text-gray-600;
+    .page-icon {
+        @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-3xl shadow-sm dark:bg-red-950/50;
     }
     .icon-btn {
         @apply rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-ink dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
     }
     .pager {
-        @apply block rounded-xl border border-gray-200 p-4 no-underline transition hover:border-brand dark:border-gray-800;
+        @apply block rounded-2xl border border-gray-200 p-5 no-underline transition hover:-translate-y-0.5 hover:border-brand hover:shadow-lg dark:border-gray-800;
+    }
+    .pager-next {
+        @apply border-transparent bg-brand hover:bg-brand-dark;
+    }
+    .pager-arrow {
+        @apply text-2xl transition;
+    }
+    .pager-next:hover .pager-arrow {
+        @apply translate-x-1;
     }
     .search-hit {
         @apply block rounded-lg px-3 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800;
@@ -58,13 +60,21 @@
         @apply bg-brand-soft dark:bg-red-950/40;
     }
 
-    /* Content components */
+    /* Small inline pieces */
     .kbd {
-        @apply inline-block whitespace-nowrap rounded-md border border-b-2 border-gray-300 bg-white px-1.5 py-0.5 font-mono text-[0.8em] font-medium not-italic leading-tight text-ink shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
+        @apply inline-block whitespace-nowrap rounded-md border border-b-[3px] border-gray-300 bg-white px-2 py-0.5 font-mono text-[0.8em] font-semibold not-italic leading-tight text-ink shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
     }
     .btn-ui {
-        @apply whitespace-nowrap rounded bg-ink px-1.5 py-0.5 text-[0.78em] font-semibold uppercase tracking-wide text-white dark:bg-gray-700;
+        @apply whitespace-nowrap rounded bg-ink px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white dark:bg-gray-700;
     }
+    .btn-go {
+        @apply whitespace-nowrap rounded bg-green-700 px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white;
+    }
+    .btn-red {
+        @apply whitespace-nowrap rounded bg-brand px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white;
+    }
+
+    /* Screenshots */
     .shot {
         @apply my-0 block w-full cursor-zoom-in rounded-xl border border-gray-200 shadow-lg shadow-gray-900/5 transition hover:shadow-xl dark:border-gray-700;
     }
@@ -75,10 +85,217 @@
         @apply my-8;
     }
     .figure figcaption {
-        @apply mt-2.5 text-center text-sm text-gray-500 dark:text-gray-400;
+        @apply mt-3 text-center text-sm text-gray-500 dark:text-gray-400;
+    }
+
+    /* Step-by-step tour */
+    .tour {
+        @apply my-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl shadow-gray-900/5 dark:border-gray-800 dark:bg-gray-900;
+    }
+    .tour-progress {
+        @apply h-1.5 bg-gray-100 dark:bg-gray-800;
+    }
+    .tour-progress span {
+        @apply block h-full bg-brand transition-all duration-500 ease-out;
+    }
+    .tour-slides {
+        @apply grid;
+    }
+    .tour-slide {
+        @apply invisible opacity-0 transition-all duration-500;
+        grid-area: 1 / 1;
+        transform: translateX(24px);
+    }
+    .tour-slide.active {
+        @apply visible opacity-100;
+        transform: none;
+    }
+    .tour-slide.from-left {
+        transform: translateX(-24px);
+    }
+    .tour-shot {
+        @apply relative mx-4 mt-4 overflow-hidden rounded-xl border border-gray-200 sm:mx-6 sm:mt-6 dark:border-gray-700;
+    }
+    .tour-shot img {
+        @apply block w-full;
+    }
+    /* Each step zooms in on its marker so small buttons are readable */
+    .tour-zoom {
+        @apply relative;
+        transition: transform 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s;
+    }
+    .tour-slide.active .tour-zoom {
+        transform: scale(1.3);
+    }
+    .tour-slide.active .tour-zoom.no-zoom {
+        transform: none;
+    }
+    /* Keep the marker the same size while the shot zooms */
+    .tour-zoom .hotspot {
+        transition: scale 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s;
+    }
+    .tour-slide.active .tour-zoom .hotspot {
+        scale: 0.77;
+    }
+    .tour-slide.active .tour-zoom.no-zoom .hotspot {
+        scale: 1;
+    }
+    @media (max-width: 640px) {
+        .tour-slide.active .tour-zoom {
+            transform: scale(1.9);
+        }
+        .tour-slide.active .tour-zoom .hotspot {
+            scale: 0.6;
+        }
+    }
+    .tour-single .tour-nav,
+    .tour-single .tour-progress,
+    .tour-single .tour-count {
+        @apply hidden;
+    }
+    .tour-shot-phone {
+        @apply mx-auto w-full max-w-[260px] rounded-[1.75rem] border-[6px] border-ink;
+    }
+    .tour-text {
+        @apply px-5 pb-2 pt-5 sm:px-8;
+    }
+    .tour-count {
+        @apply text-xs font-semibold uppercase tracking-widest text-brand;
+    }
+    .tour-title {
+        @apply mt-1 text-xl font-bold text-ink sm:text-2xl dark:text-white;
+    }
+    .tour-body {
+        @apply mt-1.5 text-base leading-relaxed text-gray-600 sm:text-lg dark:text-gray-300;
+    }
+    .tour-nav {
+        @apply flex items-center justify-between gap-3 px-5 pb-5 pt-3 sm:px-8 sm:pb-6;
+    }
+    .tour-btn {
+        @apply shrink-0 whitespace-nowrap rounded-full border border-gray-300 px-3.5 py-2 text-sm font-semibold text-ink transition sm:px-4 hover:border-gray-400 disabled:cursor-default disabled:opacity-30 dark:border-gray-700 dark:text-white;
+    }
+    .tour-btn-next {
+        @apply border-brand bg-brand text-white hover:bg-brand-dark;
+    }
+    .tour-dots {
+        @apply flex min-w-0 flex-wrap justify-center gap-1 sm:gap-1.5;
+    }
+    .tour-dots button {
+        @apply h-2 w-2 rounded-full bg-gray-300 transition-all sm:h-2.5 sm:w-2.5 dark:bg-gray-700;
+    }
+    .tour-dots button.on {
+        @apply w-5 bg-brand sm:w-7;
+    }
+    .hotspot {
+        @apply pointer-events-none absolute h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-brand sm:h-12 sm:w-12;
+        background: transparent;
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.7);
+        animation: hotspot 1.6s ease-out infinite;
+    }
+
+    /* Screen recordings */
+    .demo {
+        @apply my-10;
+    }
+    .demo figcaption {
+        @apply mt-3 flex items-center justify-center gap-2 text-center text-sm text-gray-500 dark:text-gray-400;
+    }
+    .demo-badge {
+        @apply rounded-full bg-brand px-2 py-0.5 text-xs font-semibold text-white;
+    }
+    .demo-browser {
+        @apply overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl shadow-gray-900/10 dark:border-gray-700 dark:bg-gray-900;
+    }
+    .demo-bar {
+        @apply flex items-center gap-1.5 border-b border-gray-200 bg-gray-50 px-4 py-2.5 dark:border-gray-700 dark:bg-gray-800;
+    }
+    .demo-bar i {
+        @apply h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600;
+    }
+    .demo-bar i:first-child {
+        @apply bg-red-400;
+    }
+    .demo-bar i:nth-child(2) {
+        @apply bg-amber-400;
+    }
+    .demo-bar i:nth-child(3) {
+        @apply bg-green-400;
+    }
+    .demo-bar span {
+        @apply mx-auto rounded-md bg-white px-10 py-0.5 text-xs text-gray-500 dark:bg-gray-900;
+    }
+    .demo video {
+        @apply block w-full bg-gray-100 dark:bg-gray-800;
+    }
+    .demo-phone {
+        @apply mx-auto w-full max-w-[280px] overflow-hidden rounded-[2.25rem] border-[8px] border-ink shadow-2xl dark:border-gray-600;
+    }
+    .demo-toggle {
+        @apply absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-sm text-white opacity-0 backdrop-blur transition hover:bg-black/80 focus:opacity-100;
+    }
+    .demo:hover .demo-toggle,
+    .demo.paused .demo-toggle {
+        @apply opacity-100;
+    }
+    .demo-play,
+    .demo.paused .demo-pause {
+        @apply hidden;
+    }
+    .demo.paused .demo-play {
+        @apply inline;
+    }
+
+    /* Cards */
+    .task-grid {
+        @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3;
+    }
+    .task {
+        @apply flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 no-underline transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-xl dark:border-gray-800 dark:bg-gray-900;
+    }
+    .task-icon {
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-2xl transition duration-300 dark:bg-gray-800;
+    }
+    .task:hover .task-icon {
+        @apply scale-110 bg-brand-soft;
+    }
+    .task-title {
+        @apply font-semibold text-ink dark:text-white;
+    }
+    .task-text {
+        @apply mt-0.5 text-sm text-gray-600 dark:text-gray-400;
+    }
+    .cards {
+        @apply my-8 grid gap-4 sm:grid-cols-2;
+    }
+    .cards-3 {
+        @apply lg:grid-cols-3;
+    }
+    .card {
+        @apply rounded-2xl border border-gray-200 bg-white p-5 transition duration-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900;
+    }
+    .card-icon {
+        @apply text-3xl;
+    }
+    .card-title {
+        @apply mt-2 text-lg font-bold text-ink dark:text-white;
+    }
+    .card-text {
+        @apply mt-1 text-base leading-relaxed text-gray-600 dark:text-gray-300;
+    }
+    .card a {
+        @apply font-medium text-brand underline dark:text-red-400;
+    }
+    .ok-list {
+        @apply my-6 flex flex-wrap gap-2;
+    }
+    .ok {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-200;
+    }
+    .no {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-sm font-medium text-amber-900 dark:bg-amber-950/50 dark:text-amber-200;
     }
     .callout {
-        @apply my-6 flex gap-3 rounded-xl border p-4 text-[0.95rem] leading-relaxed;
+        @apply my-8 flex gap-3 rounded-2xl border p-5 text-base leading-relaxed;
     }
     .callout-tip {
         @apply border-emerald-200 bg-emerald-50 text-emerald-950 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100;
@@ -93,76 +310,133 @@
         @apply font-medium underline;
     }
     .callout-icon {
-        @apply mt-0.5 shrink-0 text-lg leading-none;
-    }
-    .steps {
-        @apply my-6 space-y-4;
-    }
-    .steps > li {
-        @apply relative flex gap-4;
-    }
-    .step-num {
-        @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white;
-    }
-    .card-grid {
-        @apply my-6 grid gap-4 sm:grid-cols-2;
-    }
-    .card {
-        @apply block rounded-xl border border-gray-200 p-5 transition hover:border-brand hover:shadow-md dark:border-gray-800;
-    }
-    .card h3,
-    .card .card-title {
-        @apply font-semibold text-ink dark:text-white;
-    }
-    .card p {
-        @apply mt-1 text-sm text-gray-600 dark:text-gray-400;
+        @apply shrink-0 text-xl leading-none;
     }
     .tab-btn {
-        @apply rounded-full bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300;
+        @apply rounded-full bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-600 no-underline transition hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300;
     }
     .tab-btn.tab-on {
         @apply bg-ink text-white hover:bg-ink dark:bg-white dark:text-ink;
     }
+
+    /* Animated keyboard */
+    .keys {
+        @apply my-10 flex flex-wrap items-end justify-center gap-4 sm:gap-8;
+    }
+    .key {
+        @apply flex flex-col items-center gap-3;
+    }
+    .keycap {
+        @apply flex h-20 min-w-[6rem] items-center justify-center rounded-2xl border border-b-[6px] border-gray-300 bg-white px-5 font-mono text-xl font-bold text-ink shadow-lg dark:border-gray-600 dark:bg-gray-800 dark:text-white;
+        animation: keypress 4.5s infinite;
+    }
+    .key:nth-child(2) .keycap {
+        animation-delay: 1.5s;
+    }
+    .key:nth-child(3) .keycap {
+        animation-delay: 3s;
+    }
+    .key:hover .keycap {
+        @apply translate-y-1 border-b-2 border-brand;
+        animation: none;
+    }
+    .key-label {
+        @apply text-center text-sm font-semibold text-gray-600 dark:text-gray-300;
+    }
+
+    /* FAQ */
     .faq {
-        @apply scroll-mt-24 border-b border-gray-200 py-1 dark:border-gray-800;
+        @apply scroll-mt-24 border-b border-gray-200 dark:border-gray-800;
     }
     .faq summary {
-        @apply flex cursor-pointer list-none items-start justify-between gap-4 py-3 font-semibold text-ink dark:text-white;
+        @apply flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-lg font-semibold text-ink transition hover:text-brand dark:text-white;
     }
     .faq summary::-webkit-details-marker {
         display: none;
     }
     .faq summary::after {
         content: '+';
-        @apply text-xl font-normal leading-none text-brand transition;
+        @apply flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gray-100 text-lg font-normal leading-none text-brand transition dark:bg-gray-800;
     }
     .faq[open] summary::after {
-        @apply rotate-45;
+        @apply rotate-45 bg-brand-soft dark:bg-red-950/50;
     }
     .faq .answer {
-        @apply pb-4 text-[0.95rem] leading-relaxed text-gray-700 dark:text-gray-300;
+        @apply pb-5 text-base leading-relaxed text-gray-700 dark:text-gray-300;
+        animation: fade-down 0.3s ease-out;
     }
     .faq .answer p + p,
-    .faq .answer p + ul,
-    .faq .answer ul + p {
+    .faq .answer p + ol,
+    .faq .answer p + ul {
         @apply mt-2;
     }
     .faq .answer ul {
         @apply list-disc space-y-1 pl-5;
     }
+    .faq .answer ol {
+        @apply list-decimal space-y-1 pl-5;
+    }
     .faq .answer a {
         @apply font-medium text-brand underline dark:text-red-400;
     }
-    .faq .answer code {
-        @apply rounded bg-gray-100 px-1 font-mono text-[0.85em] dark:bg-gray-800;
+
+    /* Scroll reveal (only when JS runs and motion is allowed) */
+    .motion .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .badge {
-        @apply inline-block rounded-full px-2 py-0.5 align-middle text-[0.7rem] font-semibold uppercase tracking-wide;
+    .motion .reveal.shown {
+        opacity: 1;
+        transform: none;
     }
-    .badge-hidden {
-        @apply bg-violet-100 text-violet-800 dark:bg-violet-950 dark:text-violet-200;
+    .float {
+        animation: float 6s ease-in-out infinite;
     }
-    .badge-tip {
-        @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200;
+}
+
+@keyframes hotspot {
+    0% {
+        box-shadow: 0 0 0 0 rgba(213, 39, 40, 0.55), 0 0 0 4px rgba(255, 255, 255, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 18px rgba(213, 39, 40, 0), 0 0 0 4px rgba(255, 255, 255, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(213, 39, 40, 0), 0 0 0 4px rgba(255, 255, 255, 0.7);
+    }
+}
+@keyframes keypress {
+    0%, 6%, 100% {
+        transform: none;
+        border-bottom-width: 6px;
+    }
+    3% {
+        transform: translateY(4px);
+        border-bottom-width: 2px;
+        border-color: #d52728;
+    }
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+@keyframes fade-down {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 }

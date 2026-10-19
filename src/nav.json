@@ -1,50 +1,34 @@
 [
     {
-        "title": "Get started",
+        "title": "Start here",
         "pages": [
-            { "slug": "quick-start", "title": "Quick start" },
-            { "slug": "getting-started", "title": "Before you begin" }
-        ]
-    },
-    {
-        "title": "Find a video",
-        "pages": [
-            { "slug": "library", "title": "The video library" },
-            { "slug": "sort-and-filter", "title": "Sort, filter and share" }
+            { "slug": "quick-start", "title": "Your first lesson", "icon": "🚀" },
+            { "slug": "find-a-video", "title": "Find a video for your level", "icon": "🎬" }
         ]
     },
     {
         "title": "Practise",
         "pages": [
-            { "slug": "first-lesson", "title": "Your first lesson" },
-            { "slug": "hints", "title": "Checking answers and hints" },
-            { "slug": "listen-parts", "title": "Listen-only parts" },
-            { "slug": "lesson-navigation", "title": "Moving around a lesson" },
-            { "slug": "keyboard-shortcuts", "title": "Keyboard shortcuts" }
+            { "slug": "hints", "title": "Read the hint", "icon": "💡" },
+            { "slug": "too-hard", "title": "When a sentence is too hard", "icon": "🐢" },
+            { "slug": "move-around", "title": "Skip, go back, try again", "icon": "↩️" },
+            { "slug": "keyboard-shortcuts", "title": "Keyboard shortcuts", "icon": "⌨️" }
         ]
     },
     {
-        "title": "Track progress",
+        "title": "Your progress",
         "pages": [
-            { "slug": "progress", "title": "Saving and resuming" },
-            { "slug": "my-learning", "title": "My Learning" },
-            { "slug": "streaks", "title": "Learning time and streaks" }
-        ]
-    },
-    {
-        "title": "Account",
-        "pages": [
-            { "slug": "account", "title": "Signing in and out" },
-            { "slug": "privacy", "title": "Your data and privacy" }
+            { "slug": "save-progress", "title": "Save your progress", "icon": "💾" },
+            { "slug": "streaks", "title": "Your daily streak", "icon": "🔥" }
         ]
     },
     {
         "title": "More",
         "pages": [
-            { "slug": "mobile", "title": "Phones and tablets" },
-            { "slug": "hidden-features", "title": "Hidden settings and tips" },
-            { "slug": "faq", "title": "FAQ" },
-            { "slug": "troubleshooting", "title": "Troubleshooting" }
+            { "slug": "phone", "title": "Use it on your phone", "icon": "📱" },
+            { "slug": "tips", "title": "Tips and tricks", "icon": "✨" },
+            { "slug": "faq", "title": "Questions and answers", "icon": "❓" },
+            { "slug": "help", "title": "Something's not working", "icon": "🛟" }
         ]
     }
 ]

@@ -1,111 +1,73 @@
-<!-- {"title": "FAQ", "description": "Answers to common questions, including the settings and features that aren't obvious from the screen."} -->
-<div class="not-prose sticky top-16 z-10 -mx-1 mb-8 bg-white/95 px-1 py-3 backdrop-blur dark:bg-gray-950/95">
-    <label class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white px-4 py-3 shadow-sm focus-within:border-brand dark:border-gray-700 dark:bg-gray-900">
+<!-- {"title": "Questions and answers", "description": "Short answers to common questions.", "time": "Find your question"} -->
+<div class="not-prose sticky top-16 z-10 -mx-1 mb-6 bg-white/95 px-1 py-3 backdrop-blur dark:bg-gray-950/95">
+    <label class="flex items-center gap-3 rounded-2xl border border-gray-300 bg-white px-4 py-3.5 shadow-sm transition focus-within:border-brand focus-within:shadow-md dark:border-gray-700 dark:bg-gray-900">
         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input data-faq-filter type="search" placeholder="Filter questions: speed, streak, phone…" class="w-full bg-transparent text-ink outline-none placeholder:text-gray-400 dark:text-white" aria-label="Filter questions">
+        <input data-faq-filter type="search" placeholder="Type a word: streak, phone, slow…" class="w-full bg-transparent text-lg text-ink outline-none placeholder:text-gray-400 dark:text-white" aria-label="Filter questions">
     </label>
     <div class="mt-3 flex flex-wrap gap-2 text-sm">
-        <a href="#general" class="tab-btn">General</a>
-        <a href="#practising" class="tab-btn">Practising</a>
-        <a href="#answers" class="tab-btn">Answers</a>
-        <a href="#settings" class="tab-btn">Settings &amp; hidden features</a>
-        <a href="#progress" class="tab-btn">Progress</a>
-        <a href="#account" class="tab-btn">Account</a>
-        <a href="#devices" class="tab-btn">Devices</a>
+        <a href="#basics" class="tab-btn">👋 Basics</a>
+        <a href="#lessons" class="tab-btn">✍️ Lessons</a>
+        <a href="#answers" class="tab-btn">💡 Answers</a>
+        <a href="#progress" class="tab-btn">🔥 Progress</a>
+        <a href="#account" class="tab-btn">👤 Account</a>
     </div>
 </div>
-<p data-faq-empty class="not-prose hidden rounded-xl bg-gray-50 p-6 text-center dark:bg-gray-900">No questions match. Try <a class="text-brand underline" href="troubleshooting.html">Troubleshooting</a> or search the whole guide with <kbd class="kbd">/</kbd>.</p>
+<p data-faq-empty class="not-prose hidden rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-900">No questions found. Try <a class="text-brand underline" href="help.html">Something's not working</a>.</p>
 
 <div data-faq-group>
-<h2 id="general">General</h2>
+<h2 id="basics">👋 Basics</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="what-is-it"><summary>What is Dictation Daily?</summary><div class="answer"><p>A listening practice site. You watch real YouTube videos one sentence at a time, type what you hear, and get word-by-word feedback. It trains your ear for natural speed, linking and accents.</p></div></details>
-    <details class="faq" data-faq id="need-account"><summary>Do I need an account?</summary><div class="answer"><p>No. Every lesson is open to everyone. Signing in with Google adds saved progress, learning time and streaks. <a href="getting-started.html#with-or-without-an-account">Compare</a>.</p></div></details>
-    <details class="faq" data-faq id="which-level"><summary>Which level should I choose?</summary><div class="answer"><p>Start with <strong>B1 Intermediate</strong> and the <strong>Slow</strong> sort. If you get most clips right in one or two checks, move up a level. If you need to replay every clip many times, move down or <a href="hidden-features.html#slow-down-the-audio">slow the audio</a>.</p></div></details>
-    <details class="faq" data-faq id="how-many-videos"><summary>How many videos are there?</summary><div class="answer"><p>Over 1,800, from TED, BBC Learning English and Great Big Story. Nearly all have a CEFR level from B1 to C2.</p></div></details>
-    <details class="faq" data-faq id="how-long"><summary>How long should I practise each day?</summary><div class="answer"><p>Ten to twenty minutes daily works better than one long session a week. One correct clip is enough to keep your <a href="streaks.html">streak</a>.</p></div></details>
-    <details class="faq" data-faq id="request-video"><summary>Can I add my own YouTube video?</summary><div class="answer"><p>Not yourself. Videos need a timed transcript before they can be turned into exercises. You can open any library video by its YouTube ID, though: <a href="hidden-features.html#open-any-video-by-its-youtube-id">see how</a>.</p></div></details>
-</div>
-</div>
-
-<div data-faq-group>
-<h2 id="practising">Practising</h2>
-<div class="not-prose">
-    <details class="faq" data-faq id="clip-stopped"><summary>The clip stopped repeating.</summary><div class="answer"><p>Each clip plays up to 3 times on its own, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd> to hear it again, as often as you like.</p></div></details>
-    <details class="faq" data-faq id="change-repeats"><summary>Can I change how many times a clip repeats?</summary><div class="answer"><p>No, it's fixed at 3. Use <kbd class="kbd">Tab</kbd> for extra replays.</p></div></details>
-    <details class="faq" data-faq id="forward-greyed"><summary>The ▶ button at the bottom is greyed out.</summary><div class="answer"><p>You can only go forward once the current clip is answered correctly (or the listen part has played). Use <span class="btn-ui">Skip</span> (<kbd class="kbd">Esc</kbd>) to move on without answering.</p></div></details>
-    <details class="faq" data-faq id="just-listen"><summary>Why does it say “Just listen” with nothing to type?</summary><div class="answer"><p>That part of the video isn't a fair exercise: music, a one-word line, another language, overlapping voices or very fast speech. It plays once and the next exercise starts. Press <kbd class="kbd">Enter</kbd> to skip it. <a href="listen-parts.html">More</a>.</p></div></details>
-    <details class="faq" data-faq id="redo-clip"><summary>How do I redo a clip I already answered?</summary><div class="answer"><p>Go back to it with ◀ and press <span class="btn-ui">Undo</span>. If you're signed in, note that this <a href="progress.html#which-clip-is-saved">moves your saved place</a> back to that clip once you answer it.</p></div></details>
-    <details class="faq" data-faq id="redo-lesson"><summary>How do I restart a lesson from the beginning?</summary><div class="answer"><p>Finish it and press <span class="btn-ui">Redo the lesson</span>, or press ◀ repeatedly to get back to clip 1.</p></div></details>
-    <details class="faq" data-faq id="tab-not-working"><summary><kbd class="kbd">Tab</kbd> doesn't replay the clip.</summary><div class="answer"><p>The text box needs to be selected. Click inside it, then press <kbd class="kbd">Tab</kbd>. During listen parts, keys work anywhere.</p></div></details>
-    <details class="faq" data-faq id="enter-not-starting"><summary><kbd class="kbd">Enter</kbd> doesn't start the lesson.</summary><div class="answer"><p>Before the lesson starts, <kbd class="kbd">Enter</kbd> only works once you've clicked the instructions box. Simplest: click <span class="btn-ui">Start</span>, or press play on the video.</p></div></details>
-    <details class="faq" data-faq id="close-wrong-page"><summary>Close took me to a different website.</summary><div class="answer"><p><span class="btn-ui">Close</span> works like your browser's back button. If you opened the lesson from a link elsewhere, it goes back there. Use the <strong>DD</strong> logo to reach the library.</p></div></details>
+    <details class="faq" data-faq id="what-is-it"><summary>What is Dictation Daily?</summary><div class="answer"><p>A free website to practise listening. You hear a sentence from a real video, type it, and see your mistakes.</p></div></details>
+    <details class="faq" data-faq id="need-account"><summary>Do I need an account?</summary><div class="answer"><p>No. You can do every lesson without one. Sign in with Google only if you want the app to remember your progress.</p></div></details>
+    <details class="faq" data-faq id="which-level"><summary>Which level should I choose?</summary><div class="answer"><p>Start with <strong>B1</strong> and <strong>Slow</strong>. If most sentences are right in 1 or 2 tries, go up a level. <a href="find-a-video.html">How to choose</a>.</p></div></details>
+    <details class="faq" data-faq id="how-long"><summary>How long should I practise?</summary><div class="answer"><p>10–20 minutes a day is great. Every day is better than one long day.</p></div></details>
+    <details class="faq" data-faq id="videos"><summary>What videos are there?</summary><div class="answer"><p>More than 1,800 videos from TED, BBC Learning English and Great Big Story.</p></div></details>
+    <details class="faq" data-faq id="phone"><summary>Does it work on my phone?</summary><div class="answer"><p>Yes! <a href="phone.html">See how</a>.</p></div></details>
 </div>
 </div>
 
 <div data-faq-group>
-<h2 id="answers">Answers and hints</h2>
+<h2 id="lessons">✍️ Lessons</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="right-but-wrong"><summary>My answer is right but it says it's wrong.</summary><div class="answer"><p>Look at the green word in the hint: it's what the transcript expects. Common causes:</p><ul><li>numbers written differently (<code>30s</code> vs <code>thirties</code>, <code>10</code> vs <code>ten</code>)</li><li>British vs American spelling (<code>colour</code> / <code>color</code>)</li><li>filler words the speaker really says (<code>um</code>, <code>so</code>, <code>like</code>)</li><li>one word vs two (<code>every day</code> vs <code>everyday</code>, <code>well known</code> vs <code>well-known</code>)</li><li>your phone's autocorrect changing a word</li></ul></div></details>
-    <details class="faq" data-faq id="capitals-punctuation"><summary>Do capital letters and punctuation matter?</summary><div class="answer"><p>No. Capitals, commas, full stops, question marks, quotes, and apostrophes or hyphens inside words are all ignored. <a href="hints.html#what-counts-as-the-same-word">Full rules</a>.</p></div></details>
-    <details class="faq" data-faq id="only-one-mistake"><summary>Why does it only show one mistake at a time?</summary><div class="answer"><p>So you listen again for each word instead of copying the answer. Fix the first mistake and check again; the next one is shown.</p></div></details>
-    <details class="faq" data-faq id="matching-number"><summary>What does “Matching 5/8 words” mean?</summary><div class="answer"><p>The first 5 words in a row are right, out of 8 words in the clip. It counts from the start up to your first mistake.</p></div></details>
-    <details class="faq" data-faq id="transcript-mistake"><summary>The transcript itself has a mistake.</summary><div class="answer"><p>Transcripts are made automatically from the audio, so they're occasionally wrong. Type what the hint says, or skip the clip.</p></div></details>
-    <details class="faq" data-faq id="see-answer"><summary>Can I see the answer without typing it?</summary><div class="answer"><p>There's no reveal button. Type what you can and press <kbd class="kbd">Enter</kbd>: each check shows the next correct word, so you can build the answer word by word. Or skip the clip.</p></div></details>
-    <details class="faq" data-faq id="hint-disappeared"><summary>The hint disappeared.</summary><div class="answer"><p>It hides when you type or replay, so you can concentrate on listening. Press <kbd class="kbd">Enter</kbd> to check again and see it.</p></div></details>
+    <details class="faq" data-faq id="slow-down"><summary>Can I slow the video down?</summary><div class="answer"><p>Yes. Click ⚙ on the video → <strong>Speed</strong> → <strong>0.5x</strong>. <a href="too-hard.html#slow-it-down">With pictures</a>.</p></div></details>
+    <details class="faq" data-faq id="subtitles"><summary>Can I turn on subtitles?</summary><div class="answer"><p>No. Subtitles are always off, so you really listen. When you get a sentence right, you see all the words.</p></div></details>
+    <details class="faq" data-faq id="stopped"><summary>The sentence stopped playing.</summary><div class="answer"><p>It plays 3 times, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd> to hear it again.</p></div></details>
+    <details class="faq" data-faq id="forward-grey"><summary>The ▶ arrow is grey.</summary><div class="answer"><p>Get the sentence right first. Or press <span class="btn-ui">Skip</span>.</p></div></details>
+    <details class="faq" data-faq id="just-listen"><summary>Why is there nothing to type?</summary><div class="answer"><p>That's a “Just listen” part: music, or words that are too short or too fast. The next sentence starts by itself. Press <kbd class="kbd">Enter</kbd> to skip.</p></div></details>
+    <details class="faq" data-faq id="redo"><summary>How do I try a sentence again?</summary><div class="answer"><p>Go back with ◀ and press <span class="btn-ui">Undo</span>. <a href="move-around.html">See how</a>.</p></div></details>
+    <details class="faq" data-faq id="close"><summary>CLOSE took me to another page.</summary><div class="answer"><p>CLOSE works like your browser's Back button. Click the <strong>DD</strong> logo to go to the video library.</p></div></details>
 </div>
 </div>
 
 <div data-faq-group>
-<h2 id="settings">Settings and hidden features</h2>
+<h2 id="answers">💡 Answers</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="slow-down"><summary>Can I slow the audio down?</summary><div class="answer"><p>Yes. Click the ⚙ gear on the video → <strong>Speed</strong> → <strong>0.5x</strong> (or use − for 0.75x). The clip keeps looping at that speed. <a href="hidden-features.html#slow-down-the-audio">With screenshots</a>.</p></div></details>
-    <details class="faq" data-faq id="speed-up"><summary>Can I speed it up for a challenge?</summary><div class="answer"><p>Yes, the same Speed menu goes up to 2x.</p></div></details>
-    <details class="faq" data-faq id="subtitles"><summary>Can I turn on subtitles?</summary><div class="answer"><p>No. Captions are switched off during lessons, and turned off again if you enable them, so the answer isn't shown on screen. After a correct answer you see the full transcript with each word highlighted as it's spoken.</p></div></details>
-    <details class="faq" data-faq id="settings-page"><summary>Is there a settings page?</summary><div class="answer"><p>No. Speed and quality are in the YouTube player's ⚙ menu. Everything else is fixed. <a href="hidden-features.html#what-you-can-t-change">See what</a>.</p></div></details>
-    <details class="faq" data-faq id="filter-phone"><summary>How do I filter by level on my phone?</summary><div class="answer"><p>Add it to the address: <a href="https://dictationdaily.com/videos?level=B1"><code>dictationdaily.com/videos?level=B1</code></a>. You can add <code>&amp;duration=under-4-minutes</code> and <code>&amp;sort=Slow</code> too. <a href="hidden-features.html#filters-in-the-address-bar">All options</a>.</p></div></details>
-    <details class="faq" data-faq id="bookmark-list"><summary>Can I bookmark a filtered list?</summary><div class="answer"><p>Yes. The address bar always holds your current sort and filters. Bookmark it or share it.</p></div></details>
-    <details class="faq" data-faq id="youtube-id"><summary>I found a video on YouTube. Is it on Dictation Daily?</summary><div class="answer"><p>Copy the ID after <code>v=</code> in the YouTube address and open <code>dictationdaily.com/videos/&lt;ID&gt;</code>. If it's in the library, the lesson opens; otherwise you'll get “page not found”.</p></div></details>
-    <details class="faq" data-faq id="play-button"><summary>Can I start with the video's play button?</summary><div class="answer"><p>Yes. Pressing ▶ on the YouTube player starts the lesson, just like <span class="btn-ui">Start</span>.</p></div></details>
-    <details class="faq" data-faq id="highlighted-words"><summary>What are the highlighted words after a correct answer?</summary><div class="answer"><p>Each word lights up while it's being spoken. Press <kbd class="kbd">Tab</kbd> to replay and follow along. It's great for hearing how words join together.</p></div></details>
-    <details class="faq" data-faq id="data-saving"><summary>How can I use less mobile data?</summary><div class="answer"><p>Choose ⚙ → <strong>Quality</strong> in the player and pick the lowest resolution. Only the sound matters for dictation.</p></div></details>
-    <details class="faq" data-faq id="dark-mode"><summary>Is there a dark mode?</summary><div class="answer"><p>Not in the app at the moment. This guide has one: use the moon button in the top bar.</p></div></details>
+    <details class="faq" data-faq id="right-but-wrong"><summary>My answer is right, but the app says it's wrong.</summary><div class="answer"><p>Look at the <strong class="text-green-700">green word</strong> in the hint. That's what the video says. Often it's:</p><ul><li>a small word like “a” or “the”</li><li>a word ending like -s or -ed</li><li>a word your phone autocorrected</li><li>a number written in a different way</li></ul><p>Type it the way the hint shows.</p></div></details>
+    <details class="faq" data-faq id="capitals"><summary>Do capital letters and commas matter?</summary><div class="answer"><p>No. Capital letters, commas, full stops and apostrophes don't matter.</p></div></details>
+    <details class="faq" data-faq id="one-mistake"><summary>Why does it show only one mistake?</summary><div class="answer"><p>So you listen again for each word. Fix it, press <kbd class="kbd">Enter</kbd>, and see the next one.</p></div></details>
+    <details class="faq" data-faq id="see-answer"><summary>Can I see the answer?</summary><div class="answer"><p>Not all at once. But each <kbd class="kbd">Enter</kbd> shows you the next word. You can also skip.</p></div></details>
+    <details class="faq" data-faq id="transcript-wrong"><summary>I think the answer is wrong.</summary><div class="answer"><p>It can happen. The sentences are written by a computer. Type what the hint says, or skip.</p></div></details>
 </div>
 </div>
 
 <div data-faq-group>
-<h2 id="progress">Progress and streaks</h2>
+<h2 id="progress">🔥 Progress</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="started-from-clip-1"><summary>Why did my lesson start from clip 1 again?</summary><div class="answer"><ul><li>You weren't signed in. Check for your avatar in the top right.</li><li>You pressed <span class="btn-ui">Start</span> before your saved place had loaded. Reload and wait a second.</li><li>You hadn't answered any clip correctly in that video yet. Skipped clips aren't saved.</li></ul></div></details>
-    <details class="faq" data-faq id="went-back"><summary>My lesson reopened at an earlier clip than I reached.</summary><div class="answer"><p>Your saved place is the <strong>last</strong> clip you answered, not the furthest. Re-answering an earlier clip moves it back. <a href="progress.html#which-clip-is-saved">Explained here</a>.</p></div></details>
-    <details class="faq" data-faq id="streak-lower"><summary>Why is my streak lower than I expected?</summary><div class="answer"><p>Streak days change at midnight <strong>UTC</strong>, not your local midnight, so a late or early session may count for a different day. A day only counts if you answered at least one clip correctly. <a href="streaks.html#utc">Check your time zone</a>.</p></div></details>
-    <details class="faq" data-faq id="streak-midnight"><summary>Do I lose my streak at midnight?</summary><div class="answer"><p>No. If you practised yesterday, your streak stays until the end of today. It resets only after a whole day without a correct clip.</p></div></details>
-    <details class="faq" data-faq id="streak-dates-reversed"><summary>Why are the Current Streak dates backwards?</summary><div class="answer"><p>They're shown most recent first: “Oct 17 - Oct 6” means a streak from 6 October up to 17 October.</p></div></details>
-    <details class="faq" data-faq id="learning-time-low"><summary>My learning time seems low.</summary><div class="answer"><p>Only active time counts: from when a clip appears to your last keystroke, for clips you answered correctly. Idle time and skipped clips aren't counted. <a href="streaks.html#how-learning-time-is-counted">Details</a>.</p></div></details>
-    <details class="faq" data-faq id="stats-reset"><summary>My statistics went back to zero.</summary><div class="answer"><p>The My Learning statistics cover the current calendar year and restart on 1 January. Your video list and saved places are kept.</p></div></details>
-    <details class="faq" data-faq id="sync-devices"><summary>Does my progress sync between my phone and computer?</summary><div class="answer"><p>Yes, as long as you sign in with the same Google account on both.</p></div></details>
+    <details class="faq" data-faq id="started-from-clip-1"><summary>Why did my lesson start again from the beginning?</summary><div class="answer"><ul><li>You weren't signed in.</li><li>You pressed START too fast. Wait one second.</li><li>You didn't get any sentence right in that video yet.</li></ul></div></details>
+    <details class="faq" data-faq id="went-back"><summary>My lesson opened at an earlier sentence.</summary><div class="answer"><p>The app remembers the <strong>last</strong> sentence you got right. If you went back and redid sentence 5, the lesson opens at sentence 6.</p></div></details>
+    <details class="faq" data-faq id="streak-lower"><summary>Why is my streak lower than I expected?</summary><div class="answer"><p>A new streak day starts at midnight world time (UTC), maybe not at your midnight. <a href="streaks.html#when-does-a-new-day-start">See your time</a>.</p></div></details>
+    <details class="faq" data-faq id="time-low"><summary>Why is my learning time low?</summary><div class="answer"><p>Only active time counts: listening and typing on sentences you got right.</p></div></details>
+    <details class="faq" data-faq id="zero"><summary>My numbers went back to zero.</summary><div class="answer"><p>The numbers start again every 1 January. Your videos are still saved.</p></div></details>
 </div>
 </div>
 
 <div data-faq-group>
-<h2 id="account">Account and privacy</h2>
+<h2 id="account">👤 Account and privacy</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="without-google"><summary>Can I sign in without Google?</summary><div class="answer"><p>Not at the moment. You can practise without signing in; your progress just isn't saved.</p></div></details>
-    <details class="faq" data-faq id="empty-after-signin"><summary>My Learning is empty after signing in.</summary><div class="answer"><p>Progress belongs to the email you signed in with. Open the account menu (your avatar) to check which account you're using, and switch if needed.</p></div></details>
-    <details class="faq" data-faq id="how-long-signed-in"><summary>How long do I stay signed in?</summary><div class="answer"><p>Up to 30 days on the same browser, even after closing it.</p></div></details>
-    <details class="faq" data-faq id="typing-private"><summary>Is what I type sent anywhere?</summary><div class="answer"><p>No. Answers are checked in your browser. Only “clip answered” and the time spent are saved, and only when you're signed in. <a href="privacy.html">Privacy details</a>.</p></div></details>
-    <details class="faq" data-faq id="delete-data"><summary>How do I delete my data?</summary><div class="answer"><p>Contact the site owner. Signing out doesn't delete anything.</p></div></details>
+    <details class="faq" data-faq id="without-google"><summary>Can I sign in without Google?</summary><div class="answer"><p>Not now. You can still practise without signing in.</p></div></details>
+    <details class="faq" data-faq id="empty"><summary>My Learning is empty.</summary><div class="answer"><p>Check which Google account you used. Click your picture to see it. Each account has its own progress.</p></div></details>
+    <details class="faq" data-faq id="what-stored"><summary>What does the app save about me?</summary><div class="answer"><p>Your name, email and picture from Google, and which sentences you got right and when. <strong>What you type is never sent or saved.</strong></p></div></details>
+    <details class="faq" data-faq id="password"><summary>Does the app see my Google password?</summary><div class="answer"><p>No. You sign in on Google's own page.</p></div></details>
+    <details class="faq" data-faq id="delete"><summary>How do I delete my data?</summary><div class="answer"><p>Contact the site owner.</p></div></details>
 </div>
 </div>
-
-<div data-faq-group>
-<h2 id="devices">Devices</h2>
-<div class="not-prose">
-    <details class="faq" data-faq id="phone"><summary>Does it work on a phone?</summary><div class="answer"><p>Yes. Tap the text box to type and use the on-screen buttons instead of shortcuts. <a href="mobile.html">Phones and tablets</a>.</p></div></details>
-    <details class="faq" data-faq id="keyboard-popping"><summary>Why doesn't the keyboard open by itself on my phone?</summary><div class="answer"><p>On phone-sized screens the text box isn't selected automatically, so the keyboard doesn't cover the video every clip. Tap the box when you're ready.</p></div></details>
-    <details class="faq" data-faq id="fullscreen"><summary>Can I use fullscreen?</summary><div class="answer"><p>You can, but the text box and hints are hidden while the video is fullscreen. Exit fullscreen to type.</p></div></details>
-    <details class="faq" data-faq id="browsers"><summary>Which browsers are supported?</summary><div class="answer"><p>Recent Chrome, Edge, Firefox and Safari, on computers, phones and tablets.</p></div></details>
-</div>
-</div>
-
-<div class="callout not-prose callout-note mt-10"><span class="callout-icon">🛠</span><div>Something not working? See <a href="troubleshooting.html">Troubleshooting</a> for sound, video, sign-in and loading problems.</div></div>

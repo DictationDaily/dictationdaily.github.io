@@ -1,43 +1,34 @@
-<!-- {"title": "Learning time and streaks", "description": "Exactly how learning time, active days and streaks are counted, including the UTC day boundary."} -->
-<h2 id="how-learning-time-is-counted">How learning time is counted</h2>
-<p>For every clip you answer correctly, the app counts the time from when the clip came up to <strong>the last key you pressed</strong> before the correct check.</p>
-<div class="not-prose my-6 overflow-x-auto">
-    <div class="flex min-w-[520px] items-stretch overflow-hidden rounded-xl border border-gray-200 text-center text-sm dark:border-gray-800">
-        <div class="flex-[3] bg-emerald-100 p-3 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-100">Clip appears → listening → typing → fixing hints<br><strong>counted</strong></div>
-        <div class="flex-1 bg-gray-100 p-3 text-gray-600 dark:bg-gray-800 dark:text-gray-400">last keystroke → Enter<br><strong>not counted</strong></div>
+<!-- {"title": "Your daily streak", "description": "Practise every day and watch your streak grow.", "time": "1 minute"} -->
+<div class="not-prose my-8 flex items-center gap-5 rounded-3xl bg-gradient-to-br from-orange-50 to-red-50 p-6 dark:from-orange-950/30 dark:to-red-950/30">
+    <span class="float text-6xl" aria-hidden="true">🔥</span>
+    <div>
+        <p class="text-2xl font-black text-ink dark:text-white">1 correct sentence = 1 day</p>
+        <p class="mt-1 text-lg text-gray-700 dark:text-gray-300">Get one sentence right every day to keep your streak.</p>
     </div>
 </div>
-<ul>
-    <li>Listening, typing and fixing mistakes count.</li>
-    <li>Time after your last keystroke doesn't, so leaving the tab open doesn't inflate it.</li>
-    <li>Skipped clips don't count at all.</li>
-</ul>
-<p>It's a measure of active practice, not of time with the page open.</p>
 
-<h2>Active days</h2>
-<p>A day is <strong>active</strong> when you answered at least one clip correctly on it. One clip is enough.</p>
+<h2>Where to see it</h2>
+<tour>
+    <step img="signed-in-library" x="83.7" y="3.6" title="The flame">The number is your streak: how many days in a row you practised.</step>
+    <step img="my-learning-menu" x="82.6" y="13.7" title="My Learning">Click <strong>MY LEARNING</strong> to see your last 4 videos. Click one to continue.</step>
+    <step img="my-learning-menu" x="82.8" y="43" title="Go to My Learning">Opens the page with all your numbers.</step>
+    <step img="my-learning" x="51.9" y="21" title="Learning time">How long you practised this year.</step>
+    <step img="my-learning" x="67.7" y="21" title="Current streak">Days in a row, up to today.</step>
+    <step img="my-learning" x="82.4" y="21" title="Longest streak">Your best record this year. Can you beat it?</step>
+</tour>
 
-<h2>Streaks</h2>
-<p>A streak is a run of consecutive active days.</p>
-<ul>
-    <li><strong>Current Streak</strong>: the run that includes today or yesterday.</li>
-    <li><strong>Longest Streak</strong>: your best run this year.</li>
-</ul>
+<h2>The rules</h2>
+<div class="cards not-prose">
+    <div class="card"><p class="card-icon">✅</p><p class="card-title">One sentence is enough</p><p class="card-text">Get one sentence right and the day counts.</p></div>
+    <div class="card"><p class="card-icon">🌙</p><p class="card-title">You have all day</p><p class="card-text">Your streak doesn't stop at midnight. You have until the end of today.</p></div>
+    <div class="card"><p class="card-icon">💔</p><p class="card-title">Miss a whole day…</p><p class="card-text">…and the streak starts again from 0.</p></div>
+    <div class="card"><p class="card-icon">⏱</p><p class="card-title">Only active time counts</p><p class="card-text">Learning time counts listening and typing, not time away from the keyboard.</p></div>
+</div>
 
-<h3>You have until the end of today</h3>
-<p>Your streak isn't lost at midnight. If you practised yesterday, the streak still shows yesterday's count all day today, and goes up when you answer a clip. It drops to 0 only after a whole day without practice.</p>
-
-<h3 id="utc">Days are counted in UTC</h3>
-<p>Days start and end at midnight <strong>UTC</strong> (Coordinated Universal Time), not your local midnight.</p>
-<table>
-    <thead><tr><th>You live in</th><th>A new streak day starts at</th></tr></thead>
-    <tbody>
-        <tr><td>London (UTC+0 in winter)</td><td>00:00 (midnight)</td></tr>
-        <tr><td>Berlin (UTC+1 in winter)</td><td>01:00</td></tr>
-        <tr><td>Ho Chi Minh City (UTC+7)</td><td>07:00</td></tr>
-        <tr><td>Tokyo (UTC+9)</td><td>09:00</td></tr>
-        <tr><td>New York (UTC−5 in winter)</td><td>19:00 the evening before</td></tr>
-        <tr><td>Los Angeles (UTC−8 in winter)</td><td>16:00 the afternoon before</td></tr>
-    </tbody>
-</table>
-<div class="callout not-prose callout-tip"><span class="callout-icon">💡</span><div>In Ho Chi Minh City, practice at 06:30 still counts for the <em>previous</em> day. In New York, practice at 20:00 already counts for the <em>next</em> day. Practising once around the middle of your day is the safest way to keep a streak.</div></div>
+<h2>When does a new day start?</h2>
+<div class="not-prose my-6 rounded-2xl border border-gray-200 p-6 text-center dark:border-gray-800">
+    <p class="text-gray-600 dark:text-gray-400">Where you are, a new streak day starts at</p>
+    <p class="mt-2 text-5xl font-black text-brand" data-utc-midnight>07:00</p>
+    <p class="mt-2 text-sm text-gray-500">The app uses world time (UTC), not your local midnight.</p>
+</div>
+<div class="callout callout-tip"><span class="callout-icon">💡</span><div>Practise in the middle of your day, and you'll never lose a streak by accident.</div></div>

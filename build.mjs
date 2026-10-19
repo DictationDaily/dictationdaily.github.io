@@ -1,14 +1,22 @@
 // Builds the static site into _site/: every src/pages/<slug>.html is wrapped in
-// src/layout.html with the sidebar, breadcrumbs, "On this page" contents and
-// previous/next links, and a search index is written for the search box.
+// src/layout.html with the sidebar and the "next step" card, and a search index
+// is written for the search box.
 //
 // A page starts with a JSON comment holding its metadata:
-//   <!-- {"title": "...", "description": "...", "layout": "home"} -->
+//   <!-- {"title": "...", "description": "...", "time": "1 min", "layout": "home"} -->
+//
+// Pages can use three shorthand tags, expanded here so the pages stay short:
+//   <tour><step img="lesson-intro" x="95.9" y="53.6" title="Press START">Text</step>…</tour>
+//       a click-through, one screenshot per step with a pulsing marker at x%/y%
+//       (add phone to <step> for a phone screenshot; the shot zooms in on the
+//       marker, zoom="1" turns that off)
+//   <demo src="lesson" caption="…"></demo>  (add phone for a phone recording)
+//       a looping screen recording from videos/<src>.mp4
+//   <shot src="library" caption="…" alt="…">  a screenshot from images/<src>.webp
 import fs from 'node:fs';
 import path from 'node:path';
 
 const SITE_URL = 'https://dictationdaily.github.io';
-const REPO_URL = 'https://github.com/DictationDaily/dictationdaily.github.io';
 const OUT = '_site';
 
 const nav = JSON.parse(fs.readFileSync('src/nav.json', 'utf8'));
@@ -34,6 +42,10 @@ const slugify = (s) =>
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '');
+const attrs = (s) =>
+    Object.fromEntries(
+        [...s.matchAll(/(\w+)(?:="([^"]*)")?/g)].map((m) => [m[1], m[2] ?? true]),
+    );
 
 function readPage(slug) {
     const raw = fs.readFileSync(`src/pages/${slug}.html`, 'utf8');
@@ -42,34 +54,105 @@ function readPage(slug) {
     return { meta: JSON.parse(match[1]), body: raw.slice(match[0].length) };
 }
 
-// Give h2/h3 ids and a hover anchor; collect them for the contents column
+function imageSize(name) {
+    if (name.startsWith('mobile-')) return [780, 1688];
+    if (name.startsWith('tablet-')) return [820, 1180];
+    if (name.startsWith('youtube-')) return [704, 720];
+    return [1440, 900];
+}
+
+function expandTour(_, inner) {
+    const steps = [...inner.matchAll(/<step([^>]*)>([\s\S]*?)<\/step>/g)];
+    const slides = steps
+        .map(([, a, text], i) => {
+            const s = attrs(a);
+            const [w, h] = imageSize(s.img);
+            const spots = [[s.x, s.y], [s.x2, s.y2]]
+                .filter(([x, y]) => x && y)
+                .map(
+                    ([x, y]) =>
+                        `<span class="hotspot" style="left:${x}%;top:${y}%" aria-hidden="true"></span>`,
+                )
+                .join('');
+            return `
+            <div class="tour-slide${i === 0 ? ' active' : ''}" data-slide aria-hidden="${i !== 0}">
+                <div class="tour-shot${s.phone ? ' tour-shot-phone' : ''}">
+                    <div class="tour-zoom${s.zoom === '1' ? ' no-zoom' : ''}" style="transform-origin:${s.x || 50}% ${s.y || 50}%">
+                        <img src="images/${s.img}.webp" alt="${escape(s.alt || s.title)}" width="${w}" height="${h}" loading="lazy">
+                        ${spots}
+                    </div>
+                </div>
+                <div class="tour-text">
+                    <p class="tour-count">Step ${i + 1} of ${steps.length}</p>
+                    <p class="tour-title">${s.title}</p>
+                    ${text.trim() ? `<p class="tour-body">${text.trim()}</p>` : ''}
+                </div>
+            </div>`;
+        })
+        .join('');
+    return `
+        <div class="tour not-prose${steps.length === 1 ? ' tour-single' : ''}" data-tour>
+            <div class="tour-progress"><span data-bar></span></div>
+            <div class="tour-slides">${slides}</div>
+            <div class="tour-nav">
+                <button type="button" class="tour-btn" data-prev>← Back</button>
+                <div class="tour-dots" data-dots></div>
+                <button type="button" class="tour-btn tour-btn-next" data-next>Next →</button>
+            </div>
+        </div>`;
+}
+
+function expandDemo(_, a) {
+    const s = attrs(a);
+    const video = `<video src="videos/${s.src}.mp4" poster="videos/${s.src}.jpg" muted loop playsinline preload="none" aria-label="${escape(s.caption || 'Screen recording')}"></video>
+            <button type="button" class="demo-toggle" data-demo-toggle aria-label="Pause"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
+    const frame = s.phone
+        ? `<div class="demo-phone">${video}</div>`
+        : `<div class="demo-browser"><div class="demo-bar"><i></i><i></i><i></i><span>dictationdaily.com</span></div><div class="relative">${video}</div></div>`;
+    return `
+        <figure class="demo not-prose${s.phone ? ' demo-is-phone' : ''}" data-demo>
+            <div class="relative">${frame}</div>
+            ${s.caption ? `<figcaption><span class="demo-badge">▶ Watch</span> ${s.caption}</figcaption>` : ''}
+        </figure>`;
+}
+
+function expandShot(_, a) {
+    const s = attrs(a);
+    const [w, h] = imageSize(s.src);
+    const phone = s.src.startsWith('mobile-');
+    return `
+        <figure class="figure not-prose">
+            <img src="images/${s.src}.webp" alt="${escape(s.alt || s.caption || '')}" class="${phone ? 'phone' : 'shot'}" width="${w}" height="${h}" loading="lazy">
+            ${s.caption ? `<figcaption>${s.caption}</figcaption>` : ''}
+        </figure>`;
+}
+
+function expand(body) {
+    return body
+        .replace(/<tour>([\s\S]*?)<\/tour>/g, expandTour)
+        .replace(/<demo([^>]*)><\/demo>/g, expandDemo)
+        .replace(/<shot([^>]*)>/g, expandShot);
+}
+
+// Give h2s ids (for links and search) and collect them with their section text
 function addAnchors(body) {
     const headings = [];
     const used = new Set();
-    const html = body.replace(
-        /<h([23])([^>]*)>([\s\S]*?)<\/h\1>/g,
-        (all, level, attrs, inner) => {
-            let id = (attrs.match(/\sid="([^"]+)"/) || [])[1];
-            if (!id) {
-                id = slugify(inner);
-                let n = 2;
-                while (used.has(id)) id = `${slugify(inner)}-${n++}`;
-                attrs += ` id="${id}"`;
-            }
-            used.add(id);
-            const text = stripTags(inner.replace(/<span class="badge[^>]*>.*?<\/span>/g, ''));
-            headings.push({ level: Number(level), id, text });
-            return `<h${level}${attrs} class="group scroll-mt-24">${inner}<a href="#${id}" class="anchor" aria-label="Link to this section">#</a></h${level}>`;
-        },
-    );
-    // Each heading's section text, so search can link straight to it
-    const chunks = html.split(/(?=<h[23][\s>])/);
+    const html = body.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (all, a, inner) => {
+        let id = (a.match(/\sid="([^"]+)"/) || [])[1];
+        if (!id) {
+            id = slugify(inner);
+            let n = 2;
+            while (used.has(id)) id = `${slugify(inner)}-${n++}`;
+            a += ` id="${id}"`;
+        }
+        used.add(id);
+        headings.push({ id, text: stripTags(inner) });
+        return `<h2${a} class="scroll-mt-24">${inner}</h2>`;
+    });
+    const chunks = html.split(/(?=<h2[\s>])/);
     chunks.slice(chunks.length - headings.length).forEach((chunk, i) => {
-        headings[i].body = stripTags(
-            chunk
-                .replace(/<a [^>]*class="anchor"[^>]*>#<\/a>/g, '')
-                .replace(/<span class="badge[^>]*>.*?<\/span>/g, ''),
-        );
+        headings[i].body = stripTags(chunk);
     });
     return { html, headings };
 }
@@ -83,7 +166,7 @@ function sidebar(current) {
             <ul class="space-y-0.5">${group.pages
                 .map(
                     (p) => `
-                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}">${p.title}</a></li>`,
+                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}"><span class="nav-icon" aria-hidden="true">${p.icon}</span>${p.title}</a></li>`,
                 )
                 .join('')}
             </ul>
@@ -92,30 +175,14 @@ function sidebar(current) {
         .join('');
 }
 
-function tocColumn(headings) {
-    if (headings.length < 2) return '';
-    return `
-        <p class="mb-3 text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500">On this page</p>
-        <ul class="space-y-1.5 border-l border-gray-200 text-sm dark:border-gray-800">${headings
-            .map(
-                (h) => `
-            <li><a href="#${h.id}" class="toc-link ${h.level === 3 ? 'pl-7' : 'pl-4'}">${escape(h.text)}</a></li>`,
-            )
-            .join('')}
-        </ul>`;
-}
-
-function prevNext(index) {
-    const prev = ordered[index - 1];
+function nextCard(index) {
     const next = ordered[index + 1];
-    const card = (p, dir) =>
-        p
-            ? `<a href="${p.slug}.html" class="pager group ${dir === 'next' ? 'sm:col-start-2 text-right' : ''}">
-                <span class="text-xs uppercase tracking-wide text-gray-500">${dir === 'next' ? 'Next' : 'Previous'}</span>
-                <span class="mt-1 block font-semibold text-ink group-hover:text-brand dark:text-white">${dir === 'next' ? '' : '← '}${p.title}${dir === 'next' ? ' →' : ''}</span>
-            </a>`
-            : '';
-    return `<nav class="mt-16 grid gap-4 sm:grid-cols-2" aria-label="Previous and next page">${card(prev, 'prev')}${card(next, 'next')}</nav>`;
+    const prev = ordered[index - 1];
+    return `
+        <nav class="mt-16 grid gap-4 sm:grid-cols-[1fr_2fr]" aria-label="Next page">
+            ${prev ? `<a href="${prev.slug}.html" class="pager"><span class="text-xs uppercase tracking-wide text-gray-500">← Back</span><span class="mt-1 block font-semibold text-ink dark:text-white">${prev.title}</span></a>` : '<span></span>'}
+            ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">Next</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">You've read it all!</span><span class="mt-1 block text-lg font-bold text-white">🎉 Back to the guide home</span></a>`}
+        </nav>`;
 }
 
 function render(slug, meta, body) {
@@ -123,8 +190,8 @@ function render(slug, meta, body) {
     const entry = ordered[index];
     const home = meta.layout === 'home' || meta.layout === 'plain';
     const { html, headings } = home
-        ? { html: body, headings: [] }
-        : addAnchors(body);
+        ? { html: expand(body), headings: [] }
+        : addAnchors(expand(body));
     const vars = {
         title:
             slug === 'index'
@@ -137,28 +204,24 @@ function render(slug, meta, body) {
         content: home
             ? html
             : `
-            <nav class="mb-4 flex items-center gap-1.5 text-sm text-gray-500" aria-label="Breadcrumb">
-                <a href="./" class="hover:text-brand">Guide</a><span aria-hidden="true">›</span>
-                <span>${entry ? entry.group : ''}</span>
-            </nav>
-            <h1 class="text-3xl font-black tracking-tight text-ink sm:text-4xl dark:text-white">${meta.title}</h1>
-            ${meta.description ? `<p class="mt-3 text-lg text-gray-600 dark:text-gray-400">${meta.description}</p>` : ''}
-            <div class="prose prose-gray mt-8 max-w-none dark:prose-invert">${html}</div>
-            <div class="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-6 text-sm text-gray-500 dark:border-gray-800">
-                <span>Screenshots from the live app.</span>
-                <a class="hover:text-brand" href="${REPO_URL}/edit/main/src/pages/${slug}.html">Suggest an edit on GitHub</a>
-            </div>
-            ${index >= 0 ? prevNext(index) : ''}`,
-        toc: home ? '' : tocColumn(headings),
+            <header class="reveal">
+                <a href="./" class="text-sm font-medium text-gray-500 hover:text-brand">← Guide home</a>
+                <div class="mt-5 flex items-start gap-4">
+                    <span class="page-icon" aria-hidden="true">${entry?.icon || '📘'}</span>
+                    <div>
+                        <h1 class="text-3xl font-black tracking-tight text-ink sm:text-4xl dark:text-white">${meta.title}</h1>
+                        ${meta.description ? `<p class="mt-2 text-lg text-gray-600 dark:text-gray-400">${meta.description}</p>` : ''}
+                        ${meta.time ? `<p class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">⏱ ${meta.time}</p>` : ''}
+                    </div>
+                </div>
+            </header>
+            <div class="prose prose-lg prose-gray mt-10 max-w-none dark:prose-invert">${html}</div>
+            ${index >= 0 ? nextCard(index) : ''}`,
     };
     return {
         page: layout.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? ''),
         headings,
-        text: stripTags(
-            html
-                .replace(/<a [^>]*class="anchor"[^>]*>#<\/a>/g, '')
-                .replace(/<span class="badge[^>]*>.*?<\/span>/g, ''),
-        ),
+        text: stripTags(html),
     };
 }
 
@@ -172,20 +235,20 @@ for (const slug of slugs) {
     let { page, headings, text } = render(slug, meta, body);
     if (slug === '404') {
         // GitHub Pages serves 404.html at the missing URL, which may be nested
-        page = page.replace(
-            /(href|src)="(?!https?:|#|\/|mailto:)/g,
-            '$1="/',
-        ).replace(/="\/\.\/"/g, '="/"');
+        page = page
+            .replace(/(href|src|poster)="(?!https?:|#|\/|mailto:)/g, '$1="/')
+            .replace(/="\/\.\/"/g, '="/"');
     }
     fs.writeFileSync(path.join(OUT, `${slug}.html`), page);
     if (slug === 'index' || slug === '404') continue;
-    const group = ordered.find((p) => p.slug === slug)?.group || '';
+    const entry = ordered.find((p) => p.slug === slug);
     search.push({
         url: `${slug}.html`,
         title: meta.title,
-        group,
+        icon: entry.icon,
+        group: entry.group,
         description: meta.description || '',
-        headings: headings.map((h) => ({ id: h.id, text: h.text, body: h.body })),
+        headings,
         text,
     });
 }
@@ -207,7 +270,8 @@ fs.writeFileSync(
     `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`,
 );
 fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
-fs.cpSync('images', path.join(OUT, 'images'), { recursive: true });
-fs.cpSync('assets', path.join(OUT, 'assets'), { recursive: true });
+for (const dir of ['images', 'videos', 'assets']) {
+    fs.cpSync(dir, path.join(OUT, dir), { recursive: true });
+}
 fs.copyFileSync('favicon.ico', path.join(OUT, 'favicon.ico'));
 console.log(`built ${slugs.length} pages into ${OUT}/`);
