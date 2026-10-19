@@ -1,0 +1,16 @@
+{
+    "name": "dictationdaily-guide",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tailwindcss -i src/input.css -o assets/site.css --minify",
+        "dev": "tailwindcss -i src/input.css -o assets/site.css --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "How to use Dictation Daily: an illustrated user guide",
+    "devDependencies": {
+        "tailwindcss": "^3.4.17"
+    },
+    "private": true
+}

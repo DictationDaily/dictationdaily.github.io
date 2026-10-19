@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dictation Daily Guide</title>
+    <meta name="description" content="How to use Dictation Daily: find a video, practise English dictation clip by clip, read the hints, and track your learning time and streaks.">
+    <meta property="og:title" content="Dictation Daily Guide">
+    <meta property="og:description" content="An illustrated guide to practising English listening with Dictation Daily.">
+    <meta property="og:image" content="images/lesson-hint.webp">
+    <link rel="icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="bg-white text-gray-700 antialiased dark:bg-gray-950 dark:text-gray-300">
+
+<!-- Top bar -->
+<header class="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-950/90">
+    <div class="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
+        <a href="#top" class="flex items-baseline gap-1.5 whitespace-nowrap text-lg font-bold text-ink sm:text-xl dark:text-white">
+            <span class="font-black text-brand">DD</span> Dictation Daily
+            <span class="ml-1 hidden rounded-full bg-gray-100 px-2 sm:inline py-0.5 text-xs font-medium text-gray-500 dark:bg-gray-800 dark:text-gray-400">Guide</span>
+        </a>
+        <div class="ml-auto flex items-center gap-2">
+            <button id="menu-btn" class="rounded-lg p-2 text-gray-600 hover:bg-gray-100 lg:hidden dark:text-gray-300 dark:hover:bg-gray-800" aria-label="Open contents" aria-expanded="false" aria-controls="mobile-toc">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <a href="https://dictationdaily.com/videos" class="whitespace-nowrap rounded-md bg-brand px-3 py-2 text-sm font-medium uppercase tracking-wide text-white shadow hover:bg-brand-dark sm:px-4">Open<span class="hidden sm:inline"> the</span> app</a>
+        </div>
+    </div>
+    <nav id="mobile-toc" class="hidden border-t border-gray-200 px-4 py-3 lg:hidden dark:border-gray-800"></nav>
+</header>
+
+<!-- Hero -->
+<section id="top" class="relative overflow-hidden bg-gray-100 dark:bg-gray-900">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1.25fr] lg:py-20">
+        <div>
+            <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-brand">User guide</p>
+            <h1 class="text-4xl font-black leading-tight tracking-tight text-ink sm:text-5xl dark:text-white">Learn English by writing down what you hear.</h1>
+            <p class="mt-5 max-w-xl text-lg leading-relaxed">
+                Dictation Daily turns real YouTube videos into short listening exercises. You hear one sentence,
+                type it, and the app shows you exactly which word you got wrong. This guide walks through every screen.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="#quick-start" class="rounded-md bg-brand px-5 py-3 font-medium uppercase tracking-wide text-white shadow hover:bg-brand-dark">Start in 30 seconds</a>
+                <a href="#practising" class="rounded-md border border-gray-300 bg-white px-5 py-3 font-medium uppercase tracking-wide text-ink hover:border-gray-400 dark:border-gray-700 dark:bg-gray-800 dark:text-white">How a lesson works</a>
+            </div>
+            <dl class="mt-10 grid max-w-md grid-cols-3 gap-4 text-center">
+                <div><dt class="text-xs uppercase tracking-wide text-gray-500">Videos</dt><dd class="text-2xl font-bold text-ink dark:text-white">1,800+</dd></div>
+                <div><dt class="text-xs uppercase tracking-wide text-gray-500">Levels</dt><dd class="text-2xl font-bold text-ink dark:text-white">B1–C2</dd></div>
+                <div><dt class="text-xs uppercase tracking-wide text-gray-500">Account</dt><dd class="text-2xl font-bold text-ink dark:text-white">Optional</dd></div>
+            </dl>
+        </div>
+        <figure>
+            <img src="images/lesson-hint.webp" alt="A lesson: the YouTube video on the left, the learner's answer and a hint showing the wrong word on the right" class="shot" width="1440" height="900">
+            <figcaption class="caption">A lesson in progress: the hint shows that “ix” should be “is”.</figcaption>
+        </figure>
+    </div>
+</section>
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:grid lg:grid-cols-[220px_1fr] lg:gap-12">
+
+    <!-- Contents -->
+    <aside class="hidden lg:block">
+        <nav id="toc" class="sticky top-24 space-y-0.5 py-12" aria-label="Contents">
+            <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-widest text-gray-400">Contents</p>
+            <a class="toc-link" href="#quick-start">Quick start</a>
+            <a class="toc-link" href="#getting-started">1. Getting started</a>
+            <a class="toc-link" href="#finding-videos">2. Finding a video</a>
+            <a class="toc-link" href="#practising">3. Practising a lesson</a>
+            <a class="toc-link" href="#shortcuts">Keyboard shortcuts</a>
+            <a class="toc-link" href="#progress">4. Progress &amp; streaks</a>
+            <a class="toc-link" href="#account">5. Your account</a>
+            <a class="toc-link" href="#devices">6. Phones &amp; tablets</a>
+            <a class="toc-link" href="#faq">7. FAQ</a>
+        </nav>
+    </aside>
+
+    <main class="min-w-0 space-y-24 py-12">
+
+        <!-- Quick start -->
+        <section id="quick-start" class="scroll-mt-24">
+            <h2 class="section-title">The 30-second version</h2>
+            <p class="mt-3">No account needed. Open the app and:</p>
+            <ol class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">1</span><span>Go to <a class="font-medium text-brand underline" href="https://dictationdaily.com">dictationdaily.com</a> and press <span class="btn-ui">Start now</span>.</span></li>
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">2</span><span>Click any video in the library.</span></li>
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">3</span><span>Press <span class="btn-ui">Start</span> or <kbd class="kbd">Enter</kbd>. The first clip plays.</span></li>
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">4</span><span>Type what you heard and press <kbd class="kbd">Enter</kbd>.</span></li>
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">5</span><span>Fix the highlighted word and press <kbd class="kbd">Enter</kbd> again until you see <strong class="text-green-700 dark:text-green-400">You are correct!</strong></span></li>
+                <li class="flex gap-3 rounded-xl border border-gray-200 p-4 dark:border-gray-800"><span class="step">6</span><span><kbd class="kbd">Enter</kbd> goes to the next clip, <kbd class="kbd">Tab</kbd> replays it, <kbd class="kbd">Esc</kbd> skips it.</span></li>
+            </ol>
+            <p class="note mt-6">Sign in with Google if you want Dictation Daily to remember where you stopped, and to count your learning time and daily streak.</p>
+        </section>
+
+        <!-- 1. Getting started -->
+        <section id="getting-started" class="scroll-mt-24 space-y-8">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 1</p>
+                <h2 class="section-title">Getting started</h2>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <div class="rounded-xl bg-gray-50 p-5 dark:bg-gray-900">
+                    <h3 class="font-semibold text-ink dark:text-white">A browser</h3>
+                    <p class="mt-1 text-sm">A recent Chrome, Edge, Firefox or Safari. Phones and tablets work too, but a keyboard is much faster for typing answers and using shortcuts.</p>
+                </div>
+                <div class="rounded-xl bg-gray-50 p-5 dark:bg-gray-900">
+                    <h3 class="font-semibold text-ink dark:text-white">Sound</h3>
+                    <p class="mt-1 text-sm">Headphones are best. Videos play from YouTube, so YouTube must work on your network.</p>
+                </div>
+                <div class="rounded-xl bg-gray-50 p-5 dark:bg-gray-900">
+                    <h3 class="font-semibold text-ink dark:text-white">Optional: Google account</h3>
+                    <p class="mt-1 text-sm">Only needed if you want your progress saved. See <a href="#account" class="text-brand underline">Your account</a>.</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">The home page</h3>
+                <figure class="mt-4">
+                    <img src="images/home-hero.webp" alt="Dictation Daily home page with a Start Now button" class="shot" loading="lazy" width="1440" height="900">
+                    <figcaption class="caption">The home page. <span class="btn-ui">Start now</span> opens the video library; <span class="btn-ui">Sign in</span> is top right.</figcaption>
+                </figure>
+                <table class="tbl mt-6">
+                    <thead><tr><th>Part of the page</th><th>What it does</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="btn-ui">Start now</span></td><td>Opens the <a href="#finding-videos" class="text-brand underline">video library</a>.</td></tr>
+                        <tr><td><span class="btn-ui">Sign in</span></td><td>Signs you in with Google.</td></tr>
+                        <tr><td><strong class="text-brand">DD</strong> Dictation Daily logo</td><td>Returns to the home page (or the library, once you're signed in).</td></tr>
+                        <tr><td>Level tabs</td><td>Describe each CEFR level and show example videos. <strong>Explore …</strong> opens the library filtered to that level.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Choose your level</h3>
+                <p class="mt-2">Scroll down to <em>A Learning Experience Personalized</em>. Each tab explains what a level means and suggests four videos. Not sure where you are? Start at <strong>Intermediate</strong> and move up when the clips feel easy.</p>
+                <div class="mt-4" data-tabs>
+                    <div class="flex flex-wrap gap-2" role="tablist">
+                        <button role="tab" data-tab="0" class="tab-btn">B1 Intermediate</button>
+                        <button role="tab" data-tab="1" class="tab-btn">B2 Upper Intermediate</button>
+                        <button role="tab" data-tab="2" class="tab-btn">C1 Advanced</button>
+                        <button role="tab" data-tab="3" class="tab-btn">C2 Proficient</button>
+                    </div>
+                    <figure class="mt-4" data-panel="0"><img src="images/home-level-b1.webp" alt="B1 Intermediate tab: everyday and job-related speech, with four example videos" class="shot" loading="lazy" width="1440" height="820"></figure>
+                    <figure class="mt-4 hidden" data-panel="1"><img src="images/home-level-b2.webp" alt="B2 Upper Intermediate tab with example videos" class="shot" loading="lazy" width="1440" height="820"></figure>
+                    <figure class="mt-4 hidden" data-panel="2"><img src="images/home-level-c1.webp" alt="C1 Advanced tab: extended speech on abstract and complex topics" class="shot" loading="lazy" width="1440" height="820"></figure>
+                    <figure class="mt-4 hidden" data-panel="3"><img src="images/home-level-c2.webp" alt="C2 Proficient tab with example videos" class="shot" loading="lazy" width="1440" height="820"></figure>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">With or without an account</h3>
+                <p class="mt-2">You can browse and practise every lesson without signing in. Signing in only changes what gets remembered:</p>
+                <table class="tbl mt-4">
+                    <thead><tr><th></th><th>Signed out</th><th>Signed in</th></tr></thead>
+                    <tbody>
+                        <tr><td>Practise any lesson</td><td>✅</td><td>✅</td></tr>
+                        <tr><td>Lesson reopens where you stopped</td><td>❌ starts from clip 1</td><td>✅</td></tr>
+                        <tr><td>Red progress bar on thumbnails</td><td>❌</td><td>✅</td></tr>
+                        <tr><td>Learning time, active days, streaks</td><td>❌</td><td>✅</td></tr>
+                        <tr><td>My Learning page and menu</td><td>Empty</td><td>✅</td></tr>
+                        <tr><td>🔥 Streak badge in the top bar</td><td>❌</td><td>✅</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. Finding a video -->
+        <section id="finding-videos" class="scroll-mt-24 space-y-8">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 2</p>
+                <h2 class="section-title">Finding a video</h2>
+                <p class="mt-3">The library is at <a class="font-medium text-brand underline" href="https://dictationdaily.com/videos">dictationdaily.com/videos</a>. Open it with <span class="btn-ui">Start now</span>, or by clicking the logo on any page.</p>
+            </div>
+
+            <figure>
+                <img src="images/library.webp" alt="The video library: filters on the left, Latest / Popular / Slow buttons, and a grid of video cards" class="shot" loading="lazy" width="1440" height="900">
+                <figcaption class="caption">The video library. Filters on the left, sort buttons on top.</figcaption>
+            </figure>
+
+            <div class="grid items-center gap-8 md:grid-cols-[minmax(0,300px)_1fr]">
+                <figure>
+                    <img src="images/library-card.webp" alt="One video card" class="shot" loading="lazy" width="356" height="297">
+                    <figcaption class="caption">A video card</figcaption>
+                </figure>
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Reading a video card</h3>
+                    <ul class="mt-3 list-disc space-y-1.5 pl-5">
+                        <li>The <strong>thumbnail</strong>, with the video's <strong>length</strong> in the corner.</li>
+                        <li>A <strong class="text-brand">red bar</strong> under the thumbnail when you're signed in and have started the video. Its length shows how far you've got.</li>
+                        <li>The <strong>title</strong>, the <strong>channel</strong>, the YouTube <strong>view count</strong> and <strong>how long ago</strong> it was published.</li>
+                    </ul>
+                    <p class="mt-3">Click anywhere on a card to open the lesson.</p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Sorting</h3>
+                <p class="mt-2">The three buttons above the grid change the order:</p>
+                <div class="mt-4" data-tabs>
+                    <div class="flex flex-wrap gap-2" role="tablist">
+                        <button role="tab" data-tab="0" class="tab-btn">Latest</button>
+                        <button role="tab" data-tab="1" class="tab-btn">Popular</button>
+                        <button role="tab" data-tab="2" class="tab-btn">Slow</button>
+                    </div>
+                    <figure class="mt-4" data-panel="0"><img src="images/library.webp" alt="Library sorted by Latest" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><strong>Latest</strong> (default): most recently published on YouTube first.</figcaption></figure>
+                    <figure class="mt-4 hidden" data-panel="1"><img src="images/library-sort-popular.webp" alt="Library sorted by Popular" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><strong>Popular</strong>: most YouTube views first.</figcaption></figure>
+                    <figure class="mt-4 hidden" data-panel="2"><img src="images/library-sort-slow.webp" alt="Library sorted by Slow" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><strong>Slow</strong>: slowest speakers first (fewest words per minute). A great place to start if fast speech is hard for you.</figcaption></figure>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Filtering by level</h3>
+                <p class="mt-2">Click a level in the left panel to show only videos at that <a class="text-brand underline" href="https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale">CEFR level</a>. Click it again to turn it off.</p>
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    <figure><img src="images/library-level-b1.webp" alt="Library filtered to B1 Intermediate" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">B1 – Intermediate</figcaption></figure>
+                    <figure><img src="images/library-level-b2.webp" alt="Library filtered to B2 Upper Intermediate" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">B2 – Upper Intermediate</figcaption></figure>
+                    <figure><img src="images/library-level-c1.webp" alt="Library filtered to C1 Advanced" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">C1 – Advanced</figcaption></figure>
+                    <figure><img src="images/library-level-c2.webp" alt="Library filtered to C2 Proficient" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">C2 – Proficient</figcaption></figure>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Filtering by length, and combining filters</h3>
+                <p class="mt-2"><strong>Duration</strong> has three options: <em>Under 4 minutes</em>, <em>4–20 minutes</em> and <em>Over 20 minutes</em> (the full YouTube video length). You can combine one sort, one level and one duration. Click the <strong>Level</strong> or <strong>Duration</strong> heading to collapse that group.</p>
+                <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                    <figure><img src="images/library-combined.webp" alt="Library sorted by Slow, filtered to B1 and Under 4 minutes" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">Slow + B1 + Under 4 minutes: an easy first session.</figcaption></figure>
+                    <figure><img src="images/library-duration-long.webp" alt="Library filtered to videos over 20 minutes" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">Over 20 minutes: for long practice sessions.</figcaption></figure>
+                </div>
+            </div>
+
+            <div class="grid items-center gap-8 md:grid-cols-2">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Loading more videos</h3>
+                    <p class="mt-2">The library shows 24 videos at a time. Scroll to the bottom and press <span class="btn-ui">Load more</span> for the next 24. The button disappears when there are no more videos for your filters.</p>
+                    <p class="mt-2 text-sm">If the list can't load, you'll see <em>“Couldn't load videos. Please try again.”</em> with a <span class="btn-ui">Retry</span> button.</p>
+                </div>
+                <figure><img src="images/library-load-more.webp" alt="The Load More button at the bottom of the library" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Bookmarking or sharing a list</h3>
+                <p class="mt-2">Your sort and filters are kept in the address bar, so you can bookmark a list or send it to a friend. The browser's back button steps through your filter changes.</p>
+                <table class="tbl mt-4">
+                    <thead><tr><th>Address</th><th>Shows</th></tr></thead>
+                    <tbody class="font-mono text-[0.85em]">
+                        <tr><td><a class="text-brand underline" href="https://dictationdaily.com/videos?sort=Popular">/videos?sort=Popular</a></td><td class="font-sans">Most viewed first</td></tr>
+                        <tr><td><a class="text-brand underline" href="https://dictationdaily.com/videos?level=B1">/videos?level=B1</a></td><td class="font-sans">Intermediate videos</td></tr>
+                        <tr><td><a class="text-brand underline" href="https://dictationdaily.com/videos?sort=Slow&amp;duration=under-4-minutes">/videos?sort=Slow&amp;duration=under-4-minutes</a></td><td class="font-sans">Short videos with slow speech</td></tr>
+                        <tr><td><a class="text-brand underline" href="https://dictationdaily.com/videos?duration=over-20-minutes">/videos?duration=over-20-minutes</a></td><td class="font-sans">Long videos</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Practising -->
+        <section id="practising" class="scroll-mt-24 space-y-10">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 3</p>
+                <h2 class="section-title">Practising a lesson</h2>
+                <p class="mt-3">Every video is split into short <strong>clips</strong>, usually one sentence or part of a sentence. You listen to a clip, write it down, check it, and move on. A 2-minute talk has about 45 clips; a 15-minute talk about 200. The lesson plays the <strong>whole video in order</strong>, so you never miss anything between two clips.</p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 text-sm font-medium">
+                <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Start</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Listen</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Type</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Check</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-brand px-3 py-1 text-white">Fix the hint</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-green-700 px-3 py-1 text-white">Correct!</span><span aria-hidden="true">→</span>
+                <span class="rounded-full bg-ink px-3 py-1 text-white dark:bg-gray-700">Next clip</span>
+            </div>
+
+            <!-- Lesson screen -->
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">The lesson screen</h3>
+                <figure class="mt-4">
+                    <img src="images/lesson-intro.webp" alt="Lesson start screen: YouTube player on the left, instructions and a Start button on the right" class="shot" loading="lazy" width="1440" height="900">
+                    <figcaption class="caption">Before you start: the video on the left, a short reminder of how it works on the right.</figcaption>
+                </figure>
+                <ul class="mt-4 list-disc space-y-1 pl-5">
+                    <li><strong>Top bar:</strong> the logo (back to the library) and the video title.</li>
+                    <li><strong>Left:</strong> the YouTube player.</li>
+                    <li><strong>Right:</strong> the dictation area.</li>
+                    <li><strong>Bottom bar:</strong> your position in the lesson and <span class="btn-ui">Close</span>.</li>
+                </ul>
+                <p class="mt-3">Press <span class="btn-ui">Start</span> or <kbd class="kbd">Enter</kbd>. Pressing play on the video also starts the lesson.</p>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <div class="flex items-center gap-3"><span class="step">1</span><h3 class="text-xl font-bold text-ink dark:text-white">Listen</h3></div>
+                    <p class="mt-3">The clip plays and the video pauses at its end. If you don't answer, it <strong>repeats automatically</strong>, up to 3 times in total, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd> to hear it again whenever you like.</p>
+                    <p class="mt-3">The thin bar under the text box fills up as the clip plays, so you can see how much of the sentence is left.</p>
+                    <p class="note mt-4">YouTube subtitles are switched off during a lesson, so you can't read the answer off the video. If you seek outside the current clip, the video jumps back to its start.</p>
+                </div>
+                <figure><img src="images/lesson-clip-playing.webp" alt="A clip is playing; the empty text box says Type what you hear" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">The first clip is playing. The bar under the box shows its progress.</figcaption></figure>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <div class="flex items-center gap-3"><span class="step">2</span><h3 class="text-xl font-bold text-ink dark:text-white">Type what you hear</h3></div>
+                    <p class="mt-3">Type the clip into the box. You don't need to worry about:</p>
+                    <ul class="mt-2 list-disc space-y-1 pl-5">
+                        <li><strong>Capital letters</strong>: <code class="font-mono">my contention</code> matches <code class="font-mono">My contention</code>.</li>
+                        <li><strong>Punctuation</strong>: commas, full stops, question marks, quotes, and apostrophes or hyphens inside words (<code class="font-mono">dont</code> matches <code class="font-mono">don't</code>).</li>
+                        <li><strong>Symbols on their own</strong>, such as <code class="font-mono">--</code>.</li>
+                    </ul>
+                    <p class="mt-3">Spelling must match the transcript, including how numbers are written: if it says <code class="font-mono">30s</code>, then <code class="font-mono">thirties</code> is a different word.</p>
+                </div>
+                <figure><img src="images/lesson-typing.webp" alt="The learner has typed part of the sentence into the box" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">Type even if you're unsure. The check will tell you what's wrong.</figcaption></figure>
+            </div>
+
+            <!-- Just listen -->
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <div class="flex items-center gap-3"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-sm dark:bg-gray-700" aria-hidden="true">🎧</span><h3 class="text-xl font-bold text-ink dark:text-white">Parts you just listen to</h3></div>
+                    <p class="mt-3">Some parts of a video aren't exercises: music, very short lines, another language, people talking over each other, or speech too fast or unclear to type.</p>
+                    <p class="mt-3">They show <strong>Just listen</strong> and the transcript if there is one. They play <strong>once</strong>, then the next exercise starts by itself. <span class="btn-ui">Replay</span> (<kbd class="kbd">Tab</kbd>) plays the part again. The bottom bar says <strong>Listening</strong> instead of an exercise number.</p>
+                </div>
+                <figure><img src="images/lesson-listen.webp" alt="A Just listen part showing its transcript" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">A listen-only part. Nothing to type here.</figcaption></figure>
+            </div>
+
+            <!-- Step 3 -->
+            <div>
+                <div class="flex items-center gap-3"><span class="step">3</span><h3 class="text-xl font-bold text-ink dark:text-white">Check, and read the hint</h3></div>
+                <p class="mt-3">Press <kbd class="kbd">Enter</kbd> or <span class="btn-ui">Check</span>. If something is wrong, the app finds the <strong>first</strong> word that doesn't match:</p>
+
+                <div class="mt-5 grid items-center gap-6 md:grid-cols-[minmax(0,380px)_1fr]">
+                    <figure><img src="images/hint-closeup.webp" alt="Close-up: Matching 2/8 words. Hint: My contention ix is all kids" class="w-full cursor-zoom-in rounded-xl border border-gray-200 bg-white p-3 shadow dark:border-gray-700" loading="lazy" width="364" height="65"></figure>
+                    <ul class="space-y-2">
+                        <li><strong>Matching 2/8 words</strong>: how many words in a row you got right from the start, out of the words in the clip.</li>
+                        <li>A <span class="font-mono text-red-600 line-through">red crossed-out</span> word is one you typed that is wrong or extra.</li>
+                        <li>A <strong class="font-mono text-green-700 dark:text-green-400">bold green</strong> word is what should be there.</li>
+                    </ul>
+                </div>
+
+                <div class="mt-6 grid gap-4 md:grid-cols-2">
+                    <figure><img src="images/lesson-hint.webp" alt="Hint for a wrong word: ix should be is; ix is selected in the text box" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><strong>Wrong word:</strong> it's selected in the box, so you can type straight over it.</figcaption></figure>
+                    <figure><img src="images/lesson-hint-missing.webp" alt="Hint for a missing word: have is shown in green after all kids" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><strong>Missing word:</strong> 5/8 match; the cursor is placed where “have” belongs.</figcaption></figure>
+                </div>
+                <p class="mt-4">The words before the mistake are also rewritten in the transcript's spelling. Fix the word and press <kbd class="kbd">Enter</kbd> again. Only the first mistake is shown each time, so a clip with three mistakes takes at least three checks.</p>
+                <p class="note mt-4">Stuck? <span class="btn-ui">Replay</span> (<kbd class="kbd">Tab</kbd>) to listen again, or <span class="btn-ui">Skip</span> (<kbd class="kbd">Esc</kbd>) to move on without answering. Skipped clips don't count as done.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <div class="flex items-center gap-3"><span class="flex h-8 w-8 items-center justify-center rounded-full bg-green-700 text-sm font-bold text-white">4</span><h3 class="text-xl font-bold text-ink dark:text-white">You are correct!</h3></div>
+                    <p class="mt-3">You'll see the full transcript of the clip. As the video plays, each word is highlighted as it's spoken, which helps you hear how words run together.</p>
+                    <ul class="mt-3 space-y-1.5">
+                        <li><span class="rounded bg-green-700 px-1.5 py-0.5 text-[0.8em] font-semibold uppercase text-white">Continue</span> or <kbd class="kbd">Enter</kbd>: next clip.</li>
+                        <li><span class="btn-ui">Undo</span>: clear this clip and do it again.</li>
+                        <li><span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd>: hear it again while following the words.</li>
+                    </ul>
+                </div>
+                <figure><img src="images/lesson-correct.webp" alt="You are correct! with the full sentence and Continue and Undo buttons" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">The answer is right. The full sentence appears, with <strong>Continue</strong>.</figcaption></figure>
+            </div>
+
+            <!-- Moving between clips -->
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">Moving between clips</h3>
+                <figure class="mt-4"><img src="images/bottom-bar.webp" alt="The bottom bar: back arrow, Exercise 2/45, forward arrow, Close" class="w-full cursor-zoom-in rounded-xl shadow" loading="lazy" width="1440" height="64"><figcaption class="caption">The bottom bar. The red line above it shows how far into the video you are.</figcaption></figure>
+                <table class="tbl mt-4">
+                    <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+                    <tbody>
+                        <tr><td class="text-lg">◀</td><td>Back to the previous clip or listen part. Clips you've answered show their transcript; press <span class="btn-ui">Undo</span> to try one again.</td></tr>
+                        <tr><td class="text-lg">▶</td><td>Forward. Only available once the current clip is answered correctly, or the listen part has played.</td></tr>
+                        <tr><td><span class="btn-ui">Close</span></td><td>Leave the lesson and go back to where you came from.</td></tr>
+                    </tbody>
+                </table>
+                <div class="mt-6 grid gap-4 md:grid-cols-3">
+                    <figure><img src="images/lesson-next-clip.webp" alt="Exercise 2 of 45 is ready for typing" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">After <strong>Continue</strong>: exercise 2/45 plays.</figcaption></figure>
+                    <figure><img src="images/lesson-skipped.webp" alt="After skipping, exercise 3 of 45 with an empty box" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption"><kbd class="kbd">Esc</kbd> skipped clip 2; now on 3/45.</figcaption></figure>
+                    <figure><img src="images/lesson-back.webp" alt="Back on exercise 1, showing its transcript and an Undo button" class="shot" loading="lazy" width="1440" height="900"><figcaption class="caption">◀ back to clip 1: its answer and <strong>Undo</strong>.</figcaption></figure>
+                </div>
+            </div>
+
+            <!-- Shortcuts -->
+            <div id="shortcuts" class="scroll-mt-24 rounded-2xl bg-ink p-6 text-gray-200 sm:p-8 dark:bg-gray-900">
+                <h3 class="text-xl font-bold text-white">Keyboard shortcuts</h3>
+                <p class="mt-1 text-sm text-gray-400">The fastest way to practise. Keep your hands on the keyboard.</p>
+                <div class="mt-5 overflow-x-auto">
+                    <table class="w-full min-w-[420px] text-left text-sm">
+                        <thead class="text-gray-400"><tr><th class="py-2 pr-4 font-medium">Key</th><th class="py-2 pr-4 font-medium">While typing</th><th class="py-2 font-medium">After a correct answer</th></tr></thead>
+                        <tbody class="divide-y divide-white/10">
+                            <tr><td class="py-3 pr-4"><kbd class="kbd">Enter</kbd></td><td class="py-3 pr-4">Check your answer</td><td class="py-3">Continue to the next clip</td></tr>
+                            <tr><td class="py-3 pr-4"><kbd class="kbd">Tab</kbd></td><td class="py-3 pr-4">Replay the clip</td><td class="py-3">Replay the clip</td></tr>
+                            <tr><td class="py-3 pr-4"><kbd class="kbd">Esc</kbd></td><td class="py-3 pr-4">Skip to the next clip</td><td class="py-3">Go to the next clip</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-4 text-sm text-gray-400">Before the lesson starts, <kbd class="kbd">Enter</kbd> presses <strong class="text-gray-200">Start</strong>. If <kbd class="kbd">Tab</kbd> doesn't replay, click inside the text box first.</p>
+            </div>
+
+            <!-- Finishing / no transcript / resume -->
+            <div class="grid gap-8 md:grid-cols-2">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Finishing a lesson</h3>
+                    <p class="mt-2">After the last clip, the rest of the video plays as a listen part, then you'll see a congratulations screen. <span class="btn-ui">Back to browse</span> returns to the library; <span class="btn-ui">Redo the lesson</span> starts again from clip 1.</p>
+                    <figure class="mt-4"><img src="images/lesson-finished.webp" alt="Congratulations screen with Back to Browse and Redo the Lesson buttons" class="shot" loading="lazy" width="1440" height="900"></figure>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Videos without exercises</h3>
+                    <p class="mt-2">A few videos don't have a transcript yet. They open and play, but instead of the dictation area you'll see <em>“Dictation exercises for this video are not available yet”</em>. Pick another video.</p>
+                    <figure class="mt-4"><img src="images/lesson-no-transcript.webp" alt="A lesson page saying exercises are not available yet" class="shot" loading="lazy" width="1440" height="900"></figure>
+                </div>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Picking up where you left off</h3>
+                    <p class="mt-2">When you're signed in, every correct answer saves your position. Next time you open the video, the lesson starts right after the last clip you got right.</p>
+                    <p class="mt-2">Here the learner had already done 96 clips, so <span class="btn-ui">Start</span> goes straight to clip 97.</p>
+                    <p class="mt-2 text-sm">Signed out, every lesson starts from clip 1.</p>
+                </div>
+                <figure><img src="images/lesson-resumed.webp" alt="A resumed lesson starting at exercise 97" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+        </section>
+
+        <!-- 4. Progress -->
+        <section id="progress" class="scroll-mt-24 space-y-8">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 4</p>
+                <h2 class="section-title">Progress, learning time and streaks</h2>
+                <p class="mt-3">Progress tracking needs you to be <a href="#account" class="text-brand underline">signed in</a>. It's saved to your account, so it's the same on every device.</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">What gets saved, and when</h3>
+                <p class="mt-2">Something is saved each time you <strong>answer a clip correctly</strong>. Skipping, replaying or just watching saves nothing.</p>
+                <table class="tbl mt-4">
+                    <thead><tr><th>Saved</th><th>Used for</th></tr></thead>
+                    <tbody>
+                        <tr><td>Your position in that video</td><td>Resuming the lesson, the red bar on thumbnails, My Learning</td></tr>
+                        <tr><td>The date and the time you spent on the clip</td><td>Learning time, active days, streaks</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">The top bar when signed in</h3>
+                <figure class="mt-4"><img src="images/signed-in-library.webp" alt="Library top bar with a flame streak badge, a My Learning button and an avatar" class="shot" loading="lazy" width="1440" height="900"></figure>
+                <ul class="mt-4 grid gap-3 sm:grid-cols-3">
+                    <li class="rounded-xl bg-gray-50 p-4 dark:bg-gray-900"><strong class="text-ink dark:text-white">🔥 Flame badge</strong><br><span class="text-sm">Your current streak in days.</span></li>
+                    <li class="rounded-xl bg-gray-50 p-4 dark:bg-gray-900"><strong class="text-ink dark:text-white">My Learning</strong><br><span class="text-sm">A quick menu of your recent videos.</span></li>
+                    <li class="rounded-xl bg-gray-50 p-4 dark:bg-gray-900"><strong class="text-ink dark:text-white">Your avatar</strong><br><span class="text-sm">The account menu (sign out).</span></li>
+                </ul>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">The My Learning menu</h3>
+                    <p class="mt-2">Click <strong>My Learning</strong> to see the 4 videos you practised most recently, each with a red progress bar. Click one to continue it, or <span class="btn-ui">Go to My Learning</span> for the full page.</p>
+                </div>
+                <figure><img src="images/my-learning-menu.webp" alt="My Learning dropdown listing four recent videos" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">The My Learning page</h3>
+                <p class="mt-2">Open it from the menu, or go to <a class="text-brand underline" href="https://dictationdaily.com/my-learning">dictationdaily.com/my-learning</a>.</p>
+                <figure class="mt-4"><img src="images/my-learning.webp" alt="My Learning Journey: 1h 9m learning time, 30 active days, current streak 12, longest streak 18, and three videos in progress" class="shot" loading="lazy" width="1440" height="900"></figure>
+                <div class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                    <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="text-2xl font-bold text-ink dark:text-white">1h 9m</p><p class="font-medium">Total Learning Time</p><p class="mt-1 text-sm">Time spent on clips you answered correctly this year.</p></div>
+                    <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="text-2xl font-bold text-ink dark:text-white">30</p><p class="font-medium">active days</p><p class="mt-1 text-sm">Days this year with at least one correct clip.</p></div>
+                    <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="text-2xl font-bold text-ink dark:text-white">12</p><p class="font-medium">Current Streak</p><p class="mt-1 text-sm">Days in a row up to today, with the span below it (most recent first).</p></div>
+                    <div class="rounded-xl border border-gray-200 p-4 dark:border-gray-800"><p class="text-2xl font-bold text-ink dark:text-white">18</p><p class="font-medium">Longest Streak</p><p class="mt-1 text-sm">Your best run this year, with its first and last day.</p></div>
+                </div>
+                <p class="mt-4">The statistics restart on 1 January. Below them are your videos, most recently practised first; click one to continue. The page shows 24 at a time, with <span class="btn-ui">Load more</span> for the rest.</p>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="rounded-2xl bg-gray-50 p-6 dark:bg-gray-900">
+                    <h3 class="text-lg font-bold text-ink dark:text-white">⏱ How learning time is counted</h3>
+                    <p class="mt-2 text-sm">For each clip you answer correctly, the app counts from when the clip came up to the <strong>last key you pressed</strong> before the correct check.</p>
+                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
+                        <li>Listening and typing count.</li>
+                        <li>Time after your last keystroke doesn't.</li>
+                        <li>Skipped clips don't count.</li>
+                    </ul>
+                    <p class="mt-2 text-sm">So it measures active practice, not time with the page open.</p>
+                </div>
+                <div class="rounded-2xl bg-gray-50 p-6 dark:bg-gray-900">
+                    <h3 class="text-lg font-bold text-ink dark:text-white">🔥 How streaks work</h3>
+                    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm">
+                        <li>One correct clip is enough to count a day.</li>
+                        <li>Your streak isn't lost at midnight: it keeps yesterday's number until the end of today, and goes up when you practise today.</li>
+                        <li><strong>Days are counted in UTC</strong>, not your local time. In Vietnam (UTC+7) a new day starts at 07:00; in New York (UTC−5) at 19:00 the evening before.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Signed out?</h3>
+                    <p class="mt-2">My Learning shows zeros and an empty list. Sign in with <span class="btn-ui">Sign in</span> to start tracking. Practice done before signing in isn't saved.</p>
+                </div>
+                <figure><img src="images/my-learning-signed-out.webp" alt="My Learning page when signed out, showing zeros" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+        </section>
+
+        <!-- 5. Account -->
+        <section id="account" class="scroll-mt-24 space-y-8">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 5</p>
+                <h2 class="section-title">Your account</h2>
+                <p class="mt-3">Dictation Daily uses <strong>Sign in with Google</strong>. There's no separate password.</p>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Signing in</h3>
+                    <ol class="mt-3 space-y-3">
+                        <li class="flex gap-3"><span class="step">1</span><span>Click <span class="btn-ui">Sign in</span> in the top right of any page.</span></li>
+                        <li class="flex gap-3"><span class="step">2</span><span>Choose your Google account (or enter your Google email and password).</span></li>
+                        <li class="flex gap-3"><span class="step">3</span><span>Allow Dictation Daily to see your name, email address and profile picture.</span></li>
+                        <li class="flex gap-3"><span class="step">4</span><span>You're back on Dictation Daily with your picture in the top-right corner.</span></li>
+                    </ol>
+                    <p class="mt-4 text-sm">You stay signed in on that browser for up to 30 days.</p>
+                </div>
+                <figure><img src="images/google-signin.webp" alt="Google's Sign in with Google page for Dictation Daily" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1fr_1.4fr]">
+                <div>
+                    <h3 class="text-xl font-bold text-ink dark:text-white">Signing out</h3>
+                    <p class="mt-2">Click your <strong>avatar</strong>. The menu shows your name and email. Click <span class="btn-ui">Sign out</span>. Signing out on one browser doesn't sign you out on others.</p>
+                </div>
+                <figure><img src="images/account-menu.webp" alt="Account menu with name, email and a Sign Out button" class="shot" loading="lazy" width="1440" height="900"></figure>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold text-ink dark:text-white">What is stored about you</h3>
+                <table class="tbl mt-4">
+                    <thead><tr><th>Data</th><th>Why</th></tr></thead>
+                    <tbody>
+                        <tr><td>Name, email address and profile picture URL (from Google)</td><td>To show who is signed in</td></tr>
+                        <tr><td>For each video you've practised: your position and when you last practised it</td><td>Resuming lessons, My Learning</td></tr>
+                        <tr><td>For each clip you answered correctly: the date and the seconds you spent on it</td><td>Learning time and streaks</td></tr>
+                        <tr><td>Your longest streak</td><td>Shown on My Learning</td></tr>
+                    </tbody>
+                </table>
+                <p class="note mt-4">Dictation Daily never sees your Google password and can't access your Gmail, Drive or other Google data. The text you type in lessons is checked in your browser and is <strong>not</strong> sent or stored. Progress is linked to your email address, so another Google account gets a separate, empty history.</p>
+            </div>
+        </section>
+
+        <!-- 6. Devices -->
+        <section id="devices" class="scroll-mt-24 space-y-8">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 6</p>
+                <h2 class="section-title">Phones and tablets</h2>
+                <p class="mt-3">Everything works on a touch screen. The video sits above the dictation area and the bottom bar stays at the bottom. The text box isn't selected automatically, so your keyboard doesn't keep popping up: <strong>tap the box</strong> to type, and use the <span class="btn-ui">Check</span>, <span class="btn-ui">Replay</span> and <span class="btn-ui">Skip</span> buttons instead of shortcuts.</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+                <figure><img src="images/mobile-home.webp" alt="Home page on a phone" class="phone" loading="lazy" width="780" height="1688"><figcaption class="caption">Home</figcaption></figure>
+                <figure><img src="images/mobile-library.webp" alt="Library on a phone: one column of videos" class="phone" loading="lazy" width="780" height="1688"><figcaption class="caption">Library</figcaption></figure>
+                <figure><img src="images/mobile-lesson-intro.webp" alt="Lesson start screen on a phone" class="phone" loading="lazy" width="780" height="1688"><figcaption class="caption">Lesson start</figcaption></figure>
+                <figure><img src="images/mobile-lesson.webp" alt="Hint on a phone" class="phone" loading="lazy" width="780" height="1688"><figcaption class="caption">Hint</figcaption></figure>
+                <figure><img src="images/mobile-lesson-correct.webp" alt="Correct answer on a phone" class="phone" loading="lazy" width="780" height="1688"><figcaption class="caption">Correct</figcaption></figure>
+            </div>
+
+            <p class="note">On a phone the filter panel is hidden; sorting still works. To filter by level or duration, use an <a href="#finding-videos" class="underline">address from the table above</a>, such as <code class="font-mono">/videos?level=B1</code>.</p>
+
+            <div class="grid gap-6 sm:grid-cols-2">
+                <figure><img src="images/tablet-library.webp" alt="Library on a tablet: two columns" class="mx-auto w-full max-w-sm cursor-zoom-in rounded-2xl border-[6px] border-ink shadow-xl dark:border-gray-600" loading="lazy" width="820" height="1180"><figcaption class="caption">Tablet: library</figcaption></figure>
+                <figure><img src="images/tablet-lesson.webp" alt="Lesson on a tablet" class="mx-auto w-full max-w-sm cursor-zoom-in rounded-2xl border-[6px] border-ink shadow-xl dark:border-gray-600" loading="lazy" width="820" height="1180"><figcaption class="caption">Tablet: lesson</figcaption></figure>
+            </div>
+        </section>
+
+        <!-- 7. FAQ -->
+        <section id="faq" class="scroll-mt-24 space-y-6">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-widest text-brand">Part 7</p>
+                <h2 class="section-title">FAQ and troubleshooting</h2>
+            </div>
+
+            <div class="divide-y divide-gray-200 rounded-2xl border border-gray-200 dark:divide-gray-800 dark:border-gray-800">
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink marker:hidden dark:text-white">My answer is right but it says it's wrong. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <div class="mt-3 text-sm">
+                        <p>Look at the hint: the green word is what the transcript expects. Common causes:</p>
+                        <ul class="mt-2 list-disc space-y-1 pl-5">
+                            <li>numbers written differently (<code>30s</code> vs <code>thirties</code>, <code>10</code> vs <code>ten</code>)</li>
+                            <li>British vs American spelling (<code>colour</code> / <code>color</code>)</li>
+                            <li>filler words the speaker really says (<code>um</code>, <code>so</code>, <code>like</code>)</li>
+                            <li>two words typed as one, or one as two (<code>every day</code> vs <code>everyday</code>)</li>
+                        </ul>
+                        <p class="mt-2">Capital letters and punctuation never matter.</p>
+                    </div>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">The transcript itself has a mistake. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Transcripts are generated automatically from the audio, so they're occasionally wrong. Type what the hint says, or press <span class="btn-ui">Skip</span> (<kbd class="kbd">Esc</kbd>).</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">The clip stopped repeating. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Each clip plays up to 3 times, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd>.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">There's no sound, or the video won't play. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Check that YouTube works in your browser and the tab isn't muted. Some browsers block sound until you've clicked on the page: press <span class="btn-ui">Start</span> with the mouse once. If the video says <em>“This video is unavailable”</em>, its owner removed it or blocked embedding; pick another.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">The ▶ button at the bottom is greyed out. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">You can only move forward after answering the current clip correctly. Use <span class="btn-ui">Skip</span> (<kbd class="kbd">Esc</kbd>) to move on without answering.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">My lesson started from clip 1 again. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Progress is only saved when you're signed in, and only when you answer a clip correctly. Check that your avatar is in the top right. Skipped clips don't move your saved position.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">My streak is lower than I expected. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Streak days are counted in UTC, not your local time (see <a href="#progress" class="text-brand underline">How streaks work</a>). A day only counts if you answered at least one clip correctly.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">My Learning is empty after signing in. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Progress belongs to the email you signed in with. Sign out and sign in with your usual Google account.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">“Something went wrong” or “Couldn't load videos”. <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Press <span class="btn-ui">Try again</span> or <span class="btn-ui">Retry</span>; if that doesn't help, reload the page. It's usually a short network problem.</p>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">“This page could not be found.” (404) <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <div class="mt-3 text-sm">
+                        <p>The address is wrong, or the video was removed from the catalogue. Go to <a class="text-brand underline" href="https://dictationdaily.com/videos">dictationdaily.com/videos</a>.</p>
+                        <img src="images/not-found.webp" alt="404 page" class="shot mt-3 max-w-xl" loading="lazy" width="1440" height="900">
+                    </div>
+                </details>
+                <details class="group p-5">
+                    <summary class="cursor-pointer list-none font-semibold text-ink dark:text-white">Can I sign in without Google? <span class="float-right text-brand transition group-open:rotate-45">+</span></summary>
+                    <p class="mt-3 text-sm">Not at the moment. You can still practise without signing in; your progress just won't be saved. If Google shows an error, try a private/incognito window, and report the exact message if it keeps happening.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="rounded-3xl bg-brand px-6 py-12 text-center text-white sm:px-12">
+            <h2 class="text-3xl font-black tracking-tight">Ready for your first clip?</h2>
+            <p class="mx-auto mt-3 max-w-xl text-red-100">Start with a <strong>Slow</strong>, short video and practise a little every day. Ten minutes a day beats an hour once a week.</p>
+            <a href="https://dictationdaily.com/videos?sort=Slow&amp;duration=under-4-minutes" class="mt-6 inline-block rounded-md bg-white px-6 py-3 font-medium uppercase tracking-wide text-brand shadow hover:bg-red-50">Find an easy video</a>
+        </section>
+    </main>
+</div>
+
+<footer class="border-t border-gray-200 py-8 text-center text-sm text-gray-500 dark:border-gray-800">
+    <p><span class="font-bold text-brand">DD</span> Dictation Daily user guide · <a class="underline hover:text-brand" href="https://dictationdaily.com">dictationdaily.com</a></p>
+    <p class="mt-1">Screenshots taken from the live app. Videos belong to their YouTube channels.</p>
+</footer>
+
+<!-- Lightbox -->
+<div id="lightbox" class="fixed inset-0 z-50 hidden cursor-zoom-out items-center justify-center bg-black/85 p-4" role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
+    <img id="lightbox-img" alt="" class="max-h-full max-w-full rounded-lg shadow-2xl">
+</div>
+
+<script>
+    // Tabbed screenshot switchers
+    document.querySelectorAll('[data-tabs]').forEach((group) => {
+        const buttons = group.querySelectorAll('[data-tab]');
+        const panels = group.querySelectorAll('[data-panel]');
+        const select = (i) => {
+            buttons.forEach((b) => {
+                const on = b.dataset.tab === String(i);
+                b.setAttribute('aria-selected', on);
+                b.className = 'tab-btn rounded-full px-4 py-1.5 text-sm font-medium transition ' +
+                    (on ? 'bg-ink text-white dark:bg-white dark:text-ink'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300');
+            });
+            panels.forEach((p) => p.classList.toggle('hidden', p.dataset.panel !== String(i)));
+        };
+        buttons.forEach((b) => b.addEventListener('click', () => select(b.dataset.tab)));
+        select(0);
+    });
+
+    // Click any screenshot to enlarge it
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightbox-img');
+    const close = () => { box.classList.add('hidden'); box.classList.remove('flex'); };
+    document.querySelectorAll('main img, #top img').forEach((img) => {
+        img.addEventListener('click', () => {
+            boxImg.src = img.src;
+            boxImg.alt = img.alt;
+            box.classList.remove('hidden');
+            box.classList.add('flex');
+        });
+    });
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+
+    // Contents: copy into the phone menu, highlight the section in view
+    const toc = document.getElementById('toc');
+    const mobileToc = document.getElementById('mobile-toc');
+    const menuBtn = document.getElementById('menu-btn');
+    mobileToc.innerHTML = toc.innerHTML;
+    menuBtn.addEventListener('click', () => {
+        const open = mobileToc.classList.toggle('hidden') === false;
+        menuBtn.setAttribute('aria-expanded', open);
+    });
+    mobileToc.addEventListener('click', (e) => e.target.closest('a') && mobileToc.classList.add('hidden'));
+    // The active entry is the last section whose top has passed 30% of the viewport
+    const links = [...toc.querySelectorAll('a')];
+    const targets = links.map((a) => document.querySelector(a.getAttribute('href')));
+    let ticking = false;
+    const highlight = () => {
+        ticking = false;
+        const line = window.innerHeight * 0.3;
+        let current = -1;
+        targets.forEach((t, i) => { if (t && t.getBoundingClientRect().top <= line) current = i; });
+        links.forEach((a, i) => a.classList.toggle('active', i === current));
+    };
+    window.addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(highlight); }
+    }, { passive: true });
+    highlight();
+</script>
+</body>
+</html>
