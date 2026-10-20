@@ -1,32 +1,30 @@
 <!-- {"title": "Read the hint", "description": "Red words are wrong. Green words are right. Fix one word at a time.", "time": "1 minute"} -->
 <tour>
-    <step img="lesson-hint" x="59" y="53.3" title="How many words are right">“Matching 2/8 words” means: the first 2 words are right. The sentence has 8 words.</step>
-    <step img="lesson-hint" x="67.7" y="57.7" title="Red = wrong">You typed “ix”. That word is wrong.</step>
-    <step img="lesson-hint" x="69.2" y="57.7" title="Green = right">The right word is “is”.</step>
-    <step img="lesson-hint" x="64.1" y="41" title="Type over it">The wrong word is already selected for you. Type “is” and press <kbd class="kbd">Enter</kbd>.</step>
+    <step img="lesson-hint" at="matching" title="How many words are right">“Matching 1/6 words” means: the first word you typed is right. You have 6 words to type.</step>
+    <step img="lesson-hint" at="del" title="Red = wrong, green = right">You typed “ix”. The video says “is”.</step>
+    <step img="lesson-hint" x="67.6" y="43.2" title="Type over it">The wrong word is already selected. Type “is” and press <kbd class="kbd">Enter</kbd>.</step>
 </tour>
 
 <div class="callout callout-note"><span class="callout-icon">☝️</span><div>The app shows <strong>one mistake at a time</strong>. Fix it, press <kbd class="kbd">Enter</kbd>, and it shows the next one.</div></div>
 
-<h2>Three kinds of mistake</h2>
-<div class="not-prose my-8" data-tabs>
-    <div class="flex flex-wrap gap-2" role="tablist">
-        <button role="tab" data-tab="0" class="tab-btn">❌ Wrong word</button>
-        <button role="tab" data-tab="1" class="tab-btn">➕ Missing word</button>
-        <button role="tab" data-tab="2" class="tab-btn">✂️ Extra word</button>
-    </div>
-    <figure class="mt-5" data-panel="0"><img src="images/lesson-hint.webp" alt="The wrong word ix is selected" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Wrong word:</strong> it's selected. Type the right one.</figcaption></figure>
-    <figure class="mt-5 hidden" data-panel="1"><img src="images/lesson-hint-missing.webp" alt="The missing word have is shown in green" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Missing word:</strong> the green word goes where the cursor is.</figcaption></figure>
-    <figure class="mt-5 hidden" data-panel="2"><img src="images/lesson-hint-extra.webp" alt="The extra word the is selected" class="shot" width="1440" height="900" loading="lazy"><figcaption class="mt-3 text-center text-gray-500"><strong>Extra word:</strong> it's selected. Press Backspace to delete it.</figcaption></figure>
+<h2>The kinds of mistake</h2>
+<div class="mistakes not-prose">
+    <figure><img src="images/crop-hint.webp" alt="The wrong word ix is selected; the hint shows is in green" width="690" height="400" loading="lazy"><figcaption><strong>❌ Wrong word</strong> It's selected. Type the right one.</figcaption></figure>
+    <figure><img src="images/crop-missing.webp" alt="The missing word have is shown in green" width="690" height="400" loading="lazy"><figcaption><strong>➕ Missing word</strong> The green word goes where the cursor is.</figcaption></figure>
+    <figure><img src="images/crop-extra.webp" alt="The extra word the is crossed out" width="690" height="400" loading="lazy"><figcaption><strong>✂️ Extra word</strong> It's selected. Press Backspace.</figcaption></figure>
+    <figure><img src="images/crop-almost.webp" alt="Almost! Check the spelling" width="690" height="400" loading="lazy"><figcaption><strong>🔤 Almost!</strong> One or two letters are wrong. Check the spelling.</figcaption></figure>
 </div>
 
 <h2>What matters?</h2>
-<p>You don't need to worry about:</p>
+<p>These are all OK:</p>
 <div class="ok-list not-prose">
     <span class="ok">✅ Capital letters</span>
     <span class="ok">✅ Commas and full stops</span>
-    <span class="ok">✅ Question marks</span>
     <span class="ok">✅ Apostrophes (dont = don't)</span>
+    <span class="ok">✅ Numbers (19 = nineteen)</span>
+    <span class="ok">✅ Money ($5 = five dollars)</span>
+    <span class="ok">✅ British or American spelling (colour = color)</span>
+    <span class="ok">✅ Spaces and hyphens (a lot = alot)</span>
 </div>
 <p>Be careful with:</p>
 <div class="ok-list not-prose">

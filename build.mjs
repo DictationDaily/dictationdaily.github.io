@@ -7,9 +7,11 @@
 //
 // Pages can use three shorthand tags, expanded here so the pages stay short:
 //   <tour><step img="lesson-intro" x="95.9" y="53.6" title="Press START">Text</step>…</tour>
-//       a click-through, one screenshot per step with a pulsing marker at x%/y%
+//       numbered steps, each with a screenshot and a pulsing marker at x%/y%
 //       (add phone to <step> for a phone screenshot; the shot zooms in on the
-//       marker, zoom="1" turns that off)
+//       marker, zoom="1" turns that off). Instead of x/y, at="replay" (and
+//       at2="…" for a second marker) uses the measured position of that button
+//       in src/coords.json, written by scripts/capture.py
 //   <demo src="lesson" caption="…"></demo>  (add phone for a phone recording)
 //       a looping screen recording from videos/<src>.mp4
 //   <shot src="library" caption="…" alt="…">  a screenshot from images/<src>.webp
@@ -20,6 +22,7 @@ const SITE_URL = 'https://dictationdaily.github.io';
 const OUT = '_site';
 
 const nav = JSON.parse(fs.readFileSync('src/nav.json', 'utf8'));
+const coords = JSON.parse(fs.readFileSync('src/coords.json', 'utf8'));
 const layout = fs.readFileSync('src/layout.html', 'utf8');
 const ordered = nav.flatMap((group) =>
     group.pages.map((page) => ({ ...page, group: group.title })),
@@ -61,44 +64,58 @@ function imageSize(name) {
     return [1440, 900];
 }
 
+// The zoomed screenshot for one step, with its pulsing marker(s)
+function stepShot(s) {
+    const [w, h] = imageSize(s.img);
+    const spots = [[s.x, s.y], [s.x2, s.y2]]
+        .filter(([x, y]) => x && y)
+        .map(
+            ([x, y]) =>
+                `<span class="hotspot" style="left:${x}%;top:${y}%" aria-hidden="true"></span>`,
+        )
+        .join('');
+    return `<div class="step-shot${s.phone ? ' step-shot-phone' : ''}"><div class="step-zoom${s.zoom === '1' ? ' no-zoom' : ''}" style="transform-origin:${s.x || 50}% ${s.y || 50}%"><img src="images/${s.img}.webp" alt="${escape(s.alt || s.title)}" width="${w}" height="${h}" loading="lazy">${spots}</div></div>`;
+}
+
+// Numbered steps with no buttons: on wide screens the picture beside the list
+// follows the step you have scrolled to; on small screens each step shows its
+// own picture
 function expandTour(_, inner) {
-    const steps = [...inner.matchAll(/<step([^>]*)>([\s\S]*?)<\/step>/g)];
-    const slides = steps
-        .map(([, a, text], i) => {
-            const s = attrs(a);
-            const [w, h] = imageSize(s.img);
-            const spots = [[s.x, s.y], [s.x2, s.y2]]
-                .filter(([x, y]) => x && y)
-                .map(
-                    ([x, y]) =>
-                        `<span class="hotspot" style="left:${x}%;top:${y}%" aria-hidden="true"></span>`,
-                )
-                .join('');
-            return `
-            <div class="tour-slide${i === 0 ? ' active' : ''}" data-slide aria-hidden="${i !== 0}">
-                <div class="tour-shot${s.phone ? ' tour-shot-phone' : ''}">
-                    <div class="tour-zoom${s.zoom === '1' ? ' no-zoom' : ''}" style="transform-origin:${s.x || 50}% ${s.y || 50}%">
-                        <img src="images/${s.img}.webp" alt="${escape(s.alt || s.title)}" width="${w}" height="${h}" loading="lazy">
-                        ${spots}
-                    </div>
+    const steps = [...inner.matchAll(/<step([^>]*)>([\s\S]*?)<\/step>/g)].map(
+        ([, a, text]) => {
+            const s = { ...attrs(a), text: text.trim() };
+            for (const [key, x, y] of [['at', 'x', 'y'], ['at2', 'x2', 'y2']]) {
+                if (!s[key]) continue;
+                const spot = coords[s.img]?.[s[key]];
+                if (!spot) throw new Error(`no ${s[key]} in coords.json for ${s.img}`);
+                [s[x], s[y]] = spot;
+            }
+            return s;
+        },
+    );
+    const items = steps
+        .map(
+            (s, i) => `
+            <li class="step${i === 0 ? ' is-active' : ''}" data-step>
+                <span class="step-num" aria-hidden="true">${i + 1}</span>
+                <div class="min-w-0 flex-1">
+                    <p class="step-title">${s.title}</p>
+                    ${s.text ? `<p class="step-body">${s.text}</p>` : ''}
+                    <div class="step-inline">${stepShot(s)}</div>
                 </div>
-                <div class="tour-text">
-                    <p class="tour-count">Step ${i + 1} of ${steps.length}</p>
-                    <p class="tour-title">${s.title}</p>
-                    ${text.trim() ? `<p class="tour-body">${text.trim()}</p>` : ''}
-                </div>
-            </div>`;
-        })
+            </li>`,
+        )
+        .join('');
+    const stage = steps
+        .map(
+            (s, i) =>
+                `<div class="stage-shot${i === 0 ? ' is-active' : ''}" data-stage-shot aria-hidden="true">${stepShot(s)}</div>`,
+        )
         .join('');
     return `
-        <div class="tour not-prose${steps.length === 1 ? ' tour-single' : ''}" data-tour>
-            <div class="tour-progress"><span data-bar></span></div>
-            <div class="tour-slides">${slides}</div>
-            <div class="tour-nav">
-                <button type="button" class="tour-btn" data-prev>← Back</button>
-                <div class="tour-dots" data-dots></div>
-                <button type="button" class="tour-btn tour-btn-next" data-next>Next →</button>
-            </div>
+        <div class="steps not-prose" data-steps>
+            <ol class="steps-list">${items}</ol>
+            <div class="steps-stage"><div class="steps-sticky">${stage}</div></div>
         </div>`;
 }
 
@@ -177,10 +194,8 @@ function sidebar(current) {
 
 function nextCard(index) {
     const next = ordered[index + 1];
-    const prev = ordered[index - 1];
     return `
-        <nav class="mt-16 grid gap-4 sm:grid-cols-[1fr_2fr]" aria-label="Next page">
-            ${prev ? `<a href="${prev.slug}.html" class="pager"><span class="text-xs uppercase tracking-wide text-gray-500">← Back</span><span class="mt-1 block font-semibold text-ink dark:text-white">${prev.title}</span></a>` : '<span></span>'}
+        <nav class="mt-16" aria-label="Next page">
             ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">Next</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">You've read it all!</span><span class="mt-1 block text-lg font-bold text-white">🎉 Back to the guide home</span></a>`}
         </nav>`;
 }
@@ -205,8 +220,7 @@ function render(slug, meta, body) {
             ? html
             : `
             <header class="reveal">
-                <a href="./" class="text-sm font-medium text-gray-500 hover:text-brand">← Guide home</a>
-                <div class="mt-5 flex items-start gap-4">
+                <div class="flex items-start gap-4">
                     <span class="page-icon" aria-hidden="true">${entry?.icon || '📘'}</span>
                     <div>
                         <h1 class="text-3xl font-black tracking-tight text-ink sm:text-4xl dark:text-white">${meta.title}</h1>

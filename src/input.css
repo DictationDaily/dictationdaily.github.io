@@ -64,14 +64,19 @@
     .kbd {
         @apply inline-block whitespace-nowrap rounded-md border border-b-[3px] border-gray-300 bg-white px-2 py-0.5 font-mono text-[0.8em] font-semibold not-italic leading-tight text-ink shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
     }
+    /* Names of app buttons in the text: bold words, not boxes, so they
+       don't look like buttons on this page */
     .btn-ui {
-        @apply whitespace-nowrap rounded bg-ink px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white dark:bg-gray-700;
+        @apply whitespace-nowrap font-bold uppercase tracking-wide text-ink dark:text-white;
+        font-size: 0.85em;
     }
     .btn-go {
-        @apply whitespace-nowrap rounded bg-green-700 px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white;
+        @apply whitespace-nowrap font-bold uppercase tracking-wide text-green-700 dark:text-green-400;
+        font-size: 0.85em;
     }
     .btn-red {
-        @apply whitespace-nowrap rounded bg-brand px-1.5 py-0.5 text-[0.75em] font-semibold uppercase tracking-wide text-white;
+        @apply whitespace-nowrap font-bold uppercase tracking-wide text-brand dark:text-red-400;
+        font-size: 0.85em;
     }
 
     /* Screenshots */
@@ -88,103 +93,95 @@
         @apply mt-3 text-center text-sm text-gray-500 dark:text-gray-400;
     }
 
-    /* Step-by-step tour */
-    .tour {
-        @apply my-10 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl shadow-gray-900/5 dark:border-gray-800 dark:bg-gray-900;
+    /* Scroll steps: no buttons, the picture follows the step on screen */
+    .steps {
+        @apply my-10 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-10;
     }
-    .tour-progress {
-        @apply h-1.5 bg-gray-100 dark:bg-gray-800;
+    .steps-list {
+        @apply space-y-10 lg:space-y-0 lg:pb-[20vh];
     }
-    .tour-progress span {
-        @apply block h-full bg-brand transition-all duration-500 ease-out;
+    .step {
+        @apply flex gap-4 transition-opacity duration-500 lg:min-h-[42vh] lg:items-start lg:pt-[6vh] lg:opacity-35;
     }
-    .tour-slides {
-        @apply grid;
+    .step:first-child {
+        @apply lg:pt-0;
     }
-    .tour-slide {
+    .step.is-active {
+        @apply lg:opacity-100;
+    }
+    .step-num {
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-lg font-bold text-gray-600 transition-colors duration-500 dark:bg-gray-800 dark:text-gray-300;
+    }
+    .step.is-active .step-num {
+        @apply bg-brand text-white shadow-lg shadow-brand/30;
+    }
+    .step-title {
+        @apply pt-1 text-xl font-bold text-ink sm:text-2xl dark:text-white;
+    }
+    .step-body {
+        @apply mt-1.5 text-base leading-relaxed text-gray-600 sm:text-lg dark:text-gray-300;
+    }
+    .step-inline {
+        @apply mt-4 lg:hidden;
+    }
+    .steps-stage {
+        @apply hidden lg:block;
+    }
+    /* Stays level with the step being read, in the middle of the screen */
+    .steps-sticky {
+        @apply sticky grid;
+        top: max(6rem, calc(50vh - 13rem));
+    }
+    .stage-shot {
         @apply invisible opacity-0 transition-all duration-500;
         grid-area: 1 / 1;
-        transform: translateX(24px);
+        transform: translateY(12px);
     }
-    .tour-slide.active {
+    .stage-shot.is-active {
         @apply visible opacity-100;
         transform: none;
     }
-    .tour-slide.from-left {
-        transform: translateX(-24px);
+    .step-shot {
+        @apply relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-xl shadow-gray-900/10 dark:border-gray-700;
     }
-    .tour-shot {
-        @apply relative mx-4 mt-4 overflow-hidden rounded-xl border border-gray-200 sm:mx-6 sm:mt-6 dark:border-gray-700;
-    }
-    .tour-shot img {
+    .step-shot img {
         @apply block w-full;
     }
-    /* Each step zooms in on its marker so small buttons are readable */
-    .tour-zoom {
-        @apply relative;
-        transition: transform 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s;
+    .step-shot-phone {
+        @apply mx-auto w-full max-w-[260px] rounded-[1.75rem] border-[6px] border-ink dark:border-gray-600;
     }
-    .tour-slide.active .tour-zoom {
+    /* The active step zooms in on its marker so small buttons are readable */
+    .step-zoom {
+        @apply relative;
+        transition: transform 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
+    }
+    .is-active > .step-shot > .step-zoom,
+    .step.is-active .step-zoom {
         transform: scale(1.3);
     }
-    .tour-slide.active .tour-zoom.no-zoom {
-        transform: none;
-    }
     /* Keep the marker the same size while the shot zooms */
-    .tour-zoom .hotspot {
-        transition: scale 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.35s;
+    .step-zoom .hotspot {
+        transition: scale 1.1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s;
     }
-    .tour-slide.active .tour-zoom .hotspot {
+    .is-active > .step-shot > .step-zoom .hotspot,
+    .step.is-active .step-zoom .hotspot {
         scale: 0.77;
     }
-    .tour-slide.active .tour-zoom.no-zoom .hotspot {
-        scale: 1;
-    }
     @media (max-width: 640px) {
-        .tour-slide.active .tour-zoom {
-            transform: scale(1.9);
+        .step.is-active .step-zoom {
+            transform: scale(1.7);
         }
-        .tour-slide.active .tour-zoom .hotspot {
+        .step.is-active .step-zoom .hotspot {
             scale: 0.6;
         }
     }
-    .tour-single .tour-nav,
-    .tour-single .tour-progress,
-    .tour-single .tour-count {
-        @apply hidden;
+    .step-shot-phone .step-zoom,
+    .step-zoom.no-zoom {
+        transform: none !important;
     }
-    .tour-shot-phone {
-        @apply mx-auto w-full max-w-[260px] rounded-[1.75rem] border-[6px] border-ink;
-    }
-    .tour-text {
-        @apply px-5 pb-2 pt-5 sm:px-8;
-    }
-    .tour-count {
-        @apply text-xs font-semibold uppercase tracking-widest text-brand;
-    }
-    .tour-title {
-        @apply mt-1 text-xl font-bold text-ink sm:text-2xl dark:text-white;
-    }
-    .tour-body {
-        @apply mt-1.5 text-base leading-relaxed text-gray-600 sm:text-lg dark:text-gray-300;
-    }
-    .tour-nav {
-        @apply flex items-center justify-between gap-3 px-5 pb-5 pt-3 sm:px-8 sm:pb-6;
-    }
-    .tour-btn {
-        @apply shrink-0 whitespace-nowrap rounded-full border border-gray-300 px-3.5 py-2 text-sm font-semibold text-ink transition sm:px-4 hover:border-gray-400 disabled:cursor-default disabled:opacity-30 dark:border-gray-700 dark:text-white;
-    }
-    .tour-btn-next {
-        @apply border-brand bg-brand text-white hover:bg-brand-dark;
-    }
-    .tour-dots {
-        @apply flex min-w-0 flex-wrap justify-center gap-1 sm:gap-1.5;
-    }
-    .tour-dots button {
-        @apply h-2 w-2 rounded-full bg-gray-300 transition-all sm:h-2.5 sm:w-2.5 dark:bg-gray-700;
-    }
-    .tour-dots button.on {
-        @apply w-5 bg-brand sm:w-7;
+    .step-shot-phone .step-zoom .hotspot,
+    .step-zoom.no-zoom .hotspot {
+        scale: 1 !important;
     }
     .hotspot {
         @apply pointer-events-none absolute h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-brand sm:h-12 sm:w-12;
@@ -233,6 +230,7 @@
     .demo-toggle {
         @apply absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-sm text-white opacity-0 backdrop-blur transition hover:bg-black/80 focus:opacity-100;
     }
+    /* Hidden while playing; shown on hover, or when paused so it can start */
     .demo:hover .demo-toggle,
     .demo.paused .demo-toggle {
         @apply opacity-100;
@@ -243,6 +241,20 @@
     }
     .demo.paused .demo-play {
         @apply inline;
+    }
+
+    /* Close-ups of the hint, two per row */
+    .mistakes {
+        @apply my-8 grid gap-6 sm:grid-cols-2;
+    }
+    .mistakes img {
+        @apply block w-full cursor-zoom-in rounded-xl border border-gray-200 shadow-md dark:border-gray-700;
+    }
+    .mistakes figcaption {
+        @apply mt-2 text-sm text-gray-600 dark:text-gray-400;
+    }
+    .mistakes figcaption strong {
+        @apply mr-1 text-ink dark:text-white;
     }
 
     /* Cards */
@@ -311,12 +323,6 @@
     }
     .callout-icon {
         @apply shrink-0 text-xl leading-none;
-    }
-    .tab-btn {
-        @apply rounded-full bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-600 no-underline transition hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300;
-    }
-    .tab-btn.tab-on {
-        @apply bg-ink text-white hover:bg-ink dark:bg-white dark:text-ink;
     }
 
     /* Animated keyboard */

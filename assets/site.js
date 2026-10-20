@@ -1,5 +1,5 @@
-// Theme toggle, navigation drawer, search, step-by-step tours, screen
-// recordings, scroll animations, tabbed screenshots and the lightbox.
+// Theme toggle, navigation drawer, search, scroll steps, screen recordings,
+// scroll animations and the lightbox.
 // No dependencies.
 (() => {
     const $ = (s, el = document) => el.querySelector(s);
@@ -26,22 +26,6 @@
     $$('#drawer a').forEach((a) => a.addEventListener('click', () => close(drawer)));
     $('#drawer .active')?.scrollIntoView({ block: 'center' });
 
-    // Tabbed screenshots: <div data-tabs> with [data-tab] buttons and [data-panel] figures
-    $$('[data-tabs]').forEach((group) => {
-        const buttons = $$('[data-tab]', group);
-        const panels = $$('[data-panel]', group);
-        const select = (i) => {
-            buttons.forEach((b) => {
-                const on = b.dataset.tab === String(i);
-                b.setAttribute('aria-selected', on);
-                b.classList.toggle('tab-on', on);
-            });
-            panels.forEach((p) => p.classList.toggle('hidden', p.dataset.panel !== String(i)));
-        };
-        buttons.forEach((b) => b.addEventListener('click', () => select(b.dataset.tab)));
-        select(0);
-    });
-
     // Lightbox: click any screenshot to enlarge it
     const box = $('#lightbox');
     $$('main img').forEach((img) => {
@@ -57,52 +41,22 @@
 
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Step-by-step tours: one slide visible, Back/Next, dots, arrow keys
-    $$('[data-tour]').forEach((tour) => {
-        const slides = $$('[data-slide]', tour);
-        const dots = $('[data-dots]', tour);
-        const bar = $('[data-bar]', tour);
-        const prev = $('[data-prev]', tour);
-        const next = $('[data-next]', tour);
-        let current = 0;
-        slides.forEach((_, i) => {
-            const d = document.createElement('button');
-            d.type = 'button';
-            d.setAttribute('aria-label', `Step ${i + 1}`);
-            d.addEventListener('click', () => go(i));
-            dots.appendChild(d);
-        });
-        const go = (i) => {
-            if (i < 0 || i >= slides.length) return;
-            slides.forEach((s, j) => {
-                s.classList.toggle('active', j === i);
-                s.classList.toggle('from-left', j < i);
-                s.setAttribute('aria-hidden', j !== i);
-            });
-            $$('button', dots).forEach((d, j) => d.classList.toggle('on', j === i));
-            bar.style.width = `${((i + 1) / slides.length) * 100}%`;
-            prev.disabled = i === 0;
-            const last = i === slides.length - 1;
-            next.textContent = last ? 'Start again ↺' : 'Next →';
-            current = i;
+    // Scroll steps: the step nearest the middle of the screen is active; its
+    // picture shows beside the list on wide screens and zooms in
+    $$('[data-steps]').forEach((group) => {
+        const steps = $$('[data-step]', group);
+        const shots = $$('[data-stage-shot]', group);
+        const select = (i) => {
+            steps.forEach((s, j) => s.classList.toggle('is-active', j === i));
+            shots.forEach((s, j) => s.classList.toggle('is-active', j === i));
         };
-        prev.addEventListener('click', () => go(current - 1));
-        next.addEventListener('click', () => go(current === slides.length - 1 ? 0 : current + 1));
-        tour.tabIndex = 0;
-        tour.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
-            if (e.key === 'ArrowLeft') { e.preventDefault(); go(current - 1); }
-        });
-        // Swipe on touch screens
-        let x0 = null;
-        tour.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
-        tour.addEventListener('touchend', (e) => {
-            if (x0 === null) return;
-            const dx = e.changedTouches[0].clientX - x0;
-            if (Math.abs(dx) > 50) go(current + (dx < 0 ? 1 : -1));
-            x0 = null;
-        });
-        go(0);
+        if (!('IntersectionObserver' in window)) return;
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((e) => { if (e.isIntersecting) select(steps.indexOf(e.target)); });
+        }, { rootMargin: '-40% 0px -50% 0px' });
+        steps.forEach((s) => io.observe(s));
+        // Clicking a step (wide screens) shows its picture too
+        steps.forEach((s, i) => s.addEventListener('click', () => select(i)));
     });
 
     // Screen recordings: play while on screen, pause button, no autoplay for reduced motion

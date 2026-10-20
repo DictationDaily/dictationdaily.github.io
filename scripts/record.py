@@ -1,10 +1,12 @@
-"""Record short screen recordings of the live app for the guide (videos/*.mp4).
+"""Record short screen recordings of the app for the guide (videos/*.mp4).
 
 A fake pointer and a caption bar are drawn into the page so learners can follow
 each step. Frames come from Chrome's screencast and are encoded with ffmpeg.
 Signed out only, so nothing is saved to any account.
 
-usage: python3 scripts/record.py [scene ...]
+usage: [DD_BASE=http://localhost:8788] python3 scripts/record.py [scene ...]
+DD_BASE records a local build instead of production, e.g. before a UI change
+is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile
 """
 import base64
@@ -17,10 +19,11 @@ import tempfile
 
 from playwright.sync_api import sync_playwright
 
-B = 'https://dictationdaily.com'
+B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15, opens with an exercise
 LISTEN_VIDEO = 'Tp8xIgyyK7I'  # opens with a listen part
 CLIP1 = 'My contention is all kids have tremendous talents,'
+# The lesson gives the first and last word ("My … talents,"); learners type the rest
 OUT = 'videos'
 
 OVERLAY = r"""
@@ -170,11 +173,11 @@ def scene_lesson(ctx):
     caption('<b>1</b>Press START', 600)
     click(page.get_by_text('START', exact=True))
     wait_exercise(page)
-    caption('<b>2</b>Listen to the sentence', 3200)
+    caption('<b>2</b>Listen. The red line shows your words', 3400)
     ta = page.get_by_placeholder('Type what you hear').first
-    caption('<b>3</b>Type what you hear')
+    caption('<b>3</b>Type the missing words')
     move_to(ta, 500)
-    ta.press_sequentially('My contention ix all kids', delay=110)
+    ta.press_sequentially('contention ix all kids', delay=110)
     page.wait_for_timeout(500)
     caption('<b>4</b>Press Enter to check', 1200)
     ta.press('Enter')
@@ -184,12 +187,12 @@ def scene_lesson(ctx):
     page.wait_for_timeout(900)
     ta.press_sequentially('is', delay=160)
     page.keyboard.press('End')
-    ta.press_sequentially(' have tremendous talents', delay=90)
+    ta.press_sequentially(' have tremendous', delay=90)
     page.wait_for_timeout(400)
     caption('<b>6</b>Press Enter again', 1000)
     ta.press('Enter')
     page.wait_for_timeout(500)
-    caption('🎉 Correct! Press Enter for the next one', 3200)
+    caption('✓ Right! Press Enter for the next one', 3400)
     page.keyboard.press('Enter')
     caption(None, 2500)
     rec.stop(1280)
@@ -321,9 +324,9 @@ def scene_mobile(browser):
     click(page.get_by_text('START', exact=True))
     wait_exercise(page)
     ta = page.get_by_placeholder('Type what you hear').first
-    caption('Tap the box to type', 300, small=True)
+    caption('Tap the box. Type the missing words', 300, small=True)
     click(ta)
-    ta.press_sequentially('My contention ix all kids', delay=100)
+    ta.press_sequentially('contention ix all kids', delay=100)
     caption('Tap CHECK', 300, small=True)
     click(page.get_by_role('button', name='CHECK'))
     page.wait_for_timeout(600)
@@ -332,11 +335,11 @@ def scene_mobile(browser):
     page.wait_for_timeout(800)
     ta.press_sequentially('is', delay=150)
     page.keyboard.press('End')
-    ta.press_sequentially(' have tremendous talents', delay=80)
+    ta.press_sequentially(' have tremendous', delay=80)
     caption('Tap CHECK again', 300, small=True)
     click(page.get_by_role('button', name='CHECK'))
     page.wait_for_timeout(500)
-    caption('🎉 Correct!', 3000, small=True)
+    caption('✓ Right!', 3000, small=True)
     caption(None, 400)
     rec.stop(390)
 

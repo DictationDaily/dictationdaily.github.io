@@ -4,13 +4,6 @@
         <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <input data-faq-filter type="search" placeholder="Type a word: streak, phone, slow…" class="w-full bg-transparent text-lg text-ink outline-none placeholder:text-gray-400 dark:text-white" aria-label="Filter questions">
     </label>
-    <div class="mt-3 flex flex-wrap gap-2 text-sm">
-        <a href="#basics" class="tab-btn">👋 Basics</a>
-        <a href="#lessons" class="tab-btn">✍️ Lessons</a>
-        <a href="#answers" class="tab-btn">💡 Answers</a>
-        <a href="#progress" class="tab-btn">🔥 Progress</a>
-        <a href="#account" class="tab-btn">👤 Account</a>
-    </div>
 </div>
 <p data-faq-empty class="not-prose hidden rounded-2xl bg-gray-50 p-6 text-center dark:bg-gray-900">No questions found. Try <a class="text-brand underline" href="help.html">Something's not working</a>.</p>
 
@@ -30,6 +23,8 @@
 <h2 id="lessons">✍️ Lessons</h2>
 <div class="not-prose">
     <details class="faq" data-faq id="slow-down"><summary>Can I slow the video down?</summary><div class="answer"><p>Yes. Click ⚙ on the video → <strong>Speed</strong> → <strong>0.5x</strong>. <a href="too-hard.html#slow-it-down">With pictures</a>.</p></div></details>
+    <details class="faq" data-faq id="given-words"><summary>Why are some words already there?</summary><div class="answer"><p>The first and last words of a sentence are the hardest to hear, so the app gives them to you. Type the words in the gap. Typing the whole sentence is OK too.</p></div></details>
+    <details class="faq" data-faq id="red-line"><summary>What is the red line under the gap?</summary><div class="answer"><p>It fills while the missing words are spoken. So you know where your part starts and ends.</p></div></details>
     <details class="faq" data-faq id="subtitles"><summary>Can I turn on subtitles?</summary><div class="answer"><p>No. Subtitles are always off, so you really listen. When you get a sentence right, you see all the words.</p></div></details>
     <details class="faq" data-faq id="stopped"><summary>The sentence stopped playing.</summary><div class="answer"><p>It plays 3 times, then waits. Press <span class="btn-ui">Replay</span> or <kbd class="kbd">Tab</kbd> to hear it again.</p></div></details>
     <details class="faq" data-faq id="forward-grey"><summary>The ▶ arrow is grey.</summary><div class="answer"><p>Get the sentence right first. Or press <span class="btn-ui">Skip</span>.</p></div></details>
@@ -42,8 +37,9 @@
 <div data-faq-group>
 <h2 id="answers">💡 Answers</h2>
 <div class="not-prose">
-    <details class="faq" data-faq id="right-but-wrong"><summary>My answer is right, but the app says it's wrong.</summary><div class="answer"><p>Look at the <strong class="text-green-700">green word</strong> in the hint. That's what the video says. Often it's:</p><ul><li>a small word like “a” or “the”</li><li>a word ending like -s or -ed</li><li>a word your phone autocorrected</li><li>a number written in a different way</li></ul><p>Type it the way the hint shows.</p></div></details>
-    <details class="faq" data-faq id="capitals"><summary>Do capital letters and commas matter?</summary><div class="answer"><p>No. Capital letters, commas, full stops and apostrophes don't matter.</p></div></details>
+    <details class="faq" data-faq id="right-but-wrong"><summary>My answer is right, but the app says it's wrong.</summary><div class="answer"><p>Look at the <strong class="text-green-700">green word</strong> in the hint. That's what the video says. Often it's:</p><ul><li>a small word like “a” or “the”</li><li>a word ending like -s or -ed</li><li>a word your phone autocorrected</li></ul><p>Type it the way the hint shows.</p></div></details>
+    <details class="faq" data-faq id="capitals"><summary>Do capital letters, numbers or spelling matter?</summary><div class="answer"><p>These are all OK:</p><ul><li>capital letters, commas, full stops, apostrophes</li><li>numbers as digits or words: 19 = nineteen</li><li>money: $5 = five dollars</li><li>British or American spelling: colour = color</li></ul></div></details>
+    <details class="faq" data-faq id="almost"><summary>What does “Almost! Check the spelling” mean?</summary><div class="answer"><p>You heard the word, but one or two letters are wrong. Fix the spelling and press <kbd class="kbd">Enter</kbd>.</p></div></details>
     <details class="faq" data-faq id="one-mistake"><summary>Why does it show only one mistake?</summary><div class="answer"><p>So you listen again for each word. Fix it, press <kbd class="kbd">Enter</kbd>, and see the next one.</p></div></details>
     <details class="faq" data-faq id="see-answer"><summary>Can I see the answer?</summary><div class="answer"><p>Not all at once. But each <kbd class="kbd">Enter</kbd> shows you the next word. You can also skip.</p></div></details>
     <details class="faq" data-faq id="transcript-wrong"><summary>I think the answer is wrong.</summary><div class="answer"><p>It can happen. The sentences are written by a computer. Type what the hint says, or skip.</p></div></details>
