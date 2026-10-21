@@ -8,7 +8,7 @@ import os
 from PIL import Image
 
 # right-hand side of a 1440x900 lesson: the text box and the hint under it
-HINT_BOX = (750, 240, 1440, 640)
+HINT_BOX = (750, 260, 1440, 660)
 CROPS = {'lesson-hint': 'crop-hint', 'lesson-hint-missing': 'crop-missing',
          'lesson-hint-extra': 'crop-extra', 'lesson-almost': 'crop-almost'}
 

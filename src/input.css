@@ -30,22 +30,26 @@
         @apply flex items-center gap-2.5 rounded-lg px-3 py-2 text-[0.95rem] text-gray-600 transition hover:bg-gray-100 hover:text-ink dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white;
     }
     .nav-link.active {
-        @apply bg-brand-soft font-medium text-brand dark:bg-red-950/50 dark:text-red-300;
+        @apply bg-brand-soft font-extrabold text-brand dark:bg-red-950/50 dark:text-red-300;
     }
     .nav-icon {
         @apply w-5 text-center text-base;
     }
     .page-icon {
-        @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-3xl shadow-sm dark:bg-red-950/50;
+        @apply flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-cream text-3xl shadow-edge dark:bg-gray-800 dark:shadow-none;
+    }
+    /* The app's pressable red button */
+    .btn-chunky {
+        @apply items-center justify-center whitespace-nowrap rounded-2xl bg-brand px-5 py-2.5 font-display text-base font-semibold text-white no-underline shadow-edge-red transition hover:bg-[#e0312f] active:translate-y-[3px] active:shadow-none;
     }
     .icon-btn {
         @apply rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-ink dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
     }
     .pager {
-        @apply block rounded-2xl border border-gray-200 p-5 no-underline transition hover:-translate-y-0.5 hover:border-brand hover:shadow-lg dark:border-gray-800;
+        @apply block rounded-3xl border-2 border-gray-200 p-5 no-underline shadow-edge-card transition hover:-translate-y-0.5 hover:border-brand dark:border-gray-800 dark:shadow-none;
     }
     .pager-next {
-        @apply border-transparent bg-brand hover:bg-brand-dark;
+        @apply border-brand bg-brand shadow-edge-red hover:bg-[#e0312f];
     }
     .pager-arrow {
         @apply text-2xl transition;
@@ -62,7 +66,7 @@
 
     /* Small inline pieces */
     .kbd {
-        @apply inline-block whitespace-nowrap rounded-md border border-b-[3px] border-gray-300 bg-white px-2 py-0.5 font-mono text-[0.8em] font-semibold not-italic leading-tight text-ink shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
+        @apply inline-block whitespace-nowrap rounded-lg border-2 border-b-[4px] border-[#d8cbc2] bg-white px-2 py-0.5 font-mono text-[0.8em] font-semibold not-italic leading-tight text-ink shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
     }
     /* Names of app buttons in the text: bold words, not boxes, so they
        don't look like buttons on this page */
@@ -81,7 +85,7 @@
 
     /* Screenshots */
     .shot {
-        @apply my-0 block w-full cursor-zoom-in rounded-xl border border-gray-200 shadow-lg shadow-gray-900/5 transition hover:shadow-xl dark:border-gray-700;
+        @apply my-0 block w-full cursor-zoom-in rounded-2xl border-2 border-gray-200 shadow-edge-card transition hover:-translate-y-0.5 dark:border-gray-700 dark:shadow-none;
     }
     .phone {
         @apply mx-auto my-0 w-full max-w-[220px] cursor-zoom-in rounded-[1.75rem] border-[6px] border-ink shadow-xl dark:border-gray-600;
@@ -110,13 +114,13 @@
         @apply lg:opacity-100;
     }
     .step-num {
-        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 text-lg font-bold text-gray-600 transition-colors duration-500 dark:bg-gray-800 dark:text-gray-300;
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-200 font-display text-lg font-bold text-gray-600 transition-colors duration-500 dark:bg-gray-800 dark:text-gray-300;
     }
     .step.is-active .step-num {
-        @apply bg-brand text-white shadow-lg shadow-brand/30;
+        @apply bg-ink text-white shadow-edge dark:bg-flame dark:text-ink dark:shadow-none;
     }
     .step-title {
-        @apply pt-1 text-xl font-bold text-ink sm:text-2xl dark:text-white;
+        @apply pt-1 font-display text-xl font-semibold text-ink sm:text-2xl dark:text-white;
     }
     .step-body {
         @apply mt-1.5 text-base leading-relaxed text-gray-600 sm:text-lg dark:text-gray-300;
@@ -262,16 +266,16 @@
         @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3;
     }
     .task {
-        @apply flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 no-underline transition duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-xl dark:border-gray-800 dark:bg-gray-900;
+        @apply flex items-start gap-4 rounded-3xl border-2 border-gray-200 bg-white p-5 no-underline shadow-edge-card transition duration-300 hover:-translate-y-1 hover:border-brand dark:border-gray-800 dark:bg-gray-900 dark:shadow-none;
     }
     .task-icon {
-        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-2xl transition duration-300 dark:bg-gray-800;
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cream text-2xl transition duration-300 dark:bg-gray-800;
     }
     .task:hover .task-icon {
         @apply scale-110 bg-brand-soft;
     }
     .task-title {
-        @apply font-semibold text-ink dark:text-white;
+        @apply font-display text-lg font-semibold text-ink dark:text-white;
     }
     .task-text {
         @apply mt-0.5 text-sm text-gray-600 dark:text-gray-400;
@@ -283,13 +287,13 @@
         @apply lg:grid-cols-3;
     }
     .card {
-        @apply rounded-2xl border border-gray-200 bg-white p-5 transition duration-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900;
+        @apply rounded-3xl border-2 border-gray-200 bg-white p-5 shadow-edge-card transition duration-300 dark:border-gray-800 dark:bg-gray-900 dark:shadow-none;
     }
     .card-icon {
         @apply text-3xl;
     }
     .card-title {
-        @apply mt-2 text-lg font-bold text-ink dark:text-white;
+        @apply mt-2 font-display text-lg font-semibold text-ink dark:text-white;
     }
     .card-text {
         @apply mt-1 text-base leading-relaxed text-gray-600 dark:text-gray-300;
@@ -333,7 +337,7 @@
         @apply flex flex-col items-center gap-3;
     }
     .keycap {
-        @apply flex h-20 min-w-[6rem] items-center justify-center rounded-2xl border border-b-[6px] border-gray-300 bg-white px-5 font-mono text-xl font-bold text-ink shadow-lg dark:border-gray-600 dark:bg-gray-800 dark:text-white;
+        @apply flex h-20 min-w-[6rem] items-center justify-center rounded-2xl border-2 border-b-[6px] border-[#d8cbc2] bg-white px-5 font-mono text-xl font-bold text-ink shadow-lg dark:border-gray-600 dark:bg-gray-800 dark:text-white;
         animation: keypress 4.5s infinite;
     }
     .key:nth-child(2) .keycap {
@@ -355,7 +359,7 @@
         @apply scroll-mt-24 border-b border-gray-200 dark:border-gray-800;
     }
     .faq summary {
-        @apply flex cursor-pointer list-none items-start justify-between gap-4 py-4 text-lg font-semibold text-ink transition hover:text-brand dark:text-white;
+        @apply flex cursor-pointer list-none items-start justify-between gap-4 py-4 font-display text-lg font-semibold text-ink transition hover:text-brand dark:text-white;
     }
     .faq summary::-webkit-details-marker {
         display: none;
@@ -445,4 +449,16 @@
         animation: none !important;
         transition: none !important;
     }
+}
+
+/* Headings in the app's rounded display face (outside the layers so they
+   beat font-black, which Fredoka doesn't have) */
+h1,
+h2,
+h3 {
+    font-family: Fredoka, Nunito, ui-sans-serif, sans-serif;
+}
+:is(h1, h2, h3).font-black {
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }

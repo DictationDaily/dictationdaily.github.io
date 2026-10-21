@@ -12,11 +12,11 @@
     <meta property="og:description" content="{{description}}">
     <meta property="og:image" content="https://dictationdaily.github.io/images/lesson-hint.webp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#d52728">
+    <meta name="theme-color" content="#ffffff">
     <link rel="icon" href="favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/site.css">
     <script>
         // Apply the saved or system theme before first paint
@@ -32,14 +32,14 @@
 <body class="bg-white text-gray-700 antialiased dark:bg-gray-950 dark:text-gray-300">
 <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2 focus:shadow">Skip to content</a>
 
-<header class="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-950/90">
+<header class="sticky top-0 z-40 border-b-2 border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-950/90">
     <div class="mx-auto flex h-16 max-w-[90rem] items-center gap-2 px-4 sm:gap-4 sm:px-6">
         <button id="drawer-open" class="icon-btn lg:hidden" aria-label="Open navigation" aria-controls="drawer" aria-expanded="false">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-        <a href="./" class="flex items-baseline gap-1.5 whitespace-nowrap text-lg font-bold text-ink sm:text-xl dark:text-white">
-            <span class="font-black text-brand">DD</span><span class="hidden min-[360px]:inline">Dictation Daily</span>
-            <span class="ml-1 hidden rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500 sm:inline dark:bg-gray-800 dark:text-gray-400">Guide</span>
+        <a href="./" class="flex items-center gap-2.5 whitespace-nowrap font-display text-lg font-bold text-ink sm:text-xl dark:text-white">
+            <svg class="h-8 w-8 shrink-0" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#d52728"/><rect x="8" y="14" width="3" height="8" rx="1.5" fill="#fff"/><rect x="13" y="10" width="3" height="16" rx="1.5" fill="#fff"/><rect x="18" y="12" width="3" height="12" rx="1.5" fill="#fff"/><rect x="23" y="15" width="5" height="6" rx="1.5" fill="#ffc233"/></svg><span class="hidden min-[360px]:inline">DictationDaily</span>
+            <span class="ml-0.5 hidden rounded-full bg-flame-soft px-2.5 py-0.5 font-sans text-xs font-extrabold text-flame-text sm:inline dark:bg-flame/15 dark:text-flame">Guide</span>
         </a>
 
         <button id="search-open" class="ml-auto flex h-10 min-w-0 items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 text-sm text-gray-500 hover:border-gray-300 sm:ml-auto sm:w-72 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700" aria-label="Search the guide">
@@ -48,7 +48,7 @@
             <kbd class="ml-auto hidden rounded border border-gray-300 px-1.5 font-mono text-xs sm:inline dark:border-gray-700">Ctrl K</kbd>
         </button>
 
-        <a href="https://dictationdaily.com/videos" class="hidden whitespace-nowrap rounded-md bg-brand px-4 py-2 text-sm font-medium uppercase tracking-wide text-white shadow hover:bg-brand-dark sm:inline-block">Open app</a>
+        <a href="https://dictationdaily.com/videos" class="btn-chunky hidden sm:inline-flex">Open app</a>
     </div>
 </header>
 
@@ -57,13 +57,13 @@
     <div class="absolute inset-0 bg-black/40" data-close></div>
     <div class="absolute inset-y-0 left-0 w-80 max-w-[85%] overflow-y-auto bg-white p-5 shadow-xl dark:bg-gray-950">
         <div class="mb-6 flex items-center justify-between">
-            <a href="./" class="text-lg font-bold text-ink dark:text-white"><span class="font-black text-brand">DD</span> Guide</a>
+            <a href="./" class="flex items-center gap-2 font-display text-lg font-bold text-ink dark:text-white"><svg class="h-8 w-8 shrink-0" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#d52728"/><rect x="8" y="14" width="3" height="8" rx="1.5" fill="#fff"/><rect x="13" y="10" width="3" height="16" rx="1.5" fill="#fff"/><rect x="18" y="12" width="3" height="12" rx="1.5" fill="#fff"/><rect x="23" y="15" width="5" height="6" rx="1.5" fill="#ffc233"/></svg> Guide</a>
             <button class="icon-btn" data-close aria-label="Close navigation">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>
             </button>
         </div>
         <nav class="space-y-6">{{sidebar}}</nav>
-        <a href="https://dictationdaily.com/videos" class="mt-8 block rounded-md bg-brand px-4 py-2.5 text-center text-sm font-medium uppercase tracking-wide text-white">Open the app</a>
+        <a href="https://dictationdaily.com/videos" class="btn-chunky mt-8 flex w-full">Open the app</a>
     </div>
 </div>
 
@@ -74,14 +74,14 @@
     <main id="content" class="doc-main">{{content}}</main>
 </div>
 
-<footer class="border-t border-gray-200 dark:border-gray-800">
+<footer class="border-t-2 border-gray-200 dark:border-gray-800">
     <div class="mx-auto grid max-w-[90rem] gap-8 px-4 py-10 text-sm sm:grid-cols-2 sm:px-6 lg:grid-cols-4">
         <div>
-            <p class="text-lg font-bold text-ink dark:text-white"><span class="font-black text-brand">DD</span> Dictation Daily</p>
+            <p class="flex items-center gap-2 font-display text-lg font-bold text-ink dark:text-white"><svg class="h-8 w-8 shrink-0" viewBox="0 0 36 36" aria-hidden="true"><rect width="36" height="36" rx="10" fill="#d52728"/><rect x="8" y="14" width="3" height="8" rx="1.5" fill="#fff"/><rect x="13" y="10" width="3" height="16" rx="1.5" fill="#fff"/><rect x="18" y="12" width="3" height="12" rx="1.5" fill="#fff"/><rect x="23" y="15" width="5" height="6" rx="1.5" fill="#ffc233"/></svg> DictationDaily</p>
             <p class="mt-2 text-gray-500">Practise English listening with real YouTube videos, one sentence at a time.</p>
         </div>
         <div>
-            <p class="font-semibold text-ink dark:text-white">Learn</p>
+            <p class="font-display font-semibold text-ink dark:text-white">Learn</p>
             <ul class="mt-2 space-y-1.5 text-gray-500">
                 <li><a class="hover:text-brand" href="quick-start.html">Your first lesson</a></li>
                 <li><a class="hover:text-brand" href="find-a-video.html">Find a video</a></li>
@@ -89,7 +89,7 @@
             </ul>
         </div>
         <div>
-            <p class="font-semibold text-ink dark:text-white">Help</p>
+            <p class="font-display font-semibold text-ink dark:text-white">Help</p>
             <ul class="mt-2 space-y-1.5 text-gray-500">
                 <li><a class="hover:text-brand" href="faq.html">Questions and answers</a></li>
                 <li><a class="hover:text-brand" href="help.html">Something's not working</a></li>
@@ -97,7 +97,7 @@
             </ul>
         </div>
         <div>
-            <p class="font-semibold text-ink dark:text-white">Dictation Daily</p>
+            <p class="font-display font-semibold text-ink dark:text-white">Dictation Daily</p>
             <ul class="mt-2 space-y-1.5 text-gray-500">
                 <li><a class="hover:text-brand" href="https://dictationdaily.com">dictationdaily.com</a></li>
                 <li><a class="hover:text-brand" href="https://dictationdaily.com/videos">Video library</a></li>

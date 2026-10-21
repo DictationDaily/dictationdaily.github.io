@@ -16,9 +16,11 @@ B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 OUT = sys.argv[1]
 ONLY = sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == '--only' else None
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15
-CLIP1 = 'My contention is all kids have tremendous talents,'
-# The lesson gives the first and last word ("My … talents,"); learners type the rest
-GAP = 'contention is all kids have tremendous'
+# Opens with a "Just listen" part. A local build has only a few transcripts; this one is among them
+LISTEN_VIDEO = '-BvcToPZCLI' if 'DD_BASE' in os.environ else 'Tp8xIgyyK7I'
+CLIP1 = 'My contention is all kids have tremendous talents and we squander them pretty ruthlessly.'
+# The lesson gives two words each side ("My contention … pretty ruthlessly."); learners type the rest
+GAP = 'is all kids have tremendous talents and we squander them'
 COORDS = {}
 
 
@@ -71,8 +73,8 @@ def wait_exercise(page, timeout=60):
         page.wait_for_timeout(300)
 
 
-def open_lesson(page):
-    page.goto(f'{B}/videos/{VIDEO}', wait_until='load')
+def open_lesson(page, video=VIDEO):
+    page.goto(f'{B}/videos/{video}', wait_until='load')
     page.wait_for_selector('text=START', timeout=20000)
     page.wait_for_selector('iframe[src*="youtube"]', timeout=20000)
     page.wait_for_timeout(3500)
@@ -114,37 +116,43 @@ with sync_playwright() as p:
 
     if wants('home'):
         page.goto(B + '/', wait_until='load')
-        page.get_by_role('button', name='Sign In').first.wait_for(timeout=15000)
-        page.wait_for_timeout(2000)
+        page.get_by_text('Sign In', exact=True).first.wait_for(timeout=15000)
+        page.wait_for_timeout(2500)
         shot(page, 'home-hero')
-        tabs = [('INTERMEDIATE', 'b1'), ('UPPER INTERMEDIATE', 'b2'),
-                ('ADVANCED', 'c1'), ('PROFICIENT', 'c2')]
-        for label, code in tabs:
-            page.get_by_role('tab', name=re.compile(f'^{label}$', re.I)).click()
-            page.wait_for_timeout(2500)
-            box = page.get_by_role('tablist').first.bounding_box()
-            y = box['y'] + page.evaluate('window.scrollY') - 150
-            shot(page, f'home-level-{code}', full_page=True,
-                 clip={'x': 0, 'y': y, 'width': 1440, 'height': 820})
+        # the daily goal picker on the dark "daily habit" band
+        goal = page.get_by_role('radio', name=re.compile('^10 min'))
+        goal.scroll_into_view_if_needed()
+        page.wait_for_timeout(1500)
+        y = goal.bounding_box()['y'] + page.evaluate('window.scrollY') - 450
+        shot(page, 'home-goal', full_page=True,
+             clip={'x': 0, 'y': y, 'width': 1440, 'height': 900})
 
     if wants('library'):
         library(page)
         shot(page, 'library')
+        # Sort is a menu button ("Sort: Popular") with menuitemradio items
+        page.get_by_role('button', name=re.compile('^Sort')).click()
+        page.wait_for_timeout(800)
+        shot(page, 'library-sort-menu')
+        page.keyboard.press('Escape')
+        # Level, Length and Speed are menus too
+        page.get_by_role('button', name=re.compile('^Length')).click()
+        page.wait_for_timeout(800)
+        shot(page, 'library-length-menu')
+        page.keyboard.press('Escape')
+        library(page, '?quick=1')
+        shot(page, 'library-quick')
+        library(page, '?topic=science&length=short')
+        shot(page, 'library-filtered')
+        library(page, '?q=sleep')
+        shot(page, 'library-search')
+        # slowest first puts videos with a measured speed (and often a level) first
+        library(page, '?sort=slowest')
         eshot(page.locator('a[href^="/videos/"]').first, 'library-card')
-        for sort in ['Popular', 'Slow']:
-            library(page, f'?sort={sort}')
-            shot(page, f'library-sort-{sort.lower()}')
-        for lvl in ['B1', 'B2', 'C1', 'C2']:
-            library(page, f'?level={lvl}')
-            shot(page, f'library-level-{lvl.lower()}')
-        library(page, '?sort=Slow&level=B1&duration=under-4-minutes')
-        shot(page, 'library-combined')
-        library(page, '?duration=over-20-minutes')
-        shot(page, 'library-duration-long')
         library(page)
         page.mouse.wheel(0, 20000)
         page.wait_for_timeout(1500)
-        shot(page, 'library-load-more')
+        shot(page, 'library-show-more')
 
     if wants('lesson', 'hint', 'bottom'):
         open_lesson(page)
@@ -155,20 +163,21 @@ with sync_playwright() as p:
         page.wait_for_timeout(3200)
         lesson_shot(page, 'lesson-clip-playing')
         ta = page.get_by_placeholder('Type what you hear').first
-        ta.fill('contention is all kids')
+        ta.fill('is all kids')
         lesson_shot(page, 'lesson-typing')
+        ta.fill('is all kids tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint-missing')
-        ta.fill('contention is all the kids have tremendous')
+        ta.fill('is all the kids have tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint-extra')
-        ta.fill('contention is all kids have tremendus')
+        ta.fill('is all kids have tremendus')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-almost')
-        ta.fill('contention ix all kids have tremendous')
+        ta.fill('ix all kids have tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint')
@@ -194,6 +203,13 @@ with sync_playwright() as p:
             page.wait_for_timeout(1200)
         lesson_shot(page, 'lesson-back')
 
+    if wants('lesson-listen'):
+        open_lesson(page, LISTEN_VIDEO)
+        page.get_by_text('START', exact=True).click()
+        page.get_by_role('heading', name='Just listen').wait_for(timeout=20000)
+        page.wait_for_timeout(2500)
+        shot(page, 'lesson-listen')
+
     if wants('tablet'):
         t = browser.new_context(viewport={'width': 820, 'height': 1180}, device_scale_factor=1,
                                 has_touch=True)
@@ -218,7 +234,7 @@ with sync_playwright() as p:
         wait_exercise(mp)
         mp.wait_for_timeout(1000)
         mta = mp.get_by_placeholder('Type what you hear').first
-        mta.fill('contention ix all kids')
+        mta.fill('ix all kids')
         mp.get_by_role('button', name='CHECK').click()
         mp.wait_for_timeout(1000)
         lesson_shot(mp, 'mobile-lesson')

@@ -21,9 +21,11 @@ from playwright.sync_api import sync_playwright
 
 B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15, opens with an exercise
-LISTEN_VIDEO = 'Tp8xIgyyK7I'  # opens with a listen part
-CLIP1 = 'My contention is all kids have tremendous talents,'
-# The lesson gives the first and last word ("My … talents,"); learners type the rest
+# Opens with a "Just listen" part. A local build has only a few transcripts; this one is among them
+LISTEN_VIDEO = '-BvcToPZCLI' if 'DD_BASE' in os.environ else 'Tp8xIgyyK7I'
+CLIP1 = 'My contention is all kids have tremendous talents and we squander them pretty ruthlessly.'
+# The lesson gives two words each side ("My contention … pretty ruthlessly."); learners type the rest
+REST = ' have tremendous talents and we squander them'
 OUT = 'videos'
 
 OVERLAY = r"""
@@ -40,7 +42,7 @@ OVERLAY = r"""
         z-index:2147483646;pointer-events:none;animation:__r .6s ease-out forwards}
       @keyframes __r{to{transform:scale(4);opacity:0}}
       #__cap{position:fixed;left:50%;bottom:92px;transform:translate(-50%,20px);opacity:0;z-index:2147483645;pointer-events:none;
-        background:#212121;color:#fff;font:600 26px/1.3 Roboto,system-ui,sans-serif;padding:14px 26px;border-radius:999px;
+        background:#212121;color:#fff;font:700 26px/1.3 Nunito,system-ui,sans-serif;padding:14px 26px;border-radius:999px;
         box-shadow:0 10px 30px rgba(0,0,0,.35);transition:all .35s ease;white-space:nowrap}
       #__cap.on{opacity:1;transform:translate(-50%,0)}
       #__cap b{color:#ff6b6b;margin-right:10px}
@@ -177,7 +179,7 @@ def scene_lesson(ctx):
     ta = page.get_by_placeholder('Type what you hear').first
     caption('<b>3</b>Type the missing words')
     move_to(ta, 500)
-    ta.press_sequentially('contention ix all kids', delay=110)
+    ta.press_sequentially('ix all kids', delay=110)
     page.wait_for_timeout(500)
     caption('<b>4</b>Press Enter to check', 1200)
     ta.press('Enter')
@@ -187,12 +189,12 @@ def scene_lesson(ctx):
     page.wait_for_timeout(900)
     ta.press_sequentially('is', delay=160)
     page.keyboard.press('End')
-    ta.press_sequentially(' have tremendous', delay=90)
-    page.wait_for_timeout(400)
-    caption('<b>6</b>Press Enter again', 1000)
-    ta.press('Enter')
-    page.wait_for_timeout(500)
-    caption('✓ Right! Press Enter for the next one', 3400)
+    caption('<b>6</b>Type the rest')
+    ta.press_sequentially(REST, delay=70)
+    # a complete answer is accepted as it's typed
+    page.get_by_role('button', name=re.compile('^continue', re.I)).wait_for(timeout=8000)
+    caption('✓ Right! It checks by itself', 2400)
+    caption('Press Enter for the next sentence', 1400)
     page.keyboard.press('Enter')
     caption(None, 2500)
     rec.stop(1280)
@@ -207,14 +209,16 @@ def scene_library(ctx):
     rec = Recorder(page, 'library', (1440, 900))
     rec.start()
     page.evaluate('window.__move(700, 500)')
-    caption('<b>1</b>Choose “Slow” for easier speakers', 400)
-    click(page.get_by_role('button', name='Slow', exact=True))
+    caption('<b>1</b>Pick a topic', 400)
+    click(page.get_by_role('button', name=re.compile('^Mind & psychology')))
     page.wait_for_timeout(1600)
-    caption('<b>2</b>Choose your level', 300)
-    click(page.get_by_role('button', name='B1 - Intermediate'))
+    caption('<b>2</b>Short on time? Quick win', 300)
+    click(page.get_by_role('button', name=re.compile('^Quick win')))
     page.wait_for_timeout(1600)
-    caption('<b>3</b>Choose a length', 300)
-    click(page.get_by_role('button', name='Under 4 minutes'))
+    caption('<b>3</b>Sort: Slowest speaker first', 300)
+    click(page.get_by_role('button', name=re.compile('^Sort')))
+    page.wait_for_timeout(700)
+    click(page.get_by_role('menuitemradio', name=re.compile('^Slowest')))
     page.wait_for_timeout(1800)
     rec.poster()
     caption('<b>4</b>Click a video', 300)
@@ -326,7 +330,7 @@ def scene_mobile(browser):
     ta = page.get_by_placeholder('Type what you hear').first
     caption('Tap the box. Type the missing words', 300, small=True)
     click(ta)
-    ta.press_sequentially('contention ix all kids', delay=100)
+    ta.press_sequentially('ix all kids', delay=100)
     caption('Tap CHECK', 300, small=True)
     click(page.get_by_role('button', name='CHECK'))
     page.wait_for_timeout(600)
@@ -335,11 +339,14 @@ def scene_mobile(browser):
     page.wait_for_timeout(800)
     ta.press_sequentially('is', delay=150)
     page.keyboard.press('End')
-    ta.press_sequentially(' have tremendous', delay=80)
-    caption('Tap CHECK again', 300, small=True)
-    click(page.get_by_role('button', name='CHECK'))
-    page.wait_for_timeout(500)
-    caption('✓ Right!', 3000, small=True)
+    caption('Type the rest', 300, small=True)
+    ta.press_sequentially(REST, delay=60)
+    # a complete answer is accepted as it's typed
+    cont = page.get_by_role('button', name=re.compile('^continue', re.I))
+    cont.wait_for(timeout=8000)
+    caption('✓ Right! Tap CONTINUE', 1800, small=True)
+    click(cont)
+    page.wait_for_timeout(1500)
     caption(None, 400)
     rec.stop(390)
 

@@ -1,34 +1,60 @@
-<!-- {"title": "Your daily streak", "description": "Practise every day and watch your streak grow.", "time": "1 minute"} -->
-<div class="not-prose my-8 flex items-center gap-5 rounded-3xl bg-gradient-to-br from-orange-50 to-red-50 p-6 dark:from-orange-950/30 dark:to-red-950/30">
+<!-- {"title": "Your streak and daily goal", "description": "Practise every day, keep your flame burning, and see it all on My progress.", "time": "2 minutes"} -->
+<div class="not-prose my-8 flex items-center gap-5 rounded-3xl bg-cream p-6 shadow-edge-card dark:bg-gray-900 dark:shadow-none">
     <span class="float text-6xl" aria-hidden="true">🔥</span>
     <div>
-        <p class="text-2xl font-black text-ink dark:text-white">1 correct sentence = 1 day</p>
-        <p class="mt-1 text-lg text-gray-700 dark:text-gray-300">Get one sentence right every day to keep your streak.</p>
+        <p class="font-display text-2xl font-bold text-ink dark:text-white">1 correct sentence = 1 day</p>
+        <p class="mt-1 text-lg text-gray-700 dark:text-gray-300">Get one sentence right every day to keep your streak. You need to <a href="save-progress.html">sign in</a>.</p>
     </div>
 </div>
 
-<h2>Where to see it</h2>
+<h2>In the top bar</h2>
 <tour>
-    <step img="signed-in-library" x="83.7" y="3.6" title="The flame">The number is your streak: how many days in a row you practised.</step>
-    <step img="my-learning-menu" x="82.6" y="13.7" title="My Learning">Click <strong>MY LEARNING</strong> to see your last 4 videos. Click one to continue.</step>
-    <step img="my-learning-menu" x="82.8" y="43" title="Go to My Learning">Opens the page with all your numbers.</step>
-    <step img="my-learning" x="51.9" y="21" title="Learning time">How long you practised this year.</step>
-    <step img="my-learning" x="67.7" y="21" title="Current streak">Days in a row, up to today.</step>
-    <step img="my-learning" x="82.4" y="21" title="Longest streak">Your best record this year. Can you beat it?</step>
+    <step img="signed-in-library" x="79.4" y="3.3" title="The flame">The number is your streak: days in a row. The flame is grey until you practise today, then orange.</step>
+    <step img="signed-in-library" x="85.8" y="3.3" title="The goal ring">Today's minutes. “3/10m” means 3 of your 10 minutes. The ring fills up as you practise.</step>
+    <step img="signed-in-library" x="30.8" y="3.3" title="My progress">Click it (or the flame, or the ring) to see all your numbers.</step>
 </tour>
+
+<h2>Your daily goal</h2>
+<p>How many minutes do you want to practise each day?</p>
+<div class="cards not-prose">
+    <div class="card"><p class="card-icon">🙂</p><p class="card-title">5 min</p><p class="card-text">Casual</p></div>
+    <div class="card"><p class="card-icon">👍</p><p class="card-title">10 min</p><p class="card-text">Regular</p></div>
+    <div class="card"><p class="card-icon">💪</p><p class="card-title">15 min</p><p class="card-text">Serious</p></div>
+    <div class="card"><p class="card-icon">🚀</p><p class="card-title">20 min</p><p class="card-text">Intense</p></div>
+</div>
+<p>Choose it on the home page, on My progress, or at the end of your first lesson. Until you choose, the goal is 10 minutes.</p>
+<shot src="home-goal" caption="On the home page: pick a daily goal, even before you sign in." alt="Pick a daily goal: 5, 10, 15 or 20 minutes">
+<div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>The goal is extra.</strong> One correct sentence keeps your streak, even if you don't reach your goal.</div></div>
+
+<h2>The My progress page</h2>
+<tour>
+    <step img="my-learning" x="20.5" y="19" title="Your streak">Days in a row, and your best streak this year.</step>
+    <step img="my-learning" x="22.2" y="34.3" title="This week">A flame for each day you practised. Today pulses until you practise.</step>
+    <step img="my-learning" x="81" y="26" title="Today's goal">Your minutes today.</step>
+    <step img="my-learning" x="81" y="44.6" title="Change your goal">Click 5, 10, 15 or 20 min.</step>
+    <step img="my-learning" x="17.2" y="63.6" title="This year">Listening time, active days, videos finished and your longest streak.</step>
+    <step img="my-learning" x="14.3" y="78.7" title="Minutes per day">One bar for each day. The dashed line is your goal.</step>
+    <step img="my-learning-more" x="85" y="44" title="Streak milestones">Badges for 3, 7, 14, 30, 50, 100 and 365 days. The bar shows the next one.</step>
+    <step img="my-learning-more" x="32.8" y="74.3" title="My videos">Your videos, newest first. Click one to continue.</step>
+</tour>
+<p>There is also a calendar of the last 6 months and your time at each level.</p>
+
+<h2 id="finish-a-video">Finish a video</h2>
+<p>After the last sentence, a big flame shows your streak. If it's your first practice today, the number goes up by one! You also see your sentences, your minutes and your daily goal.</p>
+<shot src="lesson-finished-streak" caption="A 12-day streak! Find another video, Redo the lesson, or See my progress.">
 
 <h2>The rules</h2>
 <div class="cards not-prose">
     <div class="card"><p class="card-icon">✅</p><p class="card-title">One sentence is enough</p><p class="card-text">Get one sentence right and the day counts.</p></div>
     <div class="card"><p class="card-icon">🌙</p><p class="card-title">You have all day</p><p class="card-text">Your streak doesn't stop at midnight. You have until the end of today.</p></div>
     <div class="card"><p class="card-icon">💔</p><p class="card-title">Miss a whole day…</p><p class="card-text">…and the streak starts again from 0.</p></div>
-    <div class="card"><p class="card-icon">⏱</p><p class="card-title">Only active time counts</p><p class="card-text">Learning time counts listening and typing, not time away from the keyboard.</p></div>
+    <div class="card"><p class="card-icon">⏱</p><p class="card-title">Only active time counts</p><p class="card-text">Listening and typing count. Time away from the keyboard doesn't.</p></div>
 </div>
 
 <h2>When does a new day start?</h2>
 <div class="not-prose my-6 rounded-2xl border border-gray-200 p-6 text-center dark:border-gray-800">
     <p class="text-gray-600 dark:text-gray-400">Where you are, a new streak day starts at</p>
-    <p class="mt-2 text-5xl font-black text-brand" data-utc-midnight>07:00</p>
-    <p class="mt-2 text-sm text-gray-500">The app uses world time (UTC), not your local midnight.</p>
+    <p class="mt-2 font-display text-5xl font-bold text-brand" data-utc-midnight>07:00</p>
+    <p class="mt-2 text-sm text-gray-500">The app uses world time (UTC), not your local midnight. Your goal minutes use the same days.</p>
 </div>
 <div class="callout callout-tip"><span class="callout-icon">💡</span><div>Practise in the middle of your day, and you'll never lose a streak by accident.</div></div>

@@ -19,7 +19,7 @@
         "title": "Your progress",
         "pages": [
             { "slug": "save-progress", "title": "Save your progress", "icon": "💾" },
-            { "slug": "streaks", "title": "Your daily streak", "icon": "🔥" }
+            { "slug": "streaks", "title": "Your streak and daily goal", "icon": "🔥" }
         ]
     },
     {
