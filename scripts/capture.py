@@ -85,7 +85,8 @@ def lesson_targets(page):
         'replay': page.get_by_role('button', name=re.compile('^replay', re.I)),
         'skip': page.get_by_role('button', name=re.compile('^skip', re.I)),
         'undo': page.get_by_role('button', name=re.compile('^undo', re.I)),
-        'continue': page.get_by_role('button', name=re.compile('^continue', re.I)),
+        # By text: while its tooltip is open, the tooltip names the button
+        'continue': page.get_by_role('button').filter(has_text=re.compile('^continue$', re.I)),
         'check': page.get_by_role('button', name=re.compile('^check', re.I)),
         'textarea': page.get_by_placeholder('Type what you hear'),
         'matching': page.get_by_text(re.compile(r'^(Matching|Almost)')),
@@ -173,7 +174,8 @@ with sync_playwright() as p:
         lesson_shot(page, 'lesson-hint')
         eshot(page.get_by_text(re.compile(r'^Matching')).locator('xpath=..'), 'hint-closeup')
         ta.fill(GAP)
-        ta.press('Enter')
+        # A complete answer is accepted as it's typed; Enter would continue
+        page.get_by_text('You are correct!').first.wait_for(timeout=8000)
         page.wait_for_timeout(2500)
         lesson_shot(page, 'lesson-correct')
         page.keyboard.press('Enter')  # CONTINUE
@@ -221,7 +223,8 @@ with sync_playwright() as p:
         mp.wait_for_timeout(1000)
         lesson_shot(mp, 'mobile-lesson')
         mta.fill(GAP)
-        mp.get_by_role('button', name='CHECK').click()
+        # A complete answer is accepted as it's typed; CHECK goes away
+        mp.get_by_text('You are correct!').first.wait_for(timeout=8000)
         mp.wait_for_timeout(2000)
         lesson_shot(mp, 'mobile-lesson-correct')
 
