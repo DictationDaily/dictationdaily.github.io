@@ -12,7 +12,9 @@
 //       to <step> for a phone screenshot; the shot zooms in on the target,
 //       zoom="1" turns that off). Instead of x/y, at="replay" (and
 //       at2="…" for a second marker) uses the measured position of that button
-//       in src/coords.json, written by scripts/capture.py
+//       in src/coords.json, written by scripts/capture.py. A step you click
+//       ("Click …", "Tap …", "Press START") shows a clicking pointer on x/y
+//       instead of the box; cursor forces it on, cursor="0" off
 //   <demo src="lesson" caption="…"></demo>  (add phone for a phone recording)
 //       a looping screen recording from videos/<src>.mp4
 //   <shot src="library" caption="…" alt="…">  a screenshot from images/<src>.webp
@@ -68,7 +70,12 @@ function imageSize(name) {
 
 // The zoomed screenshot for one step, with a highlight fitted to each target:
 // box="left,top,width,height" on the step, else the box scripts/boxes.py
-// found around the point (src/boxes.json), else a small box on the point
+// found around the point (src/boxes.json), else a small box on the point.
+// A click step gets a pointer on the point instead of the first box
+const isClick = (s) =>
+    s.cursor ? s.cursor !== '0'
+        : /\b(click|tap)\b/i.test(stripTags(`${s.title} ${s.text}`)) || /^press (?!enter)/i.test(s.title);
+const POINTER = '<svg viewBox="0 0 24 24"><path d="M3 2l16 10-7 1.5L8.5 21z"/></svg>';
 function stepShot(s) {
     const [w, h] = imageSize(s.img);
     const fitted = [[s.x, s.y, s.box], [s.x2, s.y2]]
@@ -78,9 +85,10 @@ function stepShot(s) {
             return b || [+x - 2, +y - 2, 4, 4];
         });
     const spots = fitted
-        .map(
-            ([l, t, bw, bh]) =>
-                `<span class="hotspot" style="left:${l}%;top:${t}%;width:${bw}%;height:${bh}%" aria-hidden="true"></span>`,
+        .map(([l, t, bw, bh], i) =>
+            i === 0 && isClick(s)
+                ? `<span class="hotspot pointer" style="left:${+s.x}%;top:${+s.y}%" aria-hidden="true">${POINTER}</span>`
+                : `<span class="hotspot" style="left:${l}%;top:${t}%;width:${bw}%;height:${bh}%" aria-hidden="true"></span>`,
         )
         .join('');
     const [l, t, bw, bh] = fitted[0] || [40, 40, 20, 20];

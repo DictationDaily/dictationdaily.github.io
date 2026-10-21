@@ -52,7 +52,8 @@
             const from = shots[current], to = shots[i];
             const img = (shot) => $('img', shot)?.getAttribute('src');
             const glide = from && to && !reduceMotion && img(from) === img(to)
-                && $('.hotspot', from) && $('.hotspot', to);
+                && $('.hotspot', from) && $('.hotspot', to)
+                && $('.hotspot', from).classList.contains('pointer') === $('.hotspot', to).classList.contains('pointer');
             current = i;
             let target;
             if (glide) {

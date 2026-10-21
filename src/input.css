@@ -195,6 +195,50 @@
     .is-active .hotspot:not(.glide) {
         animation: hotspot-in 0.6s ease-out 0.6s both;
     }
+    /* On a click step a pointer clicks the target instead: it slides in,
+       then presses with a ripple every couple of seconds */
+    .hotspot.pointer {
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .pointer svg {
+        position: absolute;
+        left: -3px;
+        top: -2px;
+        width: 26px;
+        height: 26px;
+        transform-origin: 3px 2px;
+        fill: #fff;
+        stroke: #111827;
+        stroke-width: 1.6;
+        stroke-linejoin: round;
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+    }
+    .pointer::before {
+        content: '';
+        position: absolute;
+        left: -14px;
+        top: -14px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 3px solid #d52728;
+        opacity: 0;
+    }
+    .is-active .pointer:not(.glide) {
+        animation: pointer-in 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+    }
+    .is-active .pointer svg {
+        animation: pointer-press 2.2s ease-in-out 1.4s infinite;
+    }
+    .is-active .pointer::before {
+        animation: pointer-ripple 2.2s ease-out 1.4s infinite;
+    }
     .snap .stage-shot,
     .snap .step-zoom,
     .snap .hotspot {
@@ -416,6 +460,34 @@
 @keyframes hotspot-in {
     from {
         opacity: 0;
+    }
+}
+@keyframes pointer-in {
+    from {
+        opacity: 0;
+        transform: translate(40px, 34px);
+    }
+}
+@keyframes pointer-press {
+    0%, 16%, 100% {
+        transform: none;
+    }
+    7% {
+        transform: scale(0.8);
+    }
+}
+@keyframes pointer-ripple {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    7% {
+        opacity: 0.9;
+        transform: scale(0.4);
+    }
+    45%, 100% {
+        opacity: 0;
+        transform: scale(2.2);
     }
 }
 @keyframes keypress {
