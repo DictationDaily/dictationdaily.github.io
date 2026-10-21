@@ -46,9 +46,38 @@
     $$('[data-steps]').forEach((group) => {
         const steps = $$('[data-step]', group);
         const shots = $$('[data-stage-shot]', group);
+        let current = 0;
         const select = (i) => {
+            if (i === current) return;
+            const from = shots[current], to = shots[i];
+            const img = (shot) => $('img', shot)?.getAttribute('src');
+            const glide = from && to && !reduceMotion && img(from) === img(to)
+                && $('.hotspot', from) && $('.hotspot', to);
+            current = i;
+            let target;
+            if (glide) {
+                // Same picture: show the new step where the old one was, then
+                // let the highlight and the zoom slide over to the new target
+                const zf = $('.step-zoom', from), zt = $('.step-zoom', to);
+                const hf = $('.hotspot', from), ht = $('.hotspot', to);
+                target = [zt.style.transformOrigin, ht.style.cssText];
+                group.classList.add('snap');
+                zt.style.transformOrigin = zf.style.transformOrigin;
+                ht.style.cssText = hf.style.cssText;
+                ht.classList.add('glide');
+                zt.classList.add('glide');
+            }
             steps.forEach((s, j) => s.classList.toggle('is-active', j === i));
-            shots.forEach((s, j) => s.classList.toggle('is-active', j === i));
+            shots.forEach((s, j) => {
+                s.classList.toggle('is-active', j === i);
+                if (j !== i) $$('.glide', s).forEach((el) => el.classList.remove('glide'));
+            });
+            if (glide) {
+                void to.offsetWidth;
+                group.classList.remove('snap');
+                $('.step-zoom', to).style.transformOrigin = target[0];
+                $('.hotspot', to).style.cssText = target[1];
+            }
         };
         if (!('IntersectionObserver' in window)) return;
         const io = new IntersectionObserver((entries) => {

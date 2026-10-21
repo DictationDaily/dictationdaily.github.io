@@ -7,9 +7,10 @@
 //
 // Pages can use three shorthand tags, expanded here so the pages stay short:
 //   <tour><step img="lesson-intro" x="95.9" y="53.6" title="Press START">Text</step>…</tour>
-//       numbered steps, each with a screenshot and a pulsing marker at x%/y%
-//       (add phone to <step> for a phone screenshot; the shot zooms in on the
-//       marker, zoom="1" turns that off). Instead of x/y, at="replay" (and
+//       numbered steps, each with a screenshot and a highlight on the target
+//       at x%/y%, fitted to it by scripts/boxes.py or box="l,t,w,h" (add phone
+//       to <step> for a phone screenshot; the shot zooms in on the target,
+//       zoom="1" turns that off). Instead of x/y, at="replay" (and
 //       at2="…" for a second marker) uses the measured position of that button
 //       in src/coords.json, written by scripts/capture.py
 //   <demo src="lesson" caption="…"></demo>  (add phone for a phone recording)
@@ -23,6 +24,7 @@ const OUT = '_site';
 
 const nav = JSON.parse(fs.readFileSync('src/nav.json', 'utf8'));
 const coords = JSON.parse(fs.readFileSync('src/coords.json', 'utf8'));
+const boxes = JSON.parse(fs.readFileSync('src/boxes.json', 'utf8'));
 const layout = fs.readFileSync('src/layout.html', 'utf8');
 const ordered = nav.flatMap((group) =>
     group.pages.map((page) => ({ ...page, group: group.title })),
@@ -64,17 +66,28 @@ function imageSize(name) {
     return [1440, 900];
 }
 
-// The zoomed screenshot for one step, with its pulsing marker(s)
+// The zoomed screenshot for one step, with a highlight fitted to each target:
+// box="left,top,width,height" on the step, else the box scripts/boxes.py
+// found around the point (src/boxes.json), else a small box on the point
 function stepShot(s) {
     const [w, h] = imageSize(s.img);
-    const spots = [[s.x, s.y], [s.x2, s.y2]]
+    const fitted = [[s.x, s.y, s.box], [s.x2, s.y2]]
         .filter(([x, y]) => x && y)
+        .map(([x, y, box]) => {
+            const b = box ? box.split(',').map(Number) : boxes[`${s.img}@${+x},${+y}`];
+            return b || [+x - 2, +y - 2, 4, 4];
+        });
+    const spots = fitted
         .map(
-            ([x, y]) =>
-                `<span class="hotspot" style="left:${x}%;top:${y}%" aria-hidden="true"></span>`,
+            ([l, t, bw, bh]) =>
+                `<span class="hotspot" style="left:${l}%;top:${t}%;width:${bw}%;height:${bh}%" aria-hidden="true"></span>`,
         )
         .join('');
-    return `<div class="step-shot${s.phone ? ' step-shot-phone' : ''}"><div class="step-zoom${s.zoom === '1' ? ' no-zoom' : ''}" style="transform-origin:${s.x || 50}% ${s.y || 50}%"><img src="images/${s.img}.webp" alt="${escape(s.alt || s.title)}" width="${w}" height="${h}" loading="lazy">${spots}</div></div>`;
+    const [l, t, bw, bh] = fitted[0] || [40, 40, 20, 20];
+    const origin = `${+(l + bw / 2).toFixed(2)}% ${+(t + bh / 2).toFixed(2)}%`;
+    // Zoom in less when the target is wide or tall, so it stays in view
+    const zoom = (max) => +Math.max(1, Math.min(max, 80 / bw, 80 / bh)).toFixed(2);
+    return `<div class="step-shot${s.phone ? ' step-shot-phone' : ''}"><div class="step-zoom${s.zoom === '1' ? ' no-zoom' : ''}" style="transform-origin:${origin};--z:${zoom(1.3)};--zs:${zoom(1.7)}"><img src="images/${s.img}.webp" alt="${escape(s.alt || s.title)}" width="${w}" height="${h}" loading="lazy">${spots}</div></div>`;
 }
 
 // Numbered steps with no buttons: on wide screens the picture beside the list
