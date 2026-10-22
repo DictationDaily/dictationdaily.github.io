@@ -1,7 +1,7 @@
 # Dictation Daily user guide
 
 The help centre for [Dictation Daily](https://dictationdaily.com), published with GitHub Pages:
-**https://dictationdaily.github.io/**
+**https://docs.dictationdaily.com/** (GitHub Pages with a custom domain; https://dictationdaily.github.io/ redirects there)
 
 A friendly, step-by-step help site for learners, styled with Tailwind CSS. Pages are short and task-based,
 written in simple English, with scroll steps over real screenshots (no Back/Next buttons: the picture

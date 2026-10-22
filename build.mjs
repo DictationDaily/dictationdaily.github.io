@@ -21,7 +21,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SITE_URL = 'https://dictationdaily.github.io';
+const SITE_URL = 'https://docs.dictationdaily.com';
 const OUT = '_site';
 
 const nav = JSON.parse(fs.readFileSync('src/nav.json', 'utf8'));
