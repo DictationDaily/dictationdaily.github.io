@@ -2,33 +2,86 @@
     {
         "title": "Start here",
         "pages": [
-            { "slug": "quick-start", "title": "Your first lesson", "icon": "🚀" },
-            { "slug": "find-a-video", "title": "Find a video for your level", "icon": "🎬" }
+            {
+                "slug": "quick-start",
+                "title": "Your first lesson",
+                "icon": "🚀"
+            },
+            {
+                "slug": "find-a-video",
+                "title": "Find a video for your level",
+                "icon": "🎬"
+            }
         ]
     },
     {
         "title": "Practise",
         "pages": [
-            { "slug": "hints", "title": "Read the hint", "icon": "💡" },
-            { "slug": "too-hard", "title": "When a sentence is too hard", "icon": "🐢" },
-            { "slug": "move-around", "title": "Skip, go back, try again", "icon": "↩️" },
-            { "slug": "keyboard-shortcuts", "title": "Keyboard shortcuts", "icon": "⌨️" }
+            {
+                "slug": "hints",
+                "title": "Read the hint",
+                "icon": "💡"
+            },
+            {
+                "slug": "too-hard",
+                "title": "When a sentence is too hard",
+                "icon": "🐢"
+            },
+            {
+                "slug": "move-around",
+                "title": "Skip, go back, try again",
+                "icon": "↩️"
+            },
+            {
+                "slug": "keyboard-shortcuts",
+                "title": "Keyboard shortcuts",
+                "icon": "⌨️"
+            },
+            {
+                "slug": "shadowing",
+                "title": "Shadowing: say it after the speaker",
+                "icon": "🎤"
+            }
         ]
     },
     {
         "title": "Your progress",
         "pages": [
-            { "slug": "save-progress", "title": "Save your progress", "icon": "💾" },
-            { "slug": "streaks", "title": "Your streak and daily goal", "icon": "🔥" }
+            {
+                "slug": "save-progress",
+                "title": "Save your progress",
+                "icon": "💾"
+            },
+            {
+                "slug": "streaks",
+                "title": "Your streak and daily goal",
+                "icon": "🔥"
+            }
         ]
     },
     {
         "title": "More",
         "pages": [
-            { "slug": "phone", "title": "Use it on your phone", "icon": "📱" },
-            { "slug": "tips", "title": "Tips and tricks", "icon": "✨" },
-            { "slug": "faq", "title": "Questions and answers", "icon": "❓" },
-            { "slug": "help", "title": "Something's not working", "icon": "🛟" }
+            {
+                "slug": "phone",
+                "title": "Use it on your phone",
+                "icon": "📱"
+            },
+            {
+                "slug": "tips",
+                "title": "Tips and tricks",
+                "icon": "✨"
+            },
+            {
+                "slug": "faq",
+                "title": "Questions and answers",
+                "icon": "❓"
+            },
+            {
+                "slug": "help",
+                "title": "Something's not working",
+                "icon": "🛟"
+            }
         ]
     }
 ]
