@@ -23,9 +23,9 @@ B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15, opens with an exercise
 # Opens with a "Just listen" part. A local build has only a few transcripts; this one is among them
 LISTEN_VIDEO = '-BvcToPZCLI' if 'DD_BASE' in os.environ else 'Tp8xIgyyK7I'
-CLIP1 = 'My contention is all kids have tremendous talents and we squander them pretty ruthlessly.'
-# The lesson gives two words each side ("My contention … pretty ruthlessly."); learners type the rest
-REST = ' have tremendous talents and we squander them'
+CLIP1 = 'My contention is all kids have tremendous talents,'  # exercise 1 since the 2026-10 re-segmenting
+# The lesson gives one word each side ("My … talents,"); learners type the rest
+REST = ' have tremendous'
 OUT = 'videos'
 
 OVERLAY = r"""
@@ -135,6 +135,10 @@ def helpers(page, touch=False):
             box = loc_or_xy.bounding_box()
             x, y = box['x'] + box['width'] / 2, box['y'] + box['height'] / 2
         page.evaluate(f'window.__move({x},{y})')
+        # The real mouse follows the drawn pointer: a click leaves it where it
+        # clicked, and a button that later appears there (CONTINUE where
+        # START was) would open its tooltip in the recording
+        page.mouse.move(x, y)
         page.wait_for_timeout(wait)
         return x, y
 
@@ -179,7 +183,7 @@ def scene_lesson(ctx):
     ta = page.get_by_placeholder('Type what you hear').first
     caption('<b>3</b>Type the missing words')
     move_to(ta, 500)
-    ta.press_sequentially('ix all kids', delay=110)
+    ta.press_sequentially('contention ix all kids', delay=110)
     page.wait_for_timeout(500)
     caption('<b>4</b>Press Enter to check', 1200)
     ta.press('Enter')
@@ -192,7 +196,9 @@ def scene_lesson(ctx):
     caption('<b>6</b>Type the rest')
     ta.press_sequentially(REST, delay=70)
     # a complete answer is accepted as it's typed
-    page.get_by_role('button', name=re.compile('^continue', re.I)).wait_for(timeout=8000)
+    # By text: with the cursor resting where START was, CONTINUE appears
+    # under it and its tooltip opens, which changes the button's accessible name
+    page.locator('button').filter(has_text=re.compile('^continue$', re.I)).wait_for(timeout=8000)
     caption('✓ Right! It checks by itself', 2400)
     caption('Press Space for the next sentence', 1400)
     page.keyboard.press('Space')
@@ -330,7 +336,7 @@ def scene_mobile(browser):
     ta = page.get_by_placeholder('Type what you hear').first
     caption('Tap the box. Type the missing words', 300, small=True)
     click(ta)
-    ta.press_sequentially('ix all kids', delay=100)
+    ta.press_sequentially('contention ix all kids', delay=100)
     caption('Tap CHECK', 300, small=True)
     click(page.get_by_role('button', name='CHECK'))
     page.wait_for_timeout(600)
@@ -342,7 +348,7 @@ def scene_mobile(browser):
     caption('Type the rest', 300, small=True)
     ta.press_sequentially(REST, delay=60)
     # a complete answer is accepted as it's typed
-    cont = page.get_by_role('button', name=re.compile('^continue', re.I))
+    cont = page.locator('button').filter(has_text=re.compile('^continue$', re.I))
     cont.wait_for(timeout=8000)
     caption('✓ Right! Tap CONTINUE', 1800, small=True)
     click(cont)

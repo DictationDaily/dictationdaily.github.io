@@ -18,9 +18,9 @@ ONLY = sys.argv[3:] if len(sys.argv) > 2 and sys.argv[2] == '--only' else None
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15
 # Opens with a "Just listen" part. A local build has only a few transcripts; this one is among them
 LISTEN_VIDEO = '-BvcToPZCLI' if 'DD_BASE' in os.environ else 'Tp8xIgyyK7I'
-CLIP1 = 'My contention is all kids have tremendous talents and we squander them pretty ruthlessly.'
-# The lesson gives two words each side ("My contention … pretty ruthlessly."); learners type the rest
-GAP = 'is all kids have tremendous talents and we squander them'
+CLIP1 = 'My contention is all kids have tremendous talents,'  # exercise 1 since the 2026-10 re-segmenting
+# The lesson gives one word each side ("My … talents,"); learners type the rest
+GAP = 'contention is all kids have tremendous'
 COORDS = {}
 
 
@@ -158,26 +158,29 @@ with sync_playwright() as p:
         open_lesson(page)
         lesson_shot(page, 'lesson-intro')
         page.get_by_text('START', exact=True).click()
+        # Park the pointer: CONTINUE later appears where START was, and a
+        # pointer resting on it opens its tooltip in the shots
+        page.mouse.move(400, 32)
         wait_exercise(page)
         # while the hidden words play, the gap's red line is filling
         page.wait_for_timeout(3200)
         lesson_shot(page, 'lesson-clip-playing')
         ta = page.get_by_placeholder('Type what you hear').first
-        ta.fill('is all kids')
+        ta.fill('contention is all kids')
         lesson_shot(page, 'lesson-typing')
-        ta.fill('is all kids tremendous')
+        ta.fill('contention is all kids tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint-missing')
-        ta.fill('is all the kids have tremendous')
+        ta.fill('contention is all the kids have tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint-extra')
-        ta.fill('is all kids have tremendus')
+        ta.fill('contention is all kids have tremendus')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-almost')
-        ta.fill('ix all kids have tremendous')
+        ta.fill('contention ix all kids have tremendous')
         ta.press('Enter')
         page.wait_for_timeout(1000)
         lesson_shot(page, 'lesson-hint')
@@ -187,7 +190,7 @@ with sync_playwright() as p:
         page.get_by_text('You are correct!').first.wait_for(timeout=8000)
         page.wait_for_timeout(2500)
         lesson_shot(page, 'lesson-correct')
-        page.keyboard.press('Enter')  # CONTINUE
+        page.keyboard.press('Space')  # CONTINUE
         wait_exercise(page)
         page.wait_for_timeout(1500)
         lesson_shot(page, 'lesson-next-clip')
@@ -231,10 +234,11 @@ with sync_playwright() as p:
         open_lesson(mp)
         lesson_shot(mp, 'mobile-lesson-intro')
         mp.get_by_text('START', exact=True).click()
+        mp.mouse.move(200, 30)
         wait_exercise(mp)
         mp.wait_for_timeout(1000)
         mta = mp.get_by_placeholder('Type what you hear').first
-        mta.fill('ix all kids')
+        mta.fill('contention ix all kids')
         mp.get_by_role('button', name='CHECK').click()
         mp.wait_for_timeout(1000)
         lesson_shot(mp, 'mobile-lesson')
