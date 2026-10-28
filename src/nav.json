@@ -33,6 +33,11 @@
                 "icon": "↩️"
             },
             {
+                "slug": "look-up-a-word",
+                "title": "Look up a word",
+                "icon": "📖"
+            },
+            {
                 "slug": "keyboard-shortcuts",
                 "title": "Keyboard shortcuts",
                 "icon": "⌨️"
