@@ -1,6 +1,7 @@
 """Extra signed-out screenshots of dictationdaily.com for the guide site.
 Read-only: never signs in, so nothing is saved.
 usage: [DD_BASE=http://localhost:8788] python3 scripts/capture.py images [--only name ...]
+(--only takes name prefixes: home, library, lesson, languages, tablet, mobile, …)
 PNGs are written; convert them with scripts/to_webp.py before committing.
 src/coords.json gets the position of the buttons in each lesson shot, in % of
 the screenshot, for the x/y of the markers in <tour> steps."""
@@ -21,6 +22,8 @@ LISTEN_VIDEO = '-BvcToPZCLI' if 'DD_BASE' in os.environ else 'Tp8xIgyyK7I'
 CLIP1 = 'My contention is all kids have tremendous talents,'  # exercise 1 since the 2026-10 re-segmenting
 # The lesson gives one word each side ("My … talents,"); learners type the rest
 GAP = 'contention is all kids have tremendous'
+FR_VIDEO = 'YCuU4SjcS2A'  # Easy French 97, opens with an exercise
+FR_GAP = "et bienvenue dans un nouvel épisode d'Easy"  # "Bonjour … French,"
 COORDS = {}
 
 
@@ -212,6 +215,46 @@ with sync_playwright() as p:
         page.get_by_role('heading', name='Just listen').wait_for(timeout=20000)
         page.wait_for_timeout(2500)
         shot(page, 'lesson-listen')
+
+    if wants('languages', 'lesson-fr'):
+        # the "Which language do you want to learn?" cards on the home page
+        page.goto(B + '/', wait_until='load')
+        page.get_by_text('Sign In', exact=True).first.wait_for(timeout=15000)
+        head = page.get_by_role('heading', name=re.compile('Which language'))
+        head.scroll_into_view_if_needed()
+        page.wait_for_timeout(1500)
+        y = head.bounding_box()['y'] + page.evaluate('window.scrollY') - 60
+        shot(page, 'home-languages', full_page=True,
+             clip={'x': 0, 'y': y, 'width': 1440, 'height': 440})
+        # the Language menu on the video library
+        library(page)
+        page.get_by_role('button', name=re.compile('^Language')).click()
+        page.wait_for_timeout(800)
+        shot(page, 'library-language-menu')
+        page.keyboard.press('Escape')
+        library(page, '?lang=fr')
+        shot(page, 'library-french')
+        # a French lesson, signed out: the place of the translation asks to sign in
+        open_lesson(page, FR_VIDEO)
+        lesson_shot(page, 'lesson-fr-intro')
+        page.get_by_text('START', exact=True).click()
+        page.mouse.move(400, 32)
+        wait_exercise(page)
+        page.wait_for_timeout(1500)
+        ta = page.get_by_placeholder('Type what you hear').first
+        ta.fill(FR_GAP)
+        page.get_by_text('You are correct!').first.wait_for(timeout=8000)
+        page.wait_for_timeout(2500)
+        lesson_shot(page, 'lesson-fr-correct')
+        coords(page, 'lesson-fr-correct', {**lesson_targets(page),
+               'signin': page.get_by_text('Sign in', exact=True)})
+
+    if wants('welcome'):
+        # a visitor's /welcome: only "What do you want to learn?"
+        page.goto(B + '/welcome', wait_until='load')
+        page.get_by_text('What do you want to learn?').wait_for(timeout=15000)
+        page.wait_for_timeout(1500)
+        shot(page, 'welcome-learn')
 
     if wants('tablet'):
         t = browser.new_context(viewport={'width': 820, 'height': 1180}, device_scale_factor=1,
