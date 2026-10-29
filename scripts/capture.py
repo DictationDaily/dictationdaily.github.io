@@ -249,6 +249,13 @@ with sync_playwright() as p:
         coords(page, 'lesson-fr-correct', {**lesson_targets(page),
                'signin': page.get_by_text('Sign in', exact=True)})
 
+    if wants('welcome'):
+        # a visitor's /welcome: only "What do you want to learn?"
+        page.goto(B + '/welcome', wait_until='load')
+        page.get_by_text('What do you want to learn?').wait_for(timeout=15000)
+        page.wait_for_timeout(1500)
+        shot(page, 'welcome-learn')
+
     if wants('tablet'):
         t = browser.new_context(viewport={'width': 820, 'height': 1180}, device_scale_factor=1,
                                 has_touch=True)

@@ -11,6 +11,11 @@
                 "slug": "find-a-video",
                 "title": "Find a video for your level",
                 "icon": "🎬"
+            },
+            {
+                "slug": "languages",
+                "title": "Your language and translations",
+                "icon": "🌍"
             }
         ]
     },
