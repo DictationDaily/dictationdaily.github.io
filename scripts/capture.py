@@ -117,18 +117,22 @@ with sync_playwright() as p:
     ctx = browser.new_context(viewport={'width': 1440, 'height': 900})
     page = ctx.new_page()
 
+    # The home page's hero spins and types on its own; with less motion asked
+    # for it holds still on its last frame (French, line checked)
+    still = {'reduced_motion': 'reduce'}
+
     if wants('home'):
-        page.goto(B + '/', wait_until='load')
-        page.get_by_text('Sign In', exact=True).first.wait_for(timeout=15000)
-        page.wait_for_timeout(2500)
-        shot(page, 'home-hero')
-        # the daily goal picker on the dark "daily habit" band
-        goal = page.get_by_role('radio', name=re.compile('^10 min'))
-        goal.scroll_into_view_if_needed()
-        page.wait_for_timeout(1500)
-        y = goal.bounding_box()['y'] + page.evaluate('window.scrollY') - 450
-        shot(page, 'home-goal', full_page=True,
-             clip={'x': 0, 'y': y, 'width': 1440, 'height': 900})
+        hp = browser.new_context(viewport={'width': 1440, 'height': 900}, **still).new_page()
+        hp.goto(B + '/', wait_until='load')
+        hp.get_by_text('Sign In', exact=True).first.wait_for(timeout=15000)
+        hp.wait_for_timeout(2500)
+        shot(hp, 'home-hero')
+        # the daily goal picker on the streak band, scrolled to the middle of
+        # the screen (a full-page clip would show the sticky header mid-shot)
+        goal = hp.get_by_role('radio', name=re.compile('^10 min'))
+        goal.evaluate("el => el.scrollIntoView({block: 'center'})")
+        hp.wait_for_timeout(1500)
+        shot(hp, 'home-goal')
 
     if wants('library'):
         library(page)
@@ -269,9 +273,11 @@ with sync_playwright() as p:
         m = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True,
                                 has_touch=True, device_scale_factor=2)
         mp = m.new_page()
-        mp.goto(B + '/', wait_until='load')
-        mp.wait_for_timeout(3000)
-        shot(mp, 'mobile-home')
+        mh = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True,
+                                 has_touch=True, device_scale_factor=2, **still).new_page()
+        mh.goto(B + '/', wait_until='load')
+        mh.wait_for_timeout(3000)
+        shot(mh, 'mobile-home')
         library(mp)
         shot(mp, 'mobile-library')
         open_lesson(mp)
