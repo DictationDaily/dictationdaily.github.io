@@ -1,23 +1,24 @@
-<!-- {"title": "Look up a word", "description": "With Pro, tap any word of a sentence you have finished to hear it, see what it means in that sentence in your language, and read its dictionary entry with examples.", "time": "1 minute"} -->
+<!-- {"title": "Look up a word", "description": "With Pro, tap any word of a sentence you have finished to hear it, see what it means in your language, say it yourself and get a score, and read its dictionary entry with examples.", "time": "2 minutes"} -->
 <div class="not-prose my-8 flex items-center gap-5 rounded-3xl bg-cream p-6 shadow-edge-card dark:bg-gray-900 dark:shadow-none">
     <span class="float text-6xl" aria-hidden="true">📖</span>
     <div>
         <p class="font-display text-2xl font-bold text-ink dark:text-white">A dictionary inside every sentence.</p>
-        <p class="mt-1 text-lg text-gray-700 dark:text-gray-300">Tap a word: hear it, see what it means here, in your language, and how else it is used.</p>
+        <p class="mt-1 text-lg text-gray-700 dark:text-gray-300">Tap a word: hear it, see what it means in your language, say it yourself, and see how else it is used.</p>
     </div>
 </div>
 
 <div class="callout callout-tip"><span class="callout-icon">⭐</span><div><strong>A Pro feature.</strong> Looking up words is part of <a href="https://dictationdaily.com/pro">Pro</a>. Signed out, the card asks you to sign in; on the free plan it offers <strong>Join the Pro waitlist</strong>, and Pro is switched on for your account when it opens.</div></div>
 
 <h2>Tap a word</h2>
-<p>When you have finished a sentence (in Dictation, once it is correct; in Shadowing, once your take is checked, or on a line you did before), every word in it can be tapped. While a Shadowing line plays or you are speaking, its words can't be tapped, so nothing stops the line or the microphone. A small card opens next to the word, with the word marked in red.</p>
-<shot src="word-card" caption="épisode in a French lesson, for a learner who speaks Vietnamese." alt="A lesson with the word épisode marked in red and a card next to it: noun, masculine, its pronunciation, Listen and In the video buttons, the meaning in this sentence in Vietnamese, and its meanings with examples">
+<p>When you have finished a sentence (in Dictation, once it is correct; in Shadowing, once your take is checked, or on a line you did before), every word in it can be tapped. While a Shadowing line plays or you are speaking, its words can't be tapped, so nothing stops the line or the microphone. On a computer, the dictionary opens as a panel on the right. The lesson behind it goes darker but doesn't move, so you are back exactly where you were when you close it.</p>
+<shot src="word-card" caption="épisode in a French lesson, for a learner who speaks Vietnamese." alt="A lesson, darkened, with a panel on the right for the word épisode: noun, masculine, its pronunciation, Listen and In the video buttons, its meaning in Vietnamese, a green box with a microphone saying Tap and say épisode, and all its meanings with examples">
 
 <h2>What the card shows</h2>
 <div class="cards not-prose">
     <div class="card"><p class="card-icon">🔤</p><p class="card-title">The word</p><p class="card-text">The word as a dictionary lists it, what kind of word it is (and whether a noun is masculine or feminine), how to say it in IPA, and the forms you need: the article and plural, or a verb's main forms.</p></div>
     <div class="card"><p class="card-icon">🔊</p><p class="card-title">Hear it</p><p class="card-text"><strong>Listen</strong> says the word clearly. <strong>In the video</strong> plays the moment the speaker says it, then goes back to where you were.</p></div>
-    <div class="card"><p class="card-icon">🎯</p><p class="card-title">In this sentence</p><p class="card-text">What the word means <em>here</em>, in your language, with a simple explanation in the language you are learning.</p></div>
+    <div class="card"><p class="card-icon">🎯</p><p class="card-title">Meaning</p><p class="card-text">What the word means, in your language, with a simple explanation in the language you are learning.</p></div>
+    <div class="card"><p class="card-icon">🎙️</p><p class="card-title">Say it</p><p class="card-text">Say the word yourself and see how easily it was understood. <a href="#say-it">More below</a>.</p></div>
     <div class="card"><p class="card-icon">📚</p><p class="card-title">All meanings</p><p class="card-text">The word's common meanings, each with two short examples and their translations. The meaning used in your sentence has a red number.</p></div>
 </div>
 
@@ -25,12 +26,25 @@
 
 <div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>Small words and expressions.</strong> In French and Italian, “l'homme” or “dell'anno” are two taps: the article and the word. A word that is part of an expression, like “pick … up” or “fängt … an”, is looked up as the whole expression.</div></div>
 
+<h2 id="say-it">Say it</h2>
+<p>Under the meaning there is a green box with a microphone. Tap it and say just the word, once. Recording stops by itself when you go quiet. A moment later you see the word and a score from 1 to 100:</p>
+<div class="cards not-prose">
+    <div class="card"><p class="card-icon">🟢</p><p class="card-title">85 and up: Great</p><p class="card-text">“Easy to understand.”</p></div>
+    <div class="card"><p class="card-icon">🟢</p><p class="card-title">70 to 84: Good</p><p class="card-text">“Understood.”</p></div>
+    <div class="card"><p class="card-icon">🟠</p><p class="card-title">Under 70: Try again</p><p class="card-text">“Hard to understand. Listen, then try again.”</p></div>
+</div>
+<shot src="say-it-result" caption="Saying épisode: 92, Great." alt="The Say it box on the word panel: épisode in green, a green bar with 92 and Great, Easy to understand, and the buttons Yours and Say it again">
+<p><strong>Yours</strong> plays your recording, so you can compare it with <strong>Listen</strong> (the word said clearly) and <strong>In the video</strong> (the speaker). <strong>Say it again</strong> records a new try. If you didn't say anything, the box says <em>We didn't hear anything</em> and nothing is counted.</p>
+<div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>What the score means.</strong> A speech-to-text model listens to your recording, and the score is how sure it was of what it heard. A high score means you were easy to understand. It is <strong>not</strong> an accent grade: a clear word with an accent can still score well, and saying it softly, too fast or far from the microphone lowers the score. To work on how it sounds, play <strong>Yours</strong> right after <strong>Listen</strong> and copy what you hear.</div></div>
+<p>The first time, your browser asks to use the microphone. If you said no, the box says <strong>Allow the microphone</strong>: allow it in your browser's site settings and try again. Say it shares its daily number of checks with <a href="shadowing.html">Shadowing</a>. Your recording is checked and then dropped: nothing is stored, and nobody listens to it.</p>
+
 <h2>While the card is open</h2>
 <p>The video pauses and the lesson's keys wait, so <kbd class="kbd">Space</kbd> doesn't move you on by mistake. <kbd class="kbd">Esc</kbd>, the ✕, or a click outside closes the card, and you carry on where you were.</p>
 
 <h2>On your phone</h2>
-<p>On a phone the card slides up from the bottom of the screen. Swipe it down or tap above it to close it.</p>
-<shot src="mobile-word-card" caption="The same card on a phone." alt="The word card as a sheet at the bottom of a phone screen, with Listen and In the video buttons, the meaning in this sentence and the word's meanings with examples">
+<p>On a phone the card slides up from the bottom of the screen. Swipe it down or tap above it to close it. In Say it, <strong>Yours</strong> and <strong>Say it again</strong> are the round ear and microphone buttons.</p>
+<shot src="mobile-word-card" caption="The same card on a phone." alt="The word card as a sheet at the bottom of a phone screen, with Listen and In the video buttons, the meaning in Vietnamese, the Say it box with a microphone, and the word's meanings with examples">
+<shot src="mobile-say-it-result" caption="Say it on a phone: the ear plays your recording, the microphone records again." alt="The Say it box on a phone: épisode in green, a bar with 92 and Great, Easy to understand, a round ear button and a round green microphone button">
 
 <h2>Without Pro</h2>
 <p>On the free plan, tapping a word opens a short card instead: the word with a PRO badge, <strong>Upgrade to Pro to look up words</strong> and a <strong>Join the Pro waitlist</strong> button. Once you have joined, it says <strong>On the waitlist</strong>.</p>
