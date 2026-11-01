@@ -1,4 +1,4 @@
-<!-- {"title": "Look up a word", "description": "With Pro, tap any word of a sentence you have finished to hear it, see what it means in your language, say it yourself and get a score, and read its dictionary entry with examples.", "time": "2 minutes"} -->
+<!-- {"title": "Look up a word", "description": "With Pro, tap any word of a sentence you have finished to hear it, see what it means in your language, say it yourself and see how easily it was understood, and read its dictionary entry with examples.", "time": "2 minutes"} -->
 <div class="not-prose my-8 flex items-center gap-5 rounded-3xl bg-cream p-6 shadow-edge-card dark:bg-gray-900 dark:shadow-none">
     <span class="float text-6xl" aria-hidden="true">📖</span>
     <div>
@@ -27,15 +27,16 @@
 <div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>Small words and expressions.</strong> In French and Italian, “l'homme” or “dell'anno” are two taps: the article and the word. A word that is part of an expression, like “pick … up” or “fängt … an”, is looked up as the whole expression.</div></div>
 
 <h2 id="say-it">Say it</h2>
-<p>Under the meaning there is a green box with a microphone. Tap it and say just the word, once. Recording stops by itself when you go quiet. A moment later you see the word and a score from 1 to 100:</p>
+<p>Under the meaning there is a green box with a microphone. Tap it and say just the word, once. Recording stops by itself when you go quiet. A moment later the word comes back in a colour, with a mark beside it:</p>
 <div class="cards not-prose">
-    <div class="card"><p class="card-icon">🟢</p><p class="card-title">85 and up: Great</p><p class="card-text">“Easy to understand.”</p></div>
-    <div class="card"><p class="card-icon">🟢</p><p class="card-title">70 to 84: Good</p><p class="card-text">“Understood.”</p></div>
-    <div class="card"><p class="card-icon">🟠</p><p class="card-title">Under 70: Try again</p><p class="card-text">“Hard to understand. Listen, then try again.”</p></div>
+    <div class="card"><p class="card-icon">✅</p><p class="card-title">Green, filled tick</p><p class="card-text">“Easy to understand.”</p></div>
+    <div class="card"><p class="card-icon">☑️</p><p class="card-title">Brown, outlined tick</p><p class="card-text">“Understood.” Also whenever the word you said was heard as the right word.</p></div>
+    <div class="card"><p class="card-icon">❌</p><p class="card-title">Red, cross</p><p class="card-text">“Hard to understand. Listen, then try again.”</p></div>
 </div>
-<shot src="say-it-result" caption="Saying épisode: 92, Great." alt="The Say it box on the word panel: épisode in green, a green bar with 92 and Great, Easy to understand, and the buttons Yours and Say it again">
+<shot src="say-it-result" caption="Saying épisode: green, easy to understand." alt="The Say it box on the word panel: a green tick beside épisode in green, Easy to understand, and the buttons Yours and Say it again">
 <p><strong>Yours</strong> plays your recording, so you can compare it with <strong>Listen</strong> (the word said clearly) and <strong>In the video</strong> (the speaker). <strong>Say it again</strong> records a new try. If you didn't say anything, the box says <em>We didn't hear anything</em> and nothing is counted.</p>
-<div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>What the score means.</strong> A speech-to-text model listens to your recording, and the score is how sure it was of what it heard. A high score means you were easy to understand. It is <strong>not</strong> an accent grade: a clear word with an accent can still score well, and saying it softly, too fast or far from the microphone lowers the score. To work on how it sounds, play <strong>Yours</strong> right after <strong>Listen</strong> and copy what you hear.</div></div>
+<p>Words of one or two letters, like <em>de</em>, <em>et</em> or <em>y</em>, aren't checked: on their own they sound like too many other words. You can still record yourself; the box shows an ear and <em>Too short to check. Compare Yours with Listen.</em>, and no check is counted.</p>
+<div class="callout callout-tip"><span class="callout-icon">💡</span><div><strong>What the colours mean.</strong> A speech-to-text model listens to your recording, and the colour is how sure it was of what it heard. Green means you were easy to understand. It is <strong>not</strong> an accent grade: a clear word with an accent can still be green, and saying it softly, too fast or far from the microphone can make it brown or red. To work on how it sounds, play <strong>Yours</strong> right after <strong>Listen</strong> and copy what you hear.</div></div>
 <p>The first time, your browser asks to use the microphone. If you said no, the box says <strong>Allow the microphone</strong>: allow it in your browser's site settings and try again. Say it shares its daily number of checks with <a href="shadowing.html">Shadowing</a>. Your recording is checked and then dropped: nothing is stored, and nobody listens to it.</p>
 
 <h2>While the card is open</h2>
@@ -44,7 +45,7 @@
 <h2>On your phone</h2>
 <p>On a phone the card slides up from the bottom of the screen. Swipe it down or tap above it to close it. In Say it, <strong>Yours</strong> and <strong>Say it again</strong> are the round ear and microphone buttons.</p>
 <shot src="mobile-word-card" caption="The same card on a phone." alt="The word card as a sheet at the bottom of a phone screen, with Listen and In the video buttons, the meaning in Vietnamese, the Say it box with a microphone, and the word's meanings with examples">
-<shot src="mobile-say-it-result" caption="Say it on a phone: the ear plays your recording, the microphone records again." alt="The Say it box on a phone: épisode in green, a bar with 92 and Great, Easy to understand, a round ear button and a round green microphone button">
+<shot src="mobile-say-it-result" caption="Say it on a phone: the ear plays your recording, the microphone records again." alt="The Say it box on a phone: a green tick beside épisode in green, Easy to understand, a round ear button and a round green microphone button">
 
 <h2>Without Pro</h2>
 <p>On the free plan, tapping a word opens a short card instead: the word with a PRO badge, <strong>Upgrade to Pro to look up words</strong> and a <strong>Join the Pro waitlist</strong> button. Once you have joined, it says <strong>On the waitlist</strong>.</p>
