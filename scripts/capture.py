@@ -224,10 +224,11 @@ with sync_playwright() as p:
         # the "Which language do you want to learn?" cards on the home page
         page.goto(B + '/', wait_until='load')
         page.get_by_text('Sign In', exact=True).first.wait_for(timeout=15000)
-        head = page.get_by_role('heading', name=re.compile('Which language'))
+        # since the 2026-10-30 landing: "Which one will you learn?" in the languages band
+        head = page.get_by_role('heading', name=re.compile('Which one will you learn'))
         head.scroll_into_view_if_needed()
-        page.wait_for_timeout(1500)
-        y = head.bounding_box()['y'] + page.evaluate('window.scrollY') - 60
+        page.wait_for_timeout(2500)
+        y = head.bounding_box()['y'] + page.evaluate('window.scrollY') - 40
         shot(page, 'home-languages', full_page=True,
              clip={'x': 0, 'y': y, 'width': 1440, 'height': 440})
         # the Language menu on the video library
