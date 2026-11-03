@@ -72,6 +72,8 @@ python3 scripts/record.py voice shadow    # some
 
 Scenes: `lesson`, `hints`, `library`, `speed`, `navigate`, `listen`, `mobile`, and the Pro ones `translation`, `word`, `voice`, `shadow`, `resume`, `streak`, `report`. In the Pro scenes the speech checks (`voice-answer`, `shadow-check`, `word-check`) are answered in the browser with a canned result, and the microphone is Chrome's fake device fed a voice-like tone, so a recording makes no paid call; the interface filmed is the real one. `DD_DEBUG=<dir>` saves a screenshot when a scene breaks.
 
+The look is Cap's: `scripts/cap_render.py` draws a big pointer, a red ring on each click and the captions over the frames, and zooms in gently (1.4×, 1.25× on a phone, where it stays centred across) towards whatever is clicked, typed into (`type_()`) or pointed at (`look()`), easing back out after. `record.py` logs those events while Chrome's screencast saves the frames; nothing is drawn into the page itself. Captions use Nunito (downloaded once to `~/.cache/dd-guide/Nunito.ttf`, DejaVu Sans if missing).
+
 ## Keeping it accurate
 
 Behaviour described here was checked against the app's code and the live site. When the app changes, update the matching page, and the FAQ if a question is affected.

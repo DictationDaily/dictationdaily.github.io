@@ -1,24 +1,24 @@
 {
- "duration": 15.69,
+ "duration": 15.12,
  "steps": [
   {
    "t": 0.0,
    "text": "The flame: days in a row"
   },
   {
-   "t": 1.72,
+   "t": 2.01,
    "text": "The ring: today's minutes"
   },
   {
-   "t": 3.54,
+   "t": 4.06,
    "text": "Click it: My progress"
   },
   {
-   "t": 7.75,
+   "t": 7.22,
    "text": "Your week, your goal, your minutes"
   },
   {
-   "t": 12.79,
+   "t": 12.23,
    "text": "Six months of practice, and badges"
   }
  ]

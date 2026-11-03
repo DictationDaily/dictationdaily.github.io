@@ -1,24 +1,24 @@
 {
- "duration": 13.76,
+ "duration": 13.81,
  "steps": [
   {
-   "t": 0.0,
+   "t": 0.01,
    "text": "Tap any word of the sentence"
   },
   {
-   "t": 1.26,
+   "t": 1.38,
    "text": "Its meaning, in your language"
   },
   {
-   "t": 3.67,
+   "t": 3.79,
    "text": "Listen to it"
   },
   {
-   "t": 6.34,
+   "t": 6.42,
    "text": "Say it: tap the microphone and say the word"
   },
   {
-   "t": 9.64,
+   "t": 9.69,
    "text": "Green = easy to understand. Each sound gets a colour"
   }
  ]
