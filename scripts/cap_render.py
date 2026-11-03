@@ -19,10 +19,15 @@ import subprocess
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 FPS = 25
-ZOOM = 1.4            # "not too much"
-ZOOM_PHONE = 1.25     # a phone screen is small already
-ZOOM_TAU = 0.32       # seconds for the zoom to settle
-PAN_TAU = 0.28        # seconds for the zoom's centre to follow
+ZOOM = 1.35           # "not too much"
+ZOOM_PHONE = 1.2      # a phone screen is small already
+ZOOM_TAU = 0.5        # seconds for the zoom to settle
+PAN_TAU = 0.5         # seconds for the zoom's centre to glide
+# Zoom out only for a reason: once in, stay in while the next action is close
+# by (glide there instead) and comes within STAY_GAP seconds
+STAY_GAP = 5.0
+BRIEF = 1.5           # seconds: a shorter zoom-out is skipped
+NEAR = 0.6            # "close by": within this share of the zoomed view's size
 CLICK_BEFORE, CLICK_AFTER = 0.75, 1.6   # zoomed in around a click
 TYPE_BEFORE, TYPE_AFTER = 0.35, 1.1     # and around typing
 BRAND = (213, 39, 40)
@@ -74,6 +79,27 @@ def _windows(events):
         elif e['k'] == 'focus':
             out.append((e['t'] - TYPE_BEFORE, e['t1'] + TYPE_AFTER, e['x'], e['y']))
     return out
+
+
+def _plan(windows, w_css, h_css, zoom):
+    """Zoomed stretches: [start, end, [(time, x, y), …]]. Actions close in time
+    and place share one stretch, so the view stays in and glides between them."""
+    plan = []
+    for a, b, x, y in sorted(windows):
+        if plan:
+            seg = plan[-1]
+            _, lx, ly = seg[2][-1]
+            near = abs(x - lx) <= w_css / zoom * NEAR and abs(y - ly) <= h_css / zoom * NEAR
+            if near and a - seg[1] <= STAY_GAP:
+                seg[1] = max(seg[1], b)
+                seg[2].append((a, x, y))
+                continue
+        plan.append([a, b, [(a, x, y)]])
+    # a zoom out that would last under BRIEF seconds isn't worth it: glide instead
+    for prev, nxt in zip(plan, plan[1:]):
+        if nxt[0] - prev[1] < BRIEF:
+            prev[1] = nxt[0]
+    return plan
 
 
 def _caption_at(t, events):
@@ -158,7 +184,8 @@ def render(frames, events, out_mp4, out_w, scale, touch=False, poster_at=None, p
     W, H = first.size
     out_h = round(H * out_w / W / 2) * 2
     phone = touch
-    windows = _windows(events)
+    zoom_in = ZOOM_PHONE if touch else ZOOM
+    plan = _plan(_windows(events), W / scale, H / scale, zoom_in)
     cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{out_w}x{out_h}',
            '-r', str(FPS), '-i', '-', '-c:v', 'libx264', '-preset', 'slow', '-crf', '26', '-pix_fmt', 'yuv420p',
            '-movflags', '+faststart', '-an', out_mp4]
@@ -175,12 +202,16 @@ def render(frames, events, out_mp4, out_w, scale, touch=False, poster_at=None, p
         if cache[0] != fi:
             cache = (fi, Image.open(frames[fi][0]).convert('RGB'))
         src = cache[1]
-        # zoom target: the latest window covering t
+        # zoom target: the stretch covering t, centred on its latest action
         tz, tx, ty = 1.0, W / 2, H / 2
-        for a, b, x, y in windows:
+        for a, b, points in plan:
             if a <= t <= b:
+                x, y = points[0][1:]
+                for pt, px, py in points:
+                    if pt <= t:
+                        x, y = px, py
                 # a phone screen is narrow: stay centred across, follow up and down
-                tz, tx, ty = (ZOOM_PHONE if touch else ZOOM), (W / 2 if touch else x * scale), y * scale
+                tz, tx, ty = zoom_in, (W / 2 if touch else x * scale), y * scale
         z += (tz - z) * (1 - math.exp(-dt / ZOOM_TAU))
         k = 1 - math.exp(-dt / PAN_TAU)
         cx += (tx - cx) * k

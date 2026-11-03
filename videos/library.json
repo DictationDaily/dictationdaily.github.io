@@ -1,24 +1,24 @@
 {
- "duration": 17.72,
+ "duration": 18.08,
  "steps": [
   {
    "t": 0.01,
    "text": "Pick a topic"
   },
   {
-   "t": 2.81,
+   "t": 2.87,
    "text": "Short on time? Quick win"
   },
   {
-   "t": 5.64,
+   "t": 5.62,
    "text": "Sort: Slowest speaker first"
   },
   {
-   "t": 10.42,
+   "t": 10.28,
    "text": "Click a video"
   },
   {
-   "t": 13.34,
+   "t": 13.68,
    "text": "The lesson opens. Press START!"
   }
  ]

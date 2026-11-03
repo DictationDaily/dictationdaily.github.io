@@ -1,36 +1,36 @@
 {
- "duration": 20.94,
+ "duration": 20.67,
  "steps": [
   {
-   "t": 0.01,
+   "t": 0.0,
    "text": "Press START"
   },
   {
-   "t": 1.56,
+   "t": 1.39,
    "text": "Listen. The red line shows your words"
   },
   {
-   "t": 4.97,
+   "t": 4.8,
    "text": "Type the missing words"
   },
   {
-   "t": 8.81,
+   "t": 8.49,
    "text": "Press Enter to check"
   },
   {
-   "t": 10.67,
+   "t": 10.35,
    "text": "Fix the red word"
   },
   {
-   "t": 13.06,
+   "t": 12.74,
    "text": "Type the rest"
   },
   {
-   "t": 14.35,
+   "t": 14.03,
    "text": "✓ Right! It checks by itself"
   },
   {
-   "t": 16.76,
+   "t": 16.43,
    "text": "Press Space for the next sentence"
   }
  ]

@@ -1,16 +1,16 @@
 {
- "duration": 12.31,
+ "duration": 12.28,
  "steps": [
   {
-   "t": 0.01,
+   "t": 0.0,
    "text": "Too hard? Press Esc to skip it"
   },
   {
-   "t": 3.37,
+   "t": 3.32,
    "text": "Go back with the ◀ arrow"
   },
   {
-   "t": 7.68,
+   "t": 7.61,
    "text": "Press UNDO to try a sentence again"
   }
  ]

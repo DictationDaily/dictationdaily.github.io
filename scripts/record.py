@@ -135,19 +135,39 @@ class Recorder:
         self.page.wait_for_timeout(300)
         self.cdp.send('Page.stopScreencast')
         self.stopped = True
-        os.makedirs(OUT, exist_ok=True)
-        mp4 = f'{OUT}/{self.name}.mp4'
-        frame_w = cap_render.Image.open(self.frames[0][0]).size[0]
-        cap_render.render(self.frames, self.events, mp4, out_width,
-                          scale=frame_w / self.page.viewport_size['width'], touch=self.touch,
-                          poster_at=self.poster_at, poster_path=f'{OUT}/{self.name}.jpg')
-        shutil.rmtree(self.dir)
+        # Keep the take (frames + what happened), so the video can be drawn
+        # again with other zoom settings: record.py --render <scene>
+        take = os.path.join(TAKES, self.name)
+        shutil.rmtree(take, ignore_errors=True)
+        os.makedirs(TAKES, exist_ok=True)
+        shutil.move(self.dir, take)
+        frame_w = cap_render.Image.open(self.frames[0][0].replace(self.dir, take)).size[0]
+        with open(os.path.join(take, 'take.json'), 'w') as f:
+            json.dump({'frames': [[os.path.basename(p), t] for p, t in self.frames], 'events': self.events,
+                       'out_width': out_width, 'scale': frame_w / self.page.viewport_size['width'],
+                       'touch': self.touch, 'poster_at': self.poster_at}, f)
+        render_take(self.name)
         t0 = self.frames[0][1]
         end = self.frames[-1][1] - t0
         steps = [{'t': round(max(0.0, t - t0), 2), 'text': text} for t, text in self.chapters]
         with open(f'{OUT}/{self.name}.json', 'w') as f:
             json.dump({'duration': round(end, 2), 'steps': steps}, f, ensure_ascii=False, indent=1)
-        print('wrote', mp4, f'{os.path.getsize(mp4) // 1024} KB', flush=True)
+
+
+TAKES = os.path.expanduser('~/.cache/dd-guide/takes')
+
+
+def render_take(name):
+    """Draw videos/<name>.mp4 and .jpg from the kept take."""
+    take = os.path.join(TAKES, name)
+    with open(os.path.join(take, 'take.json')) as f:
+        d = json.load(f)
+    os.makedirs(OUT, exist_ok=True)
+    frames = [(os.path.join(take, p), t) for p, t in d['frames']]
+    mp4 = f'{OUT}/{name}.mp4'
+    cap_render.render(frames, d['events'], mp4, d['out_width'], scale=d['scale'], touch=d['touch'],
+                      poster_at=d['poster_at'], poster_path=f'{OUT}/{name}.jpg')
+    print('drew', mp4, f'{os.path.getsize(mp4) // 1024} KB', flush=True)
 
 
 def log(kind, **e):
@@ -603,10 +623,15 @@ def scene_shadow(ctx):
     caption('Press START', 400)
     click(page.get_by_text('START', exact=True).first)
     caption('1. Listen to the line', 300)
-    page.get_by_text(re.compile('Say it now')).first.wait_for(timeout=30000)
+    result = page.get_by_role('region', name='Shadowing result').first
+    page.get_by_text(re.compile('Say it now')).or_(result).first.wait_for(timeout=30000)
     caption('2. The microphone opens: say it', 2200)
-    click(page.get_by_test_id('record').first, 300)
-    page.get_by_role('region', name='Shadowing result').first.wait_for(timeout=10000)
+    if not result.is_visible():
+        # it stops by itself after a quiet moment; if not yet, tap it
+        rec_btn = page.get_by_test_id('record').first
+        if rec_btn.is_visible():
+            click(rec_btn, 300)
+    result.wait_for(timeout=10000)
     caption('3. See which words were heard', 2600)
     rec.poster()
     caption('Enter: hear your take. Esc: try again', 2200)
@@ -722,6 +747,11 @@ def fake_voice():
 
 
 if __name__ == '__main__':
+    if sys.argv[1:2] == ['--render']:
+        # draw again from the kept takes, without recording
+        for name in sys.argv[2:] or sorted(os.listdir(TAKES)):
+            render_take(name)
+        sys.exit()
     wanted = sys.argv[1:] or [*SCENES, 'mobile']
     with sync_playwright() as p:
         browser = p.chromium.launch(channel='chrome', headless=True,
