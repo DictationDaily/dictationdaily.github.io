@@ -2,7 +2,8 @@
 
 A fake pointer and a caption bar are drawn into the page so learners can follow
 each step. Frames come from Chrome's screencast and are encoded with ffmpeg.
-Signed out only, so nothing is saved to any account.
+Signed out, or (DD_SESSION, see pro_session.py) as a Pro learner with every
+write blocked and every lesson unstarted, so nothing is saved to any account.
 
 usage: [DD_BASE=http://localhost:8788] python3 scripts/record.py [scene ...]
 DD_BASE records a local build instead of production, e.g. before a UI change
@@ -18,6 +19,8 @@ import sys
 import tempfile
 
 from playwright.sync_api import sync_playwright
+
+import pro_session
 
 B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 VIDEO = 'g4IAa8wZlqU'  # Sir Ken Robinson, 2:15, opens with an exercise
@@ -166,7 +169,7 @@ def open_lesson(page, video=VIDEO):
 
 
 def wait_exercise(page):
-    page.get_by_placeholder('Type what you hear').first.wait_for(state='visible', timeout=60000)
+    page.get_by_placeholder(re.compile('what you hear')).first.wait_for(state='visible', timeout=60000)
 
 
 def scene_lesson(ctx):
@@ -180,7 +183,7 @@ def scene_lesson(ctx):
     click(page.get_by_text('START', exact=True))
     wait_exercise(page)
     caption('<b>2</b>Listen. The red line shows your words', 3400)
-    ta = page.get_by_placeholder('Type what you hear').first
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
     caption('<b>3</b>Type the missing words')
     move_to(ta, 500)
     ta.press_sequentially('contention ix all kids', delay=110)
@@ -208,7 +211,8 @@ def scene_lesson(ctx):
 
 def scene_library(ctx):
     page = ctx.new_page()
-    page.goto(f'{B}/videos', wait_until='load')
+    # English, like the library screenshots (a signed-in learner sees their learning language)
+    page.goto(f'{B}/videos?lang=en', wait_until='load')
     page.wait_for_selector('img[src*="ytimg.com"]', timeout=20000)
     page.wait_for_timeout(3000)
     move_to, click, caption = helpers(page)
@@ -228,7 +232,9 @@ def scene_library(ctx):
     page.wait_for_timeout(1800)
     rec.poster()
     caption('<b>4</b>Click a video', 300)
-    card = page.locator('a[href^="/videos/"]').first
+    # the first card of the filtered list (signed in, "Pick up where you left off" comes first)
+    card = page.locator('xpath=//*[contains(normalize-space(.), "Find your next video")][not(*)]'
+                        '/following::a[starts-with(@href, "/videos/")][1]')
     move_to(card, 900)
     page.wait_for_timeout(500)
     click(card, 200)
@@ -272,7 +278,7 @@ def scene_navigate(ctx):
     move_to, click, caption = helpers(page)
     page.get_by_text('START', exact=True).click()
     wait_exercise(page)
-    ta = page.get_by_placeholder('Type what you hear').first
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
     ta.fill(CLIP1)
     ta.press('Enter')
     page.wait_for_timeout(800)
@@ -286,7 +292,8 @@ def scene_navigate(ctx):
     page.keyboard.press('Escape')
     page.wait_for_timeout(1500)
     caption('Go back with the ◀ arrow', 300)
-    back = page.locator('header, .MuiAppBar-positionFixed').last.locator('button').first
+    # by name: signed in, the bar starts with the ⚙ gear
+    back = page.get_by_role('button', name=re.compile('^Previous part$'))
     click(back)
     page.wait_for_timeout(1200)
     click(back, 500)
@@ -322,6 +329,7 @@ def scene_listen(ctx):
 def scene_mobile(browser):
     ctx = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True,
                               device_scale_factor=2)
+    pro_session.apply(ctx, B)
     ctx.add_init_script(OVERLAY)
     page = ctx.new_page()
     open_lesson(page)
@@ -333,7 +341,7 @@ def scene_mobile(browser):
     caption('Tap START', 400, small=True)
     click(page.get_by_text('START', exact=True))
     wait_exercise(page)
-    ta = page.get_by_placeholder('Type what you hear').first
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
     caption('Tap the box. Type the missing words', 300, small=True)
     click(ta)
     ta.press_sequentially('contention ix all kids', delay=100)
@@ -370,6 +378,7 @@ if __name__ == '__main__':
                 scene_mobile(browser)
                 continue
             ctx = browser.new_context(viewport={'width': 1440, 'height': 900})
+            pro_session.apply(ctx, B)
             ctx.add_init_script(OVERLAY)
             SCENES[name](ctx)
             ctx.close()

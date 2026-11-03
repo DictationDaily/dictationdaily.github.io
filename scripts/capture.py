@@ -1,5 +1,6 @@
 """Extra signed-out screenshots of dictationdaily.com for the guide site.
-Read-only: never signs in, so nothing is saved.
+Read-only: signed out, or (DD_SESSION) signed in as a Pro learner with every
+write blocked, so nothing is saved. Home, library and welcome are always signed out.
 usage: [DD_BASE=http://localhost:8788] python3 scripts/capture.py images [--only name ...]
 (--only takes name prefixes: home, library, lesson, languages, tablet, mobile, …)
 PNGs are written; convert them with scripts/to_webp.py before committing.
@@ -12,6 +13,8 @@ import sys
 import time
 
 from playwright.sync_api import sync_playwright
+
+import pro_session  # DD_SESSION: lessons as a Pro learner (see pro_session.py)
 
 B = os.environ.get('DD_BASE', 'https://dictationdaily.com').rstrip('/')
 OUT = sys.argv[1]
@@ -93,16 +96,18 @@ def lesson_targets(page):
         # By text: while its tooltip is open, the tooltip names the button
         'continue': page.get_by_role('button').filter(has_text=re.compile('^continue$', re.I)),
         'check': page.get_by_role('button', name=re.compile('^check', re.I)),
-        'textarea': page.get_by_placeholder('Type what you hear'),
+        'textarea': page.get_by_placeholder(re.compile('what you hear')),
         'matching': page.get_by_text(re.compile(r'^(Matching|Almost)')),
         'del': page.locator('del'),
         'ins': page.locator('ins'),
         'tick': page.locator('[data-testid="CheckCircleRoundedIcon"]'),
         'exercise': page.get_by_text(re.compile(r'^Exercise \d+/\d+$')),
-        'back': bottom.locator('button').first,
-        'forward': bottom.locator('button').nth(1),
+        # by name: signed in, the bar starts with the ⚙ gear
+        'back': page.get_by_role('button', name=re.compile('^Previous (part|line)$')),
+        'forward': page.get_by_role('button', name=re.compile('^Next (part|line)$')),
+        'gear': page.locator('[data-testid="lesson-settings"]'),
         'close': page.get_by_role('button', name=re.compile('^close', re.I)),
-        'gear': page.locator('iframe[src*="youtube"]'),
+        'player': page.locator('iframe[src*="youtube"]'),
     }
 
 
@@ -116,6 +121,10 @@ with sync_playwright() as p:
                                 args=['--autoplay-policy=no-user-gesture-required'])
     ctx = browser.new_context(viewport={'width': 1440, 'height': 900})
     page = ctx.new_page()
+    # lessons: a Pro learner with DD_SESSION, else the same visitor page
+    lctx = browser.new_context(viewport={'width': 1440, 'height': 900})
+    pro_session.apply(lctx, B)
+    lp = lctx.new_page()
 
     # The home page's hero spins and types on its own; with less motion asked
     # for it holds still on its last frame (French, line checked)
@@ -162,63 +171,63 @@ with sync_playwright() as p:
         shot(page, 'library-show-more')
 
     if wants('lesson', 'hint', 'bottom'):
-        open_lesson(page)
-        lesson_shot(page, 'lesson-intro')
-        page.get_by_text('START', exact=True).click()
+        open_lesson(lp)
+        lesson_shot(lp, 'lesson-intro')
+        lp.get_by_text('START', exact=True).click()
         # Park the pointer: CONTINUE later appears where START was, and a
         # pointer resting on it opens its tooltip in the shots
-        page.mouse.move(400, 32)
-        wait_exercise(page)
+        lp.mouse.move(400, 32)
+        wait_exercise(lp)
         # while the hidden words play, the gap's red line is filling
-        page.wait_for_timeout(3200)
-        lesson_shot(page, 'lesson-clip-playing')
-        ta = page.get_by_placeholder('Type what you hear').first
+        lp.wait_for_timeout(3200)
+        lesson_shot(lp, 'lesson-clip-playing')
+        ta = lp.get_by_placeholder(re.compile('what you hear')).first
         ta.fill('contention is all kids')
-        lesson_shot(page, 'lesson-typing')
+        lesson_shot(lp, 'lesson-typing')
         ta.fill('contention is all kids tremendous')
         ta.press('Enter')
-        page.wait_for_timeout(1000)
-        lesson_shot(page, 'lesson-hint-missing')
+        lp.wait_for_timeout(1000)
+        lesson_shot(lp, 'lesson-hint-missing')
         ta.fill('contention is all the kids have tremendous')
         ta.press('Enter')
-        page.wait_for_timeout(1000)
-        lesson_shot(page, 'lesson-hint-extra')
+        lp.wait_for_timeout(1000)
+        lesson_shot(lp, 'lesson-hint-extra')
         ta.fill('contention is all kids have tremendus')
         ta.press('Enter')
-        page.wait_for_timeout(1000)
-        lesson_shot(page, 'lesson-almost')
+        lp.wait_for_timeout(1000)
+        lesson_shot(lp, 'lesson-almost')
         ta.fill('contention ix all kids have tremendous')
         ta.press('Enter')
-        page.wait_for_timeout(1000)
-        lesson_shot(page, 'lesson-hint')
-        eshot(page.get_by_text(re.compile(r'^Matching')).locator('xpath=..'), 'hint-closeup')
+        lp.wait_for_timeout(1000)
+        lesson_shot(lp, 'lesson-hint')
+        eshot(lp.get_by_text(re.compile(r'^Matching')).locator('xpath=..'), 'hint-closeup')
         ta.fill(GAP)
         # A complete answer is accepted as it's typed; Enter would continue
-        page.get_by_text('You are correct!').first.wait_for(timeout=8000)
-        page.wait_for_timeout(2500)
-        lesson_shot(page, 'lesson-correct')
-        page.keyboard.press('Space')  # CONTINUE
-        wait_exercise(page)
-        page.wait_for_timeout(1500)
-        lesson_shot(page, 'lesson-next-clip')
-        bar = page.get_by_text(re.compile(r'^Exercise \d+/\d+$')).first
+        lp.get_by_text('You are correct!').first.wait_for(timeout=8000)
+        lp.wait_for_timeout(2500)
+        lesson_shot(lp, 'lesson-correct')
+        lp.keyboard.press('Space')  # CONTINUE
+        wait_exercise(lp)
+        lp.wait_for_timeout(1500)
+        lesson_shot(lp, 'lesson-next-clip')
+        bar = lp.get_by_text(re.compile(r'^Exercise \d+/\d+$')).first
         eshot(bar.locator('xpath=ancestor::*[contains(@class,"MuiToolbar") or contains(@class,"MuiAppBar")][1]'),
               'bottom-bar')
-        page.keyboard.press('Escape')  # SKIP
-        page.wait_for_timeout(2000)
-        lesson_shot(page, 'lesson-skipped')
+        lp.keyboard.press('Escape')  # SKIP
+        lp.wait_for_timeout(2000)
+        lesson_shot(lp, 'lesson-skipped')
         # go back to the answered clip with the ◀ button
         for _ in range(2):
-            page.locator('.MuiAppBar-positionFixed').last.locator('button').first.click()
-            page.wait_for_timeout(1200)
-        lesson_shot(page, 'lesson-back')
+            lp.get_by_role('button', name=re.compile('^Previous part$')).click()
+            lp.wait_for_timeout(1200)
+        lesson_shot(lp, 'lesson-back')
 
     if wants('lesson-listen'):
-        open_lesson(page, LISTEN_VIDEO)
-        page.get_by_text('START', exact=True).click()
-        page.get_by_role('heading', name='Just listen').wait_for(timeout=20000)
-        page.wait_for_timeout(2500)
-        shot(page, 'lesson-listen')
+        open_lesson(lp, LISTEN_VIDEO)
+        lp.get_by_text('START', exact=True).click()
+        lp.get_by_role('heading', name='Just listen').wait_for(timeout=20000)
+        lp.wait_for_timeout(2500)
+        shot(lp, 'lesson-listen')
 
     if wants('languages', 'lesson-fr'):
         # the "Which language do you want to learn?" cards on the home page
@@ -240,19 +249,19 @@ with sync_playwright() as p:
         library(page, '?lang=fr')
         shot(page, 'library-french')
         # a French lesson, signed out: the place of the translation asks to sign in
-        open_lesson(page, FR_VIDEO)
-        lesson_shot(page, 'lesson-fr-intro')
-        page.get_by_text('START', exact=True).click()
-        page.mouse.move(400, 32)
-        wait_exercise(page)
-        page.wait_for_timeout(1500)
-        ta = page.get_by_placeholder('Type what you hear').first
+        open_lesson(lp, FR_VIDEO)
+        lesson_shot(lp, 'lesson-fr-intro')
+        lp.get_by_text('START', exact=True).click()
+        lp.mouse.move(400, 32)
+        wait_exercise(lp)
+        lp.wait_for_timeout(1500)
+        ta = lp.get_by_placeholder(re.compile('what you hear')).first
         ta.fill(FR_GAP)
-        page.get_by_text('You are correct!').first.wait_for(timeout=8000)
-        page.wait_for_timeout(2500)
-        lesson_shot(page, 'lesson-fr-correct')
-        coords(page, 'lesson-fr-correct', {**lesson_targets(page),
-               'signin': page.get_by_text('Sign in', exact=True)})
+        lp.get_by_text('You are correct!').first.wait_for(timeout=8000)
+        lp.wait_for_timeout(4500)
+        lesson_shot(lp, 'lesson-fr-correct')
+        coords(lp, 'lesson-fr-correct', {**lesson_targets(lp),
+               'signin': lp.get_by_text('Sign in', exact=True)})
 
     if wants('welcome'):
         # a visitor's /welcome: only "What do you want to learn?"
@@ -267,6 +276,10 @@ with sync_playwright() as p:
         tp = t.new_page()
         library(tp)
         shot(tp, 'tablet-library')
+        tl = browser.new_context(viewport={'width': 820, 'height': 1180}, device_scale_factor=1,
+                                 has_touch=True)
+        pro_session.apply(tl, B)
+        tp = tl.new_page()
         open_lesson(tp)
         shot(tp, 'tablet-lesson')
 
@@ -281,13 +294,17 @@ with sync_playwright() as p:
         shot(mh, 'mobile-home')
         library(mp)
         shot(mp, 'mobile-library')
+        ml = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True,
+                                 has_touch=True, device_scale_factor=2)
+        pro_session.apply(ml, B)
+        mp = ml.new_page()
         open_lesson(mp)
         lesson_shot(mp, 'mobile-lesson-intro')
         mp.get_by_text('START', exact=True).click()
         mp.mouse.move(200, 30)
         wait_exercise(mp)
         mp.wait_for_timeout(1000)
-        mta = mp.get_by_placeholder('Type what you hear').first
+        mta = mp.get_by_placeholder(re.compile('what you hear')).first
         mta.fill('contention ix all kids')
         mp.get_by_role('button', name='CHECK').click()
         mp.wait_for_timeout(1000)
