@@ -43,6 +43,11 @@
                 "icon": "📖"
             },
             {
+                "slug": "say-your-answer",
+                "title": "Say your answer",
+                "icon": "🎙️"
+            },
+            {
                 "slug": "keyboard-shortcuts",
                 "title": "Keyboard shortcuts",
                 "icon": "⌨️"
