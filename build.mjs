@@ -154,6 +154,35 @@ function expandDemo(_, a) {
         </figure>`;
 }
 
+// A recording with its steps beside it (below on phones): the steps are the
+// captions the recording shows, with their times, from videos/<src>.json
+// (written by scripts/record.py). The step being played lights up and fills;
+// clicking a step plays the recording from there.
+//   <watch src="voice" title="Say the words instead of typing"></watch>  (phone for a phone recording)
+function expandWatch(_, a) {
+    const s = attrs(a);
+    const meta = JSON.parse(fs.readFileSync(`videos/${s.src}.json`, 'utf8'));
+    const steps = meta.steps.map((st, i) => {
+        const end = meta.steps[i + 1]?.t ?? meta.duration;
+        return `<li><button type="button" class="watch-step${i === 0 ? ' is-active' : ''}" data-t="${st.t}" data-end="${end}">
+                <span class="watch-num" aria-hidden="true">${i + 1}</span><span class="watch-text">${escape(st.text)}</span>
+                <span class="watch-fill" aria-hidden="true"></span></button></li>`;
+    }).join('');
+    const video = `<video src="videos/${s.src}.mp4" poster="videos/${s.src}.jpg" muted loop playsinline preload="metadata" aria-label="${escape(s.title || 'Screen recording')}"></video>
+            <button type="button" class="demo-toggle" data-demo-toggle aria-label="Pause"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
+    const frame = s.phone
+        ? `<div class="demo-phone">${video}</div>`
+        : `<div class="demo-browser"><div class="demo-bar"><i></i><i></i><i></i><span>dictationdaily.com</span></div><div class="relative">${video}</div></div>`;
+    return `
+        <section class="watch not-prose${s.phone ? ' watch-phone' : ''}" data-watch data-demo>
+            <div class="watch-video relative">${frame}</div>
+            <div class="watch-side">
+                ${s.title ? `<h3 class="watch-title">${s.title}</h3>` : ''}
+                <ol class="watch-steps">${steps}</ol>
+            </div>
+        </section>`;
+}
+
 function expandShot(_, a) {
     const s = attrs(a);
     const [w, h] = imageSize(s.src);
@@ -169,6 +198,7 @@ function expand(body) {
     return body
         .replace(/<tour>([\s\S]*?)<\/tour>/g, expandTour)
         .replace(/<demo([^>]*)><\/demo>/g, expandDemo)
+        .replace(/<watch([^>]*)><\/watch>/g, expandWatch)
         .replace(/<shot([^>]*)>/g, expandShot);
 }
 

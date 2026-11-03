@@ -1,35 +1,17 @@
-<!-- {"title": "Skip, go back, try again", "description": "Move between sentences with the bar at the bottom.", "time": "1 minute"} -->
-<demo src="navigate" caption="Skip a sentence, go back, and try one again."></demo>
+<!-- {"title": "Skip, go back, try again", "description": "The bar at the bottom moves between sentences. UNDO tries one again.", "time": "1 minute"} -->
+<watch src="navigate" title="Skip, go back, UNDO"></watch>
 
-<h2>The bottom bar</h2>
-<tour>
-    <step img="lesson-next-clip" at="exercise" title="Where you are">“Exercise 2/42” means sentence 2 of 42.</step>
-    <step img="lesson-next-clip" at="back" title="◀ Go back">Go to the sentence before. You see your answer.</step>
-    <step img="lesson-back" at="undo" title="UNDO = try again">The box is empty again. Listen and type!</step>
-    <step img="lesson-next-clip" at="forward" title="▶ Go forward">Works after you get the sentence right.</step>
-    <step img="lesson-next-clip" box="93.8,94.9,5.3,4.3" at="close" title="Close">Leave the lesson (on a phone it is a ✕). Or click the logo at the top to go to the videos.</step>
-</tour>
+<watch src="listen" title="“Just listen” parts"></watch>
 
-<h2>“Just listen” parts</h2>
-<p>Some parts have nothing to type, for example music or very short words. The next sentence starts by itself. Press <kbd class="kbd">Space</kbd> to skip, or tap <b>SKIP</b> on a phone.</p>
-<shot src="lesson-listen" caption="Nothing to type here. Just listen.">
+<div class="cards not-prose">
+    <div class="card"><p class="card-icon">📍</p><p class="card-title">Exercise 2/42</p><p class="card-text">Sentence 2 of 42. ◀ goes back, ▶ goes on once the sentence is right.</p></div>
+    <div class="card"><p class="card-icon">✕</p><p class="card-title">Leave</p><p class="card-text"><strong>Close</strong> at the bottom right (a ✕ on phones).</p></div>
+    <div class="card"><p class="card-icon">🎉</p><p class="card-title">The end</p><p class="card-text">Your streak and minutes, then <strong>Find another video</strong> or <strong>Redo the lesson</strong>.</p></div>
+</div>
 
-<h2>The end of the lesson</h2>
-<p>After the last sentence the card celebrates: <strong>Lesson done!</strong> or, signed in, <strong>N-day streak!</strong> with your numbers for the day. The video plays on.</p>
-<ul>
-    <li><strong>Find another video</strong>: back to the videos.</li>
-    <li><strong>See my progress →</strong> (signed in): your streak, goal and time.</li>
-    <li><strong>Redo the lesson</strong>: start again from sentence 1.</li>
-</ul>
-<shot src="lesson-finished-streak" caption="Signed in: your streak, your sentences and minutes, and today's goal." alt="The finish card: a flame, 17, 17-day streak!, 42 sentences, 1 minutes practising, 6/15 min of daily goal, Find another video, Redo the lesson and See my progress">
-<p>Without an account you see your sentences and minutes. More about the streak: <a href="streaks.html#finish-a-video">Your streak</a>.</p>
-
-<h2 id="finished-before">Open a video you already finished</h2>
-<p>Signed in, a video you finished on another day opens on a short card instead: <strong>You've done this one</strong>, with the day you finished it. Choose what to do next:</p>
-<ul>
-    <li><strong>Practise again</strong> (or <kbd class="kbd">Enter</kbd>): type all the sentences again from the start.</li>
-    <li><strong>Say it in Shadowing</strong>: say the same sentences out loud (<a href="shadowing.html">Shadowing</a>, Pro).</li>
-    <li><strong>Find another video</strong>: more videos at the same level.</li>
-</ul>
-<shot src="lesson-finished-return" caption="A video finished before: Practise again, Say it in Shadowing, or Find another video." alt="The lesson card says Finished, You've done this one, 42 sentences, 2:15, level C2, with three choices: Practise again with an Enter key, Say it in Shadowing, and Find another video. Under them: Today 6 of 15 min and See my progress">
-<p>The celebration only shows when you finish a video in this visit.</p>
+<h2>Questions</h2>
+<div class="faq">
+    <details><summary>What does the end of a lesson look like?</summary><p>Signed in, it shows your streak, your sentences and minutes, and today's goal. The video plays on.</p><img src="images/lesson-finished-streak.webp" alt="The finish card: 17-day streak, 42 sentences, Find another video, Redo the lesson, See my progress" class="shot mt-3" loading="lazy"></details>
+    <details id="finished-before"><summary>I opened a video I finished before</summary><p>It opens on <strong>You've done this one</strong>: <strong>Practise again</strong> (<kbd class="kbd">Enter</kbd>), <strong>Say it in Shadowing</strong>, or <strong>Find another video</strong>.</p><img src="images/lesson-finished-return.webp" alt="You've done this one, with Practise again, Say it in Shadowing and Find another video" class="shot mt-3" loading="lazy"></details>
+    <details><summary>Does a skipped sentence count?</summary><p>No. Only correct sentences are saved. Your place is the last correct one.</p></details>
+</div>

@@ -1,0 +1,21 @@
+{
+ "duration": 11.92,
+ "steps": [
+  {
+   "t": 0.01,
+   "text": "Click the ⚙ gear on the video"
+  },
+  {
+   "t": 2.32,
+   "text": "Choose Speed"
+  },
+  {
+   "t": 4.36,
+   "text": "Pick 0.5x"
+  },
+  {
+   "t": 6.23,
+   "text": "🐢 Now the sentence plays slowly"
+  }
+ ]
+}
