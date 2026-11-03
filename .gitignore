@@ -1,3 +1,4 @@
 node_modules/
 assets/site.css
 _site/
+__pycache__/
