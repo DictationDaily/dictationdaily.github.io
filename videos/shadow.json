@@ -1,0 +1,29 @@
+{
+ "duration": 15.99,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Press START"
+  },
+  {
+   "t": 1.37,
+   "text": "Listen to the line"
+  },
+  {
+   "t": 4.01,
+   "text": "The microphone opens: say it"
+  },
+  {
+   "t": 6.72,
+   "text": "See which words were heard"
+  },
+  {
+   "t": 9.52,
+   "text": "Enter: hear your take. Esc: try again"
+  },
+  {
+   "t": 11.73,
+   "text": "Space: next line"
+  }
+ ]
+}

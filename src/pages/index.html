@@ -1,15 +1,14 @@
 <!-- {"title": "Dictation Daily Guide", "description": "Learn how to use Dictation Daily, step by step: listen to a sentence, type it or say it, fix your mistakes. English, French, German, Italian, Spanish or Portuguese.", "layout": "home"} -->
 <section class="relative overflow-hidden bg-gradient-to-b from-gray-100 to-white dark:from-gray-900 dark:to-gray-950">
     <div class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-brand/10 blur-3xl"></div>
-    <div class="mx-auto grid max-w-[84rem] items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1.25fr] lg:py-20">
+    <div class="mx-auto grid max-w-[84rem] items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_1.4fr] lg:py-20">
         <div class="reveal">
-            <p class="mb-4 inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-sm font-medium text-brand shadow-sm dark:bg-gray-800">👋 Welcome to the guide</p>
             <h1 class="text-4xl font-black leading-tight tracking-tight text-ink sm:text-6xl dark:text-white">Listen.<br>Type.<br><span class="text-brand">Get better.</span></h1>
-            <p class="mt-6 max-w-lg text-xl leading-relaxed">Dictation Daily helps you understand spoken English, French, German, Italian, Spanish or Portuguese. You hear one sentence, you type it (or say it), and the app shows you your mistakes, with the translation in your language.</p>
+            <p class="mt-6 max-w-lg text-xl leading-relaxed">Hear a sentence from a real video, type what you hear, fix the red words. English, French, German, Italian, Spanish or Portuguese.</p>
             <div class="mt-8 flex flex-wrap gap-3">
-                <a href="quick-start.html" class="btn-chunky inline-flex px-7 py-3.5 text-lg">Show me how →</a>
+                <a href="quick-start.html" class="btn-chunky inline-flex px-7 py-3.5 text-lg">Watch how →</a>
             </div>
-            <p class="mt-6 text-sm text-gray-500">Free to use · No account needed · Works on your phone</p>
+            <p class="mt-6 text-sm text-gray-500">Free · No account needed · Works on your phone</p>
         </div>
         <div class="float">
             <demo src="lesson" caption="A whole sentence in 20 seconds"></demo>
@@ -18,62 +17,66 @@
 </section>
 
 <section class="mx-auto max-w-[84rem] px-4 py-16 sm:px-6">
-    <h2 class="reveal text-center text-3xl font-black tracking-tight text-ink dark:text-white">How it works</h2>
-    <ol class="mt-10 grid gap-6 sm:grid-cols-3" data-reveal>
-        <li class="text-center"><div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cream text-4xl shadow-edge dark:bg-gray-800 dark:shadow-none">🎧</div><p class="mt-4 text-xl font-bold text-ink dark:text-white">1. Listen</p><p class="mt-1">A short sentence plays.</p></li>
-        <li class="text-center"><div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cream text-4xl shadow-edge dark:bg-gray-800 dark:shadow-none">⌨️</div><p class="mt-4 text-xl font-bold text-ink dark:text-white">2. Type</p><p class="mt-1">Write what you heard. Or say it, in Shadowing.</p></li>
-        <li class="text-center"><div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-cream text-4xl shadow-edge dark:bg-gray-800 dark:shadow-none">✅</div><p class="mt-4 text-xl font-bold text-ink dark:text-white">3. Check</p><p class="mt-1">See your mistake. Fix it. Next!</p></li>
-    </ol>
+    <h2 class="reveal text-3xl font-black tracking-tight text-ink dark:text-white">Learn it in 4 steps</h2>
+    <p class="reveal mt-2 text-lg text-gray-600 dark:text-gray-400">Each one is a short video. About 5 minutes in all.</p>
+    <div class="path-grid mt-8" data-reveal>
+        <a class="path-card" href="quick-start.html">
+            <div class="path-video"><video src="videos/lesson.mp4" poster="videos/lesson.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-num">1</span></div>
+            <p class="path-title">Your first lesson</p>
+            <p class="path-text">Listen, type, check.</p>
+        </a>
+        <a class="path-card" href="hints.html">
+            <div class="path-video"><video src="videos/hints.mp4" poster="videos/hints.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-num">2</span></div>
+            <p class="path-title">Red and green words</p>
+            <p class="path-text">Fix one mistake at a time.</p>
+        </a>
+        <a class="path-card" href="move-around.html">
+            <div class="path-video"><video src="videos/navigate.mp4" poster="videos/navigate.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-num">3</span></div>
+            <p class="path-title">Stuck? Skip or go back</p>
+            <p class="path-text">And try it again later.</p>
+        </a>
+        <a class="path-card" href="streaks.html">
+            <div class="path-video"><video src="videos/streak.mp4" poster="videos/streak.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-num">4</span></div>
+            <p class="path-title">Keep your flame</p>
+            <p class="path-text">One sentence a day.</p>
+        </a>
+    </div>
 </section>
 
 <section class="border-y border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900/40">
     <div class="mx-auto max-w-[84rem] px-4 py-16 sm:px-6">
-        <h2 class="reveal text-3xl font-black tracking-tight text-ink dark:text-white">What do you want to do?</h2>
-        <div class="task-grid mt-8" data-reveal>
-            <a class="task" href="quick-start.html"><span class="task-icon">🚀</span><span><span class="task-title">Do my first lesson</span><span class="task-text block">Step by step, in 1 minute.</span></span></a>
-            <a class="task" href="find-a-video.html"><span class="task-icon">🎬</span><span><span class="task-title">Find a video for my level</span><span class="task-text block">Topics, slow speakers, short videos.</span></span></a>
-            <a class="task" href="hints.html"><span class="task-icon">💡</span><span><span class="task-title">Understand the red and green words</span><span class="task-text block">How to read the hint.</span></span></a>
-            <a class="task" href="too-hard.html"><span class="task-icon">🐢</span><span><span class="task-title">Make a sentence easier</span><span class="task-text block">Listen again, slow down, or skip.</span></span></a>
-            <a class="task" href="languages.html"><span class="task-icon">🌍</span><span><span class="task-title">Learn French, German, Spanish…</span><span class="task-text block">Pick a language. See each sentence in yours.</span></span></a>
-            <a class="task" href="look-up-a-word.html"><span class="task-icon">📖</span><span><span class="task-title">Look up a word</span><span class="task-text block">Tap it: meaning, sound, examples.</span></span></a>
-            <a class="task" href="shadowing.html"><span class="task-icon">🎤</span><span><span class="task-title">Practise speaking</span><span class="task-text block">Shadowing: say it after the speaker.</span></span></a>
-            <a class="task" href="save-progress.html"><span class="task-icon">💾</span><span><span class="task-title">Pick up where I stopped</span><span class="task-text block">Sign in, and every lesson is saved.</span></span></a>
-            <a class="task" href="streaks.html"><span class="task-icon">🔥</span><span><span class="task-title">Keep my streak</span><span class="task-text block">Daily goal and My progress.</span></span></a>
-            <a class="task" href="say-your-answer.html"><span class="task-icon">🎙️</span><span><span class="task-title">Say my answer</span><span class="task-text block">Speak instead of typing (Pro).</span></span></a>
-            <a class="task" href="help.html#report-a-bug"><span class="task-icon">🐞</span><span><span class="task-title">Report a bug</span><span class="task-text block">Tell us from the app, with a screenshot.</span></span></a>
-            <a class="task" href="phone.html"><span class="task-icon">📱</span><span><span class="task-title">Practise on my phone</span><span class="task-text block">Tap, type, check.</span></span></a>
+        <h2 class="reveal text-3xl font-black tracking-tight text-ink dark:text-white">Understand more. Then speak.</h2>
+        <p class="reveal mt-2 text-lg text-gray-600 dark:text-gray-400">Translations come with a free account. The rest is Pro.</p>
+        <div class="path-grid mt-8" data-reveal>
+        <a class="path-card" href="languages.html">
+            <div class="path-video"><video src="videos/translation.mp4" poster="videos/translation.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video></div>
+            <p class="path-title">Translations</p>
+            <p class="path-text">Every sentence in your language.</p>
+        </a>
+        <a class="path-card" href="look-up-a-word.html">
+            <div class="path-video"><video src="videos/word.mp4" poster="videos/word.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-pro">PRO</span></div>
+            <p class="path-title">Look up a word</p>
+            <p class="path-text">Tap it: meaning, sound, Say it.</p>
+        </a>
+        <a class="path-card" href="say-your-answer.html">
+            <div class="path-video"><video src="videos/voice.mp4" poster="videos/voice.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-pro">PRO</span></div>
+            <p class="path-title">Say your answer</p>
+            <p class="path-text">Speak instead of typing.</p>
+        </a>
+        <a class="path-card" href="shadowing.html">
+            <div class="path-video"><video src="videos/shadow.mp4" poster="videos/shadow.jpg" muted loop playsinline preload="none" data-autoplay aria-hidden="true"></video><span class="path-pro">PRO</span></div>
+            <p class="path-title">Shadowing</p>
+            <p class="path-text">Say each line after the speaker.</p>
+        </a>
         </div>
     </div>
 </section>
 
-<section class="mx-auto grid max-w-[84rem] gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2">
-    <div class="reveal">
-        <p class="text-sm font-semibold uppercase tracking-widest text-brand">✨ Tips and tricks</p>
-        <h2 class="mt-2 text-3xl font-black tracking-tight text-ink dark:text-white">Did you know?</h2>
-        <ul class="mt-6 space-y-3">
-            <li><a class="task" href="too-hard.html#slow-it-down"><span class="task-icon">🐢</span><span><span class="task-title">You can slow the video down</span><span class="task-text block">Hear every word at half speed.</span></span></a></li>
-            <li><a class="task" href="keyboard-shortcuts.html"><span class="task-icon">⌨️</span><span><span class="task-title">Four keys do everything</span><span class="task-text block">Enter, Space, Tab and Esc.</span></span></a></li>
-            <li><a class="task" href="find-a-video.html"><span class="task-icon">⚡</span><span><span class="task-title">Quick win</span><span class="task-text block">Finish a whole video in under 5 minutes.</span></span></a></li>
-        </ul>
-    </div>
-    <div class="reveal">
-        <p class="text-sm font-semibold uppercase tracking-widest text-brand">❓ Questions</p>
-        <h2 class="mt-2 text-3xl font-black tracking-tight text-ink dark:text-white">People often ask</h2>
-        <ul class="mt-6 divide-y divide-gray-200 overflow-hidden rounded-2xl border border-gray-200 dark:divide-gray-800 dark:border-gray-800">
-            <li><a class="flex justify-between gap-4 px-5 py-4 transition hover:bg-gray-50 hover:text-brand dark:hover:bg-gray-900" href="faq.html#right-but-wrong">My answer is right, but the app says it's wrong <span aria-hidden="true">→</span></a></li>
-            <li><a class="flex justify-between gap-4 px-5 py-4 transition hover:bg-gray-50 hover:text-brand dark:hover:bg-gray-900" href="faq.html#translation">Where is the translation? <span aria-hidden="true">→</span></a></li>
-            <li><a class="flex justify-between gap-4 px-5 py-4 transition hover:bg-gray-50 hover:text-brand dark:hover:bg-gray-900" href="faq.html#started-from-clip-1">Why did my lesson start again from the beginning? <span aria-hidden="true">→</span></a></li>
-            <li><a class="flex justify-between gap-4 px-5 py-4 transition hover:bg-gray-50 hover:text-brand dark:hover:bg-gray-900" href="faq.html#goal-streak">I didn't reach my daily goal. Is my streak safe? <span aria-hidden="true">→</span></a></li>
-        </ul>
-        <a href="faq.html" class="mt-5 inline-block font-semibold text-brand hover:underline">All questions →</a>
-    </div>
-</section>
-
-<section class="mx-auto max-w-[84rem] px-4 pb-16 sm:px-6">
-    <div class="reveal rounded-3xl bg-ink px-6 py-14 text-center text-white sm:px-12 dark:bg-gray-900">
-        <p class="text-5xl" aria-hidden="true">🎯</p>
-        <h2 class="mt-4 text-3xl font-black tracking-tight">Ready? Try one sentence now.</h2>
-        <p class="mx-auto mt-3 max-w-xl text-lg text-gray-300">Start with a slow, short video. Ten minutes a day is enough.</p>
-        <a href="https://dictationdaily.com/videos?sort=slowest&amp;length=short" class="btn-chunky mt-8 inline-flex px-8 py-4 text-lg">Find an easy video</a>
+<section class="mx-auto max-w-[84rem] px-4 py-16 sm:px-6">
+    <h2 class="reveal text-3xl font-black tracking-tight text-ink dark:text-white">Need help?</h2>
+    <div class="task-grid mt-8" data-reveal>
+        <a class="task" href="faq.html"><span class="task-icon">❓</span><span><span class="task-title">Questions</span><span class="task-text block">“My answer is right but it says wrong”, and more.</span></span></a>
+        <a class="task" href="help.html"><span class="task-icon">🛟</span><span><span class="task-title">Something's not working</span><span class="task-text block">No sound, no translation, not saved.</span></span></a>
+        <a class="task" href="help.html#report-a-bug"><span class="task-icon">🐞</span><span><span class="task-title">Report a bug</span><span class="task-text block">From the lesson, with a screenshot.</span></span></a>
     </div>
 </section>

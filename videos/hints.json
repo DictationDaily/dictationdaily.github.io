@@ -1,0 +1,33 @@
+{
+ "duration": 18.5,
+ "steps": [
+  {
+   "t": 0.32,
+   "text": "A word is missing"
+  },
+  {
+   "t": 2.6,
+   "text": "Green shows the missing word: type it at the cursor"
+  },
+  {
+   "t": 5.47,
+   "text": "A word too many"
+  },
+  {
+   "t": 7.9,
+   "text": "Crossed out = extra: press Backspace"
+  },
+  {
+   "t": 10.73,
+   "text": "A wrong word"
+  },
+  {
+   "t": 13.2,
+   "text": "Red is wrong, green is right. Type over it"
+  },
+  {
+   "t": 16.01,
+   "text": "✓ Right!"
+  }
+ ]
+}

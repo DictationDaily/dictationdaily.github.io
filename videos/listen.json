@@ -1,0 +1,17 @@
+{
+ "duration": 8.33,
+ "steps": [
+  {
+   "t": 0.8,
+   "text": "🎧 “Just listen” parts: nothing to type"
+  },
+  {
+   "t": 3.61,
+   "text": "Press Space to skip, or wait"
+  },
+  {
+   "t": 5.13,
+   "text": "Then the next sentence starts"
+  }
+ ]
+}

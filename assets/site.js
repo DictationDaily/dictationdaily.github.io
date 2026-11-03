@@ -113,6 +113,41 @@
         sync();
     });
 
+    // Walkthroughs: the step being played lights up and fills; a click on a
+    // step plays the recording from there
+    $$('[data-watch]').forEach((watch) => {
+        const video = $('video', watch);
+        const steps = $$('.watch-step', watch);
+        const tick = () => {
+            const t = video.currentTime;
+            steps.forEach((b) => {
+                const from = +b.dataset.t, to = +b.dataset.end;
+                const on = t >= from && t < to;
+                b.classList.toggle('is-active', on);
+                b.classList.toggle('is-done', t >= to);
+                b.style.setProperty('--p', on ? Math.min(1, (t - from) / Math.max(0.1, to - from)) : (t >= to ? 1 : 0));
+            });
+        };
+        let raf = 0;
+        const loop = () => { tick(); raf = requestAnimationFrame(loop); };
+        video.addEventListener('play', () => { cancelAnimationFrame(raf); loop(); });
+        video.addEventListener('pause', () => { cancelAnimationFrame(raf); tick(); });
+        video.addEventListener('seeked', tick);
+        steps.forEach((b) => b.addEventListener('click', () => {
+            video.currentTime = +b.dataset.t + 0.05;
+            video.play().catch(() => {});
+        }));
+    });
+
+    // The home page's small recordings play while on screen
+    $$('video[data-autoplay]').forEach((video) => {
+        if (reduceMotion) return;
+        new IntersectionObserver(([e]) => {
+            if (e.isIntersecting) video.play().catch(() => {});
+            else video.pause();
+        }, { threshold: 0.4 }).observe(video);
+    });
+
     // Fade content in as it scrolls into view
     if (!reduceMotion && 'IntersectionObserver' in window) {
         document.documentElement.classList.add('motion');

@@ -1,0 +1,29 @@
+{
+ "duration": 15.9,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Tap the microphone in the box"
+  },
+  {
+   "t": 1.07,
+   "text": "Say the words you heard"
+  },
+  {
+   "t": 3.48,
+   "text": "They are written in the box and checked"
+  },
+  {
+   "t": 6.09,
+   "text": "Now say the whole sentence"
+  },
+  {
+   "t": 10.2,
+   "text": "Green words were heard, red ones were not"
+  },
+  {
+   "t": 13.2,
+   "text": "Space: next sentence"
+  }
+ ]
+}

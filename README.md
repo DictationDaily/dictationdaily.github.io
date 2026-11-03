@@ -62,14 +62,15 @@ A local build has transcripts for only a few videos, and few videos have a level
 
 ## Screen recordings
 
-`scripts/record.py` records the app (signed out; `DD_BASE` as above) with a visible pointer and step captions, and encodes `videos/<scene>.mp4` with ffmpeg:
+Every page leads with a recording (since 2026-11-03): `<watch src="voice" title="…"></watch>` (add `phone` for a phone one) shows `videos/voice.mp4` with its steps beside it, which light up and fill as the video plays; clicking a step plays from there. The steps are the captions the recording shows, saved with their times in `videos/<scene>.json` by `scripts/record.py`, so a new recording brings its own steps. Pages keep text short: the description, the recording, at most three cards, and collapsed questions.
 
 ```bash
-python3 scripts/record.py            # all scenes: lesson library speed navigate listen mobile
-python3 scripts/record.py speed      # just one
+export DD_SESSION=/path/to/cookie.txt     # a Pro account (see Screenshots): every scene as a Pro learner
+python3 scripts/record.py                 # all scenes
+python3 scripts/record.py voice shadow    # some
 ```
 
-Step markers are positions in % of the screenshot. For lesson shots use `at="replay"` etc., measured by `capture.py` into `src/coords.json`; otherwise measure with Playwright's `bounding_box()` rather than guessing.
+Scenes: `lesson`, `hints`, `library`, `speed`, `navigate`, `listen`, `mobile`, and the Pro ones `translation`, `word`, `voice`, `shadow`, `resume`, `streak`, `report`. In the Pro scenes the speech checks (`voice-answer`, `shadow-check`, `word-check`) are answered in the browser with a canned result, and the microphone is Chrome's fake device fed a voice-like tone, so a recording makes no paid call; the interface filmed is the real one. `DD_DEBUG=<dir>` saves a screenshot when a scene breaks.
 
 ## Keeping it accurate
 
