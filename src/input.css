@@ -54,6 +54,13 @@
     .btn-chunky {
         @apply items-center justify-center whitespace-nowrap rounded-2xl bg-brand px-5 py-2.5 font-display text-base font-semibold text-white no-underline shadow-edge-red transition hover:bg-[#e0312f] active:translate-y-[3px] active:shadow-none;
     }
+    /* the six languages you can learn, by flag, under the home page title */
+    .hero-flags {
+        @apply mt-5 flex flex-wrap gap-2.5;
+    }
+    .hero-flags img {
+        @apply h-6 w-9 rounded object-cover shadow-[0_0_0_1px_rgba(0,0,0,.12)];
+    }
     /* header flag: the guide's language, a menu of both languages by flag */
     .lang-menu {
         @apply relative shrink-0;
