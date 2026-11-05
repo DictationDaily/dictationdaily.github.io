@@ -3,15 +3,15 @@
  "steps": [
   {
    "t": 0.01,
-   "text": "Nhấn START"
+   "text": "Bấm START"
   },
   {
    "t": 1.28,
-   "text": "Nghe câu"
+   "text": "Nghe câu mẫu"
   },
   {
    "t": 3.95,
-   "text": "Micro bật lên: nói theo"
+   "text": "Micro bật lên: nói lại câu đó"
   },
   {
    "t": 6.69,
@@ -19,11 +19,11 @@
   },
   {
    "t": 9.51,
-   "text": "Enter: nghe lại bạn nói. Esc: thử lại"
+   "text": "Enter: nghe lại giọng mình. Esc: nói lại"
   },
   {
    "t": 11.72,
-   "text": "Space: câu tiếp theo"
+   "text": "Space: sang câu tiếp"
   }
  ]
 }

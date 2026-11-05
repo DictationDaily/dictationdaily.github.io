@@ -3,23 +3,23 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Ngọn lửa: số ngày liên tiếp"
+   "text": "Ngọn lửa: số ngày học liên tiếp"
   },
   {
    "t": 2.13,
-   "text": "Vòng tròn: số phút hôm nay"
+   "text": "Vòng tròn: số phút đã học hôm nay"
   },
   {
    "t": 4.22,
-   "text": "Bấm vào: My progress"
+   "text": "Bấm vào để mở My progress"
   },
   {
    "t": 7.98,
-   "text": "Tuần của bạn, mục tiêu, số phút"
+   "text": "Tuần này, mục tiêu và số phút của bạn"
   },
   {
    "t": 13.01,
-   "text": "Sáu tháng luyện tập và huy hiệu"
+   "text": "Lịch học 6 tháng qua và huy hiệu"
   }
  ]
 }

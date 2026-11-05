@@ -3,11 +3,11 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Nhấn START"
+   "text": "Bấm START"
   },
   {
    "t": 1.39,
-   "text": "Nghe. Dòng đỏ là chỗ bạn gõ"
+   "text": "Lắng nghe. Vạch đỏ chạy qua phần bạn cần gõ"
   },
   {
    "t": 4.8,
@@ -19,19 +19,19 @@
   },
   {
    "t": 10.35,
-   "text": "Sửa từ màu đỏ"
+   "text": "Sửa từ bị báo đỏ"
   },
   {
    "t": 12.74,
-   "text": "Gõ phần còn lại"
+   "text": "Gõ nốt phần còn lại"
   },
   {
    "t": 14.03,
-   "text": "✓ Đúng! Tự kiểm tra luôn"
+   "text": "✓ Đúng rồi! Gõ đúng là dấu ✓ tự hiện"
   },
   {
    "t": 16.43,
-   "text": "Nhấn Space sang câu tiếp"
+   "text": "Nhấn Space để sang câu tiếp"
   }
  ]
 }
