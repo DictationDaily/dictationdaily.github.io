@@ -59,7 +59,8 @@
         @apply mt-5 flex flex-wrap gap-2.5;
     }
     .hero-flags img {
-        @apply h-6 w-9 rounded object-cover shadow-[0_0_0_1px_rgba(0,0,0,.12)];
+        @apply pointer-events-none h-6 w-9 select-none rounded object-cover shadow-[0_0_0_1px_rgba(0,0,0,.12)];
+        -webkit-touch-callout: none;
     }
     /* header flag: the guide's language, a menu of both languages by flag */
     .lang-menu {
