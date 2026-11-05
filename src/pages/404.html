@@ -1,4 +1,8 @@
 <!-- {"title": "Page not found", "description": "This page doesn't exist.", "layout": "plain"} -->
+<script>
+    // a missing page of the Vietnamese guide gets the Vietnamese 404
+    if (location.pathname.startsWith('/vi/') && location.pathname !== '/vi/404.html') location.replace('/vi/404.html');
+</script>
 <section class="mx-auto max-w-xl px-4 py-24 text-center">
     <p class="text-6xl font-black text-brand">404</p>
     <h1 class="mt-4 text-3xl font-bold text-ink dark:text-white">This page doesn't exist</h1>

@@ -193,7 +193,8 @@
     $$('[data-utc-midnight]').forEach((el) => {
         const d = new Date();
         d.setUTCHours(24, 0, 0, 0);
-        el.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        // in the page's language: 07:00 on the Vietnamese guide, not 07:00 AM
+        el.textContent = d.toLocaleTimeString(document.documentElement.lang === 'vi' ? 'vi-VN' : [], { hour: '2-digit', minute: '2-digit' });
     });
 
     // Search, in the page's language: /search-index.json or /vi/search-index.json
