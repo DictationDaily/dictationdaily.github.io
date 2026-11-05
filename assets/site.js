@@ -9,6 +9,24 @@
         set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} },
     };
 
+    // Words this script writes, in the page's language (<html lang>)
+    const WORDS = {
+        en: {
+            play: 'Play', pause: 'Pause', try: 'Try', or: 'or', tryWords: ['slow', 'skip', 'streak', 'phone'],
+            none: (q) => `No results for “${q}”. Try the <a class="text-brand underline" href="faq.html">FAQ</a>.`,
+        },
+        vi: {
+            play: 'Phát', pause: 'Tạm dừng', try: 'Thử', or: 'hoặc', tryWords: ['chậm', 'bỏ qua', 'streak', 'điện thoại'],
+            none: (q) => `Không tìm thấy “${q}”. Xem <a class="text-brand underline" href="faq.html">Câu hỏi thường gặp</a>.`,
+        },
+    };
+    const T = WORDS[document.documentElement.lang] || WORDS.en;
+
+    // The other language's page opens at the same section
+    $$('[data-lang-link]').forEach((a) => a.addEventListener('click', () => {
+        if (location.hash) a.href = a.href.split('#')[0] + location.hash;
+    }));
+
     // Theme
     $('#theme-toggle')?.addEventListener('click', () => {
         const dark = document.documentElement.classList.toggle('dark');
@@ -96,7 +114,7 @@
         let userPaused = reduceMotion;
         const sync = () => {
             demo.classList.toggle('paused', video.paused);
-            toggle.setAttribute('aria-label', video.paused ? 'Play' : 'Pause');
+            toggle.setAttribute('aria-label', video.paused ? T.play : T.pause);
         };
         video.addEventListener('play', sync);
         video.addEventListener('pause', sync);
@@ -168,14 +186,15 @@
         el.textContent = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     });
 
-    // Search
+    // Search, in the page's language: /search-index.json or /vi/search-index.json
     const search = $('#search');
+    const base = document.documentElement.dataset.base || '/';
     const input = $('#search-input');
     const list = $('#search-results');
     let index = null;
     let results = [];
     let selected = 0;
-    const loadIndex = () => index || (index = fetch('/search-index.json').then((r) => r.json()).catch(() => []));
+    const loadIndex = () => index || (index = fetch(`${base}search-index.json`).then((r) => r.json()).catch(() => []));
     const openSearch = () => { open(search); input.value = ''; render(''); input.focus(); loadIndex().then(() => render(input.value)); };
     $('#search-open')?.addEventListener('click', openSearch);
     addEventListener('keydown', (e) => {
@@ -189,10 +208,24 @@
     });
 
     const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-    const mark = (s, words) => words.reduce((acc, w) => acc.replace(new RegExp(`(${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark>$1</mark>'), esc(s));
+    // Lower case without accents, one character for one ("tốc độ" finds "toc do"),
+    // so positions in the folded text are positions in the original
+    const fold = (s) => s.toLowerCase().replace(/[^\x00-\x7f]/g, (c) => (c === 'đ' ? 'd' : c.normalize('NFD').replace(/\p{M}/gu, '')) || c);
+    const mark = (s, words) => {
+        const f = fold(s);
+        const hit = new Array(s.length).fill(false);
+        for (const w of words) for (let i = f.indexOf(w); i >= 0; i = f.indexOf(w, i + 1)) hit.fill(true, i, i + w.length);
+        let out = '';
+        for (let i = 0; i < s.length; i++) {
+            if (hit[i] && !hit[i - 1]) out += '<mark>';
+            out += esc(s[i]);
+            if (hit[i] && !hit[i + 1]) out += '</mark>';
+        }
+        return out;
+    };
 
     function snippet(text, words) {
-        const lower = text.toLowerCase();
+        const lower = fold(text);
         const at = Math.max(0, Math.min(...words.map((w) => { const i = lower.indexOf(w); return i < 0 ? Infinity : i; })));
         if (!isFinite(at)) return text.slice(0, 120) + '…';
         const start = Math.max(0, at - 50);
@@ -200,31 +233,32 @@
     }
 
     function render(query) {
-        const words = query.toLowerCase().split(/\s+/).filter(Boolean);
+        const words = fold(query).split(/\s+/).filter(Boolean);
         if (!words.length) {
             results = [];
-            list.innerHTML = `<li class="px-3 py-6 text-center text-sm text-gray-500">Try <button class="text-brand underline" data-q="slow">slow</button>, <button class="text-brand underline" data-q="skip">skip</button>, <button class="text-brand underline" data-q="streak">streak</button> or <button class="text-brand underline" data-q="phone">phone</button>.</li>`;
+            const q = T.tryWords.map((w) => `<button class="text-brand underline" data-q="${w}">${w}</button>`);
+            list.innerHTML = `<li class="px-3 py-6 text-center text-sm text-gray-500">${T.try} ${q.slice(0, -1).join(', ')} ${T.or} ${q[q.length - 1]}.</li>`;
             $$('[data-q]', list).forEach((b) => b.addEventListener('click', () => { input.value = b.dataset.q; input.dispatchEvent(new Event('input')); input.focus(); }));
             return;
         }
         Promise.resolve(loadIndex()).then((pages) => {
             results = [];
             for (const p of pages) {
-                const title = p.title.toLowerCase();
-                const body = (p.description + ' ' + p.text).toLowerCase();
-                if (!words.every((w) => title.includes(w) || body.includes(w) || p.headings.some((h) => h.text.toLowerCase().includes(w)))) continue;
+                const title = fold(p.title);
+                const body = fold(p.description + ' ' + p.text);
+                if (!words.every((w) => title.includes(w) || body.includes(w) || p.headings.some((h) => fold(h.text).includes(w)))) continue;
                 let score = words.reduce((s, w) => s + (title.includes(w) ? 10 : 0) + (body.split(w).length - 1), 0);
                 // Link to the section that matches best: heading text counts most
                 let heading = null;
                 let best = 0;
                 for (const h of p.headings) {
-                    const t = h.text.toLowerCase();
-                    const s = (h.body || '').toLowerCase();
+                    const t = fold(h.text);
+                    const s = fold(h.body || '');
                     const hs = words.reduce((n, w) => n + (t.includes(w) ? 20 : 0) + (s.split(w).length - 1), 0);
                     if (hs > best) { best = hs; heading = h; }
                 }
                 if (heading) {
-                    const t = heading.text.toLowerCase();
+                    const t = fold(heading.text);
                     if (words.every((w) => t.includes(w))) score += 25;
                     else if (words.some((w) => t.includes(w))) score += 5;
                 }
@@ -236,13 +270,13 @@
             list.innerHTML = results.length
                 ? results.map((r, i) => `
                     <li role="option" aria-selected="${i === 0}">
-                        <a href="/${r.p.url}${r.heading ? '#' + r.heading.id : ''}" class="search-hit">
+                        <a href="${base}${r.p.url}${r.heading ? '#' + r.heading.id : ''}" class="search-hit">
                             <span class="text-xs uppercase tracking-wide text-gray-400">${r.p.icon || ''} ${esc(r.p.group)}</span>
                             <span class="block font-semibold text-ink dark:text-white">${mark(r.p.title, words)}${r.heading ? ` <span class="font-normal text-gray-500">› ${mark(r.heading.text, words)}</span>` : ''}</span>
                             <span class="mt-0.5 block text-sm text-gray-500">${mark(snippet(r.heading?.body || r.p.text, words), words)}</span>
                         </a>
                     </li>`).join('')
-                : `<li class="px-3 py-6 text-center text-sm text-gray-500">No results for “${esc(query)}”. Try the <a class="text-brand underline" href="faq.html">FAQ</a>.</li>`;
+                : `<li class="px-3 py-6 text-center text-sm text-gray-500">${T.none(esc(query))}</li>`;
             $$('a', list).forEach((a) => a.addEventListener('click', () => close(search)));
         });
     }

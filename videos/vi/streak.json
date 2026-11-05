@@ -1,0 +1,25 @@
+{
+ "duration": 15.88,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Ngọn lửa: số ngày liên tiếp"
+  },
+  {
+   "t": 2.13,
+   "text": "Vòng tròn: số phút hôm nay"
+  },
+  {
+   "t": 4.22,
+   "text": "Bấm vào: My progress"
+  },
+  {
+   "t": 7.98,
+   "text": "Tuần của bạn, mục tiêu, số phút"
+  },
+  {
+   "t": 13.01,
+   "text": "Sáu tháng luyện tập và huy hiệu"
+  }
+ ]
+}

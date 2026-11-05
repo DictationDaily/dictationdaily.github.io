@@ -1,0 +1,29 @@
+{
+ "duration": 16.0,
+ "steps": [
+  {
+   "t": 0.01,
+   "text": "Nhấn START"
+  },
+  {
+   "t": 1.28,
+   "text": "Nghe câu"
+  },
+  {
+   "t": 3.95,
+   "text": "Micro bật lên: nói theo"
+  },
+  {
+   "t": 6.69,
+   "text": "Xem từ nào được nghe rõ"
+  },
+  {
+   "t": 9.51,
+   "text": "Enter: nghe lại bạn nói. Esc: thử lại"
+  },
+  {
+   "t": 11.72,
+   "text": "Space: câu tiếp theo"
+  }
+ ]
+}

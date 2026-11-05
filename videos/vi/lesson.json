@@ -1,0 +1,37 @@
+{
+ "duration": 20.67,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Nhấn START"
+  },
+  {
+   "t": 1.39,
+   "text": "Nghe. Dòng đỏ là chỗ bạn gõ"
+  },
+  {
+   "t": 4.8,
+   "text": "Gõ những từ còn thiếu"
+  },
+  {
+   "t": 8.49,
+   "text": "Nhấn Enter để kiểm tra"
+  },
+  {
+   "t": 10.35,
+   "text": "Sửa từ màu đỏ"
+  },
+  {
+   "t": 12.74,
+   "text": "Gõ phần còn lại"
+  },
+  {
+   "t": 14.03,
+   "text": "✓ Đúng! Tự kiểm tra luôn"
+  },
+  {
+   "t": 16.43,
+   "text": "Nhấn Space sang câu tiếp"
+  }
+ ]
+}

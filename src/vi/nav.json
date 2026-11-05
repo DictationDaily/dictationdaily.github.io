@@ -1,0 +1,112 @@
+[
+    {
+        "title": "Bắt đầu",
+        "pages": [
+            {
+                "slug": "quick-start",
+                "title": "Bài học đầu tiên",
+                "icon": "🚀"
+            },
+            {
+                "slug": "hints",
+                "title": "Chữ đỏ và chữ xanh",
+                "icon": "💡"
+            },
+            {
+                "slug": "find-a-video",
+                "title": "Tìm video",
+                "icon": "🎬"
+            }
+        ]
+    },
+    {
+        "title": "Khi thấy khó",
+        "pages": [
+            {
+                "slug": "too-hard",
+                "title": "Nghe lại, chậm hơn",
+                "icon": "🐢"
+            },
+            {
+                "slug": "move-around",
+                "title": "Bỏ qua, quay lại, làm lại",
+                "icon": "↩️"
+            }
+        ]
+    },
+    {
+        "title": "Ngôn ngữ của bạn",
+        "pages": [
+            {
+                "slug": "languages",
+                "title": "Bản dịch",
+                "icon": "🌍"
+            },
+            {
+                "slug": "look-up-a-word",
+                "title": "Tra một từ",
+                "icon": "📖"
+            }
+        ]
+    },
+    {
+        "title": "Luyện nói",
+        "pages": [
+            {
+                "slug": "say-your-answer",
+                "title": "Nói câu trả lời",
+                "icon": "🎙️"
+            },
+            {
+                "slug": "shadowing",
+                "title": "Shadowing",
+                "icon": "🎤"
+            }
+        ]
+    },
+    {
+        "title": "Tiến độ của bạn",
+        "pages": [
+            {
+                "slug": "save-progress",
+                "title": "Học tiếp từ chỗ đã dừng",
+                "icon": "💾"
+            },
+            {
+                "slug": "streaks",
+                "title": "Chuỗi ngày và mục tiêu",
+                "icon": "🔥"
+            }
+        ]
+    },
+    {
+        "title": "Thêm",
+        "pages": [
+            {
+                "slug": "phone",
+                "title": "Trên điện thoại",
+                "icon": "📱"
+            },
+            {
+                "slug": "keyboard-shortcuts",
+                "title": "Phím tắt",
+                "icon": "⌨️"
+            },
+            {
+                "slug": "tips",
+                "title": "Mẹo hay",
+                "icon": "✨"
+            },
+            {
+                "slug": "faq",
+                "title": "Câu hỏi",
+                "icon": "❓"
+            },
+            {
+                "slug": "help",
+                "title": "Có gì đó không chạy",
+                "icon": "🛟"
+            }
+        ]
+    }
+]
