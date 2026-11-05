@@ -31,7 +31,8 @@ module.exports = {
             },
             fontFamily: {
                 sans: ['Nunito', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-                display: ['Fredoka', 'Nunito', 'ui-sans-serif', 'sans-serif'],
+                // Fredoka, or Baloo 2 on Vietnamese pages (Fredoka has no Vietnamese letters): src/input.css
+                display: ['var(--font-display)'],
                 mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
             },
             boxShadow: {
