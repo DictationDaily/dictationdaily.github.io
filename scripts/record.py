@@ -685,9 +685,22 @@ def scene_pronounce(ctx):
     rec.stop(1280)
 
 
+def pronounced(words, scores):
+    """Azure's pronunciation score per word (90 unless given; 0 = left out)."""
+    out = []
+    for w in words:
+        k = w.strip(',.').lower()
+        sc = scores.get(k, 90)
+        out.append({'word': k, 'score': sc, 'omitted': sc == 0})
+    return out
+
+
 def scene_shadow(ctx):
     page = ctx.new_page()
-    canned(page, 'shadow-check', heard(LINE1, missing=('tremendous',)))
+    # green / brown / red words (since 2026-11-05): "contention" close,
+    # "tremendous" left out
+    canned(page, 'shadow-check', {**heard(LINE1, missing=('tremendous',)),
+                                  'pronunciation': pronounced(LINE1, {'contention': 70, 'tremendous': 0})})
     page.goto(f'{B}/videos/{VIDEO}?mode=shadowing', wait_until='load')
     page.wait_for_selector('iframe[src*="youtube"]', timeout=20000)
     page.wait_for_timeout(1500)
@@ -711,7 +724,7 @@ def scene_shadow(ctx):
         if rec_btn.is_visible():
             click(rec_btn, 300)
     result.wait_for(timeout=10000)
-    caption('3. See which words were heard', 2600)
+    caption('3. Green: well said. Brown: close. Red: missed', 3000)
     rec.poster()
     caption('Enter: hear your take. Esc: try again', 2200)
     caption('Space: next line', 1000)
