@@ -276,12 +276,22 @@ function nextCard(index) {
 const pageUrl = (l, slug) =>
     `${SITE_URL}/${l.dir ? l.dir + '/' : ''}${slug === 'index' ? '' : slug + '.html'}`;
 
-// The header link to this page in the other language
+// The header flag: the page's language; clicking it lists both languages by
+// flag, each opening this page (and section, see site.js) in that language
+const FLAGS = { en: { flag: 'gb', name: 'English' }, vi: { flag: 'vn', name: 'Tiếng Việt' } };
 function langSwitch(slug) {
-    const other = LANGS.find((l) => l !== lang);
     const file = slug === 'index' || slug === '404' ? '' : `${slug}.html`;
-    const href = lang.dir ? `../${file}` : `${other.dir}/${file}`;
-    return `<a href="${href || './'}" hreflang="${other.code}" lang="${other.code}" class="lang-switch" data-lang-link title="${S.switch_label}" aria-label="${S.switch_label}"><svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span class="sm:hidden">${other.code.toUpperCase()}</span><span class="hidden sm:inline">${S.switch}</span></a>`;
+    const root = lang.dir ? '../' : '';
+    const flag = (l) => `<img src="${root}assets/flags/${FLAGS[l.code].flag}.svg" alt="" width="24" height="16" class="lang-flag">`;
+    const items = LANGS.map((l) => {
+        const href = `${root}${l.dir ? l.dir + '/' : ''}${file}` || './';
+        const here = l === lang;
+        return `<li><a href="${href}" hreflang="${l.code}" lang="${l.code}" class="lang-item"${here ? ' aria-current="true"' : ' data-lang-link'}>${flag(l)}<span>${FLAGS[l.code].name}</span>${here ? '<svg class="ml-auto h-4 w-4 text-brand" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>' : ''}</a></li>`;
+    }).join('');
+    return `<div class="lang-menu" data-lang-menu>
+            <button type="button" class="lang-button" aria-haspopup="true" aria-expanded="false" aria-label="${S.language}: ${FLAGS[lang.code].name}" title="${S.language}">${flag(lang)}<svg class="h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+            <ul class="lang-list hidden" role="menu">${items}</ul>
+        </div>`;
 }
 
 function render(slug, meta, body) {
@@ -304,6 +314,8 @@ function render(slug, meta, body) {
             `<link rel="alternate" hreflang="x-default" href="${pageUrl(LANGS[0], slug)}">`,
         ].join('\n    '),
         langswitch: langSwitch(slug),
+        // Baloo 2 for Vietnamese headings (src/input.css)
+        font_extra: lang.code === 'vi' ? '&family=Baloo+2:wght@600;700;800' : '',
         sidebar: sidebar(slug),
         body_class: home ? 'layout-home' : 'layout-doc',
         content: home

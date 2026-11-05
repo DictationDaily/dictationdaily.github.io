@@ -3,6 +3,18 @@
 @tailwind utilities;
 
 @layer base {
+    /* The rounded display face. Fredoka has no Vietnamese letters (ữ ạ ầ came
+       out in a serif fallback), so Vietnamese pages use Baloo 2 */
+    :root {
+        --font-display: Fredoka, Nunito, ui-sans-serif, sans-serif;
+    }
+    :root:lang(vi) {
+        --font-display: 'Baloo 2', Nunito, ui-sans-serif, sans-serif;
+    }
+    /* the wordmark looks the same in every language */
+    .brand-name {
+        font-family: Fredoka, Nunito, ui-sans-serif, sans-serif;
+    }
     html {
         scroll-padding-top: 5rem;
     }
@@ -42,9 +54,24 @@
     .btn-chunky {
         @apply items-center justify-center whitespace-nowrap rounded-2xl bg-brand px-5 py-2.5 font-display text-base font-semibold text-white no-underline shadow-edge-red transition hover:bg-[#e0312f] active:translate-y-[3px] active:shadow-none;
     }
-    /* header link to the guide in the other language */
-    .lang-switch {
-        @apply flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-2 text-sm font-bold text-gray-600 hover:bg-gray-100 hover:text-ink sm:px-3 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
+    /* header flag: the guide's language, a menu of both languages by flag */
+    .lang-menu {
+        @apply relative shrink-0;
+    }
+    .lang-button {
+        @apply flex h-10 items-center gap-1 rounded-lg px-2 hover:bg-gray-100 dark:hover:bg-gray-800;
+    }
+    .lang-flag {
+        @apply h-4 w-6 shrink-0 rounded-[3px] object-cover shadow-[0_0_0_1px_rgba(0,0,0,.12)];
+    }
+    .lang-list {
+        @apply absolute right-0 top-12 z-50 w-48 rounded-xl border border-gray-200 bg-white p-1.5 shadow-xl dark:border-gray-800 dark:bg-gray-900;
+    }
+    .lang-item {
+        @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-bold text-gray-700 no-underline hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800;
+    }
+    .lang-item[aria-current] {
+        @apply bg-gray-50 dark:bg-gray-800/60;
     }
     .icon-btn {
         @apply rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-ink dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
@@ -605,9 +632,15 @@
 h1,
 h2,
 h3 {
-    font-family: Fredoka, Nunito, ui-sans-serif, sans-serif;
+    font-family: var(--font-display);
 }
 :is(h1, h2, h3).font-black {
     font-weight: 700;
     letter-spacing: -0.01em;
+}
+/* Baloo 2 is lighter than Fredoka at the same weight */
+:lang(vi) :is(h1, h2).font-black,
+:lang(vi) .prose :is(h1, h2) {
+    font-weight: 800;
+    letter-spacing: 0;
 }

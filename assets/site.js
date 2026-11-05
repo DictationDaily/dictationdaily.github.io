@@ -27,6 +27,16 @@
         if (location.hash) a.href = a.href.split('#')[0] + location.hash;
     }));
 
+    // The flag menu: opens on click, closes on a click outside or Esc
+    $$('[data-lang-menu]').forEach((menu) => {
+        const button = $('button', menu);
+        const list = $('ul', menu);
+        const show = (on) => { list.classList.toggle('hidden', !on); button.setAttribute('aria-expanded', on); };
+        button.addEventListener('click', (e) => { e.stopPropagation(); show(list.classList.contains('hidden')); });
+        document.addEventListener('click', (e) => { if (!menu.contains(e.target)) show(false); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') show(false); });
+    });
+
     // Theme
     $('#theme-toggle')?.addEventListener('click', () => {
         const dark = document.documentElement.classList.toggle('dark');

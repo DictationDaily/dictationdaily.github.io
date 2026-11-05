@@ -34,8 +34,7 @@
   "watch": "Watch",
   "recording": "Screen recording",
   "pause": "Pause",
-  "switch": "Tiếng Việt",
-  "switch_label": "Đọc hướng dẫn bằng tiếng Việt"
+  "language": "Language"
  },
  "vi": {
   "site": "Hướng dẫn Dictation Daily",
@@ -72,7 +71,6 @@
   "watch": "Xem",
   "recording": "Video quay màn hình",
   "pause": "Tạm dừng",
-  "switch": "English",
-  "switch_label": "Read the guide in English"
+  "language": "Ngôn ngữ"
  }
 }
