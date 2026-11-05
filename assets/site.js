@@ -259,6 +259,8 @@
                 const body = fold(p.description + ' ' + p.text);
                 if (!words.every((w) => title.includes(w) || body.includes(w) || p.headings.some((h) => fold(h.text).includes(w)))) continue;
                 let score = words.reduce((s, w) => s + (title.includes(w) ? 10 : 0) + (body.split(w).length - 1), 0);
+                // a page named after the search comes first ("phát âm" → Kiểm tra phát âm, not the FAQ)
+                if (words.every((w) => title.includes(w))) score += 100;
                 // Link to the section that matches best: heading text counts most
                 let heading = null;
                 let best = 0;
