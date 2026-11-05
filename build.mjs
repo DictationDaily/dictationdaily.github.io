@@ -247,6 +247,8 @@ function addAnchors(body) {
     return { html, headings };
 }
 
+const proTag = (p) => (p?.pro ? ' <span class="pro-tag">PRO</span>' : '');
+
 function sidebar(current) {
     return nav
         .map(
@@ -256,7 +258,7 @@ function sidebar(current) {
             <ul class="space-y-0.5">${group.pages
                 .map(
                     (p) => `
-                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}"><span class="nav-icon" aria-hidden="true">${p.icon}</span>${p.title}</a></li>`,
+                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}"><span class="nav-icon" aria-hidden="true">${p.icon}</span><span class="min-w-0">${p.title}</span>${proTag(p)}</a></li>`,
                 )
                 .join('')}
             </ul>
@@ -269,7 +271,7 @@ function nextCard(index) {
     const next = ordered[index + 1];
     return `
         <nav class="mt-16" aria-label="${S.next_page}">
-            ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.next}</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.read_all}</span><span class="mt-1 block text-lg font-bold text-white">🎉 ${S.back_home}</span></a>`}
+            ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.next}</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}${proTag(next)}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.read_all}</span><span class="mt-1 block text-lg font-bold text-white">🎉 ${S.back_home}</span></a>`}
         </nav>`;
 }
 
@@ -325,7 +327,7 @@ function render(slug, meta, body) {
                 <div class="flex items-start gap-4">
                     <span class="page-icon" aria-hidden="true">${entry?.icon || '📘'}</span>
                     <div>
-                        <h1 class="text-3xl font-black tracking-tight text-ink sm:text-4xl dark:text-white">${meta.title}</h1>
+                        <h1 class="text-3xl font-black tracking-tight text-ink sm:text-4xl dark:text-white">${meta.title}${proTag(entry).replace('pro-tag', 'pro-tag pro-tag-lg')}</h1>
                         ${meta.description ? `<p class="mt-2 text-lg text-gray-600 dark:text-gray-400">${meta.description}</p>` : ''}
                         ${meta.time ? `<p class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600 dark:bg-gray-800 dark:text-gray-300">⏱ ${meta.time}</p>` : ''}
                     </div>
@@ -385,6 +387,7 @@ for (const slug of slugs) {
         url: `${slug}.html`,
         title: meta.title,
         icon: entry.icon,
+        pro: !!entry.pro,
         group: entry.group,
         description: meta.description || '',
         headings,
