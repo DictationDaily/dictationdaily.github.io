@@ -53,6 +53,11 @@
         "title": "Luyện nói",
         "pages": [
             {
+                "slug": "pronunciation",
+                "title": "Kiểm tra phát âm",
+                "icon": "🗣️"
+            },
+            {
                 "slug": "say-your-answer",
                 "title": "Trả lời bằng giọng nói",
                 "icon": "🎙️"

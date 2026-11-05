@@ -2,47 +2,116 @@
     {
         "title": "Start here",
         "pages": [
-            {"slug": "quick-start", "title": "Your first lesson", "icon": "🚀"},
-            {"slug": "hints", "title": "Red and green words", "icon": "💡"},
-            {"slug": "find-a-video", "title": "Find a video", "icon": "🎬"}
+            {
+                "slug": "quick-start",
+                "title": "Your first lesson",
+                "icon": "🚀"
+            },
+            {
+                "slug": "hints",
+                "title": "Red and green words",
+                "icon": "💡"
+            },
+            {
+                "slug": "find-a-video",
+                "title": "Find a video",
+                "icon": "🎬"
+            }
         ]
     },
     {
         "title": "When it's hard",
         "pages": [
-            {"slug": "too-hard", "title": "Hear it again, slower", "icon": "🐢"},
-            {"slug": "move-around", "title": "Skip, go back, try again", "icon": "↩️"}
+            {
+                "slug": "too-hard",
+                "title": "Hear it again, slower",
+                "icon": "🐢"
+            },
+            {
+                "slug": "move-around",
+                "title": "Skip, go back, try again",
+                "icon": "↩️"
+            }
         ]
     },
     {
         "title": "Your language",
         "pages": [
-            {"slug": "languages", "title": "Translations", "icon": "🌍"},
-            {"slug": "look-up-a-word", "title": "Look up a word", "icon": "📖"}
+            {
+                "slug": "languages",
+                "title": "Translations",
+                "icon": "🌍"
+            },
+            {
+                "slug": "look-up-a-word",
+                "title": "Look up a word",
+                "icon": "📖"
+            }
         ]
     },
     {
         "title": "Speak",
         "pages": [
-            {"slug": "say-your-answer", "title": "Say your answer", "icon": "🎙️"},
-            {"slug": "shadowing", "title": "Shadowing", "icon": "🎤"}
+            {
+                "slug": "pronunciation",
+                "title": "Check your pronunciation",
+                "icon": "🗣️"
+            },
+            {
+                "slug": "say-your-answer",
+                "title": "Say your answer",
+                "icon": "🎙️"
+            },
+            {
+                "slug": "shadowing",
+                "title": "Shadowing",
+                "icon": "🎤"
+            }
         ]
     },
     {
         "title": "Your progress",
         "pages": [
-            {"slug": "save-progress", "title": "Pick up where you stopped", "icon": "💾"},
-            {"slug": "streaks", "title": "Streak and daily goal", "icon": "🔥"}
+            {
+                "slug": "save-progress",
+                "title": "Pick up where you stopped",
+                "icon": "💾"
+            },
+            {
+                "slug": "streaks",
+                "title": "Streak and daily goal",
+                "icon": "🔥"
+            }
         ]
     },
     {
         "title": "More",
         "pages": [
-            {"slug": "phone", "title": "On your phone", "icon": "📱"},
-            {"slug": "keyboard-shortcuts", "title": "Keyboard shortcuts", "icon": "⌨️"},
-            {"slug": "tips", "title": "Tips", "icon": "✨"},
-            {"slug": "faq", "title": "Questions", "icon": "❓"},
-            {"slug": "help", "title": "Something's not working", "icon": "🛟"}
+            {
+                "slug": "phone",
+                "title": "On your phone",
+                "icon": "📱"
+            },
+            {
+                "slug": "keyboard-shortcuts",
+                "title": "Keyboard shortcuts",
+                "icon": "⌨️"
+            },
+            {
+                "slug": "tips",
+                "title": "Tips",
+                "icon": "✨"
+            },
+            {
+                "slug": "faq",
+                "title": "Questions",
+                "icon": "❓"
+            },
+            {
+                "slug": "help",
+                "title": "Something's not working",
+                "icon": "🛟"
+            }
         ]
     }
 ]
