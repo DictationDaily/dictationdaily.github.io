@@ -45,7 +45,8 @@
             {
                 "slug": "look-up-a-word",
                 "title": "Tra từ",
-                "icon": "📖"
+                "icon": "📖",
+                "pro": true
             }
         ]
     },
@@ -55,17 +56,20 @@
             {
                 "slug": "pronunciation",
                 "title": "Kiểm tra phát âm",
-                "icon": "🗣️"
+                "icon": "🗣️",
+                "pro": true
             },
             {
                 "slug": "say-your-answer",
                 "title": "Trả lời bằng giọng nói",
-                "icon": "🎙️"
+                "icon": "🎙️",
+                "pro": true
             },
             {
                 "slug": "shadowing",
                 "title": "Shadowing",
-                "icon": "🎤"
+                "icon": "🎤",
+                "pro": true
             }
         ]
     },
