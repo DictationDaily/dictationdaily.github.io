@@ -361,17 +361,20 @@ ordered = nav.flatMap((group) =>
 );
 const out = path.join(OUT, lang.dir);
 fs.mkdirSync(out, { recursive: true });
-// GitHub Pages serves only the root 404.html
-const slugs = ['index', ...ordered.map((p) => p.slug), ...(lang.dir ? [] : ['404'])];
+// GitHub Pages serves only the root 404.html; it sends a missing /vi/ page to
+// vi/404.html (the script in src/pages/404.html)
+const slugs = ['index', ...ordered.map((p) => p.slug), '404'];
 const search = [];
 for (const slug of slugs) {
     const { meta, body } = readPage(slug);
     let { page, headings, text } = render(slug, meta, body);
     if (slug === '404') {
         // GitHub Pages serves 404.html at the missing URL, which may be nested
+        const base = lang.dir ? `/${lang.dir}/` : '/';
         page = page
-            .replace(/(href|src|poster)="(?!https?:|#|\/|mailto:)/g, '$1="/')
-            .replace(/="\/\.\/"/g, '="/"');
+            .replace(/(href|src|poster)="(?!https?:|#|\/|mailto:)/g, `$1="${base}`)
+            .replace(/="\/(vi\/)?\.\.\//g, '="/')
+            .replace(/="(\/(?:vi\/)?)\.\/"/g, '="$1"');
     }
     fs.writeFileSync(path.join(out, `${slug}.html`), page);
     if (slug === '404') continue;
