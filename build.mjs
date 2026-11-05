@@ -2,6 +2,12 @@
 // src/layout.html with the sidebar and the "next step" card, and a search index
 // is written for the search box.
 //
+// The guide is in two languages: English at the root, Vietnamese under /vi/
+// from src/vi/pages/ + src/vi/nav.json, with the layout's words from
+// src/strings.json and the recordings from videos/vi/ (drawn with
+// `python3 scripts/record.py --render --lang vi`). Every page links to the
+// same page in the other language.
+//
 // A page starts with a JSON comment holding its metadata:
 //   <!-- {"title": "...", "description": "...", "time": "1 min", "layout": "home"} -->
 //
@@ -24,13 +30,18 @@ import path from 'node:path';
 const SITE_URL = 'https://docs.dictationdaily.com';
 const OUT = '_site';
 
-const nav = JSON.parse(fs.readFileSync('src/nav.json', 'utf8'));
+const LANGS = [
+    { code: 'en', dir: '', src: 'src' },
+    { code: 'vi', dir: 'vi', src: 'src/vi' },
+];
+const STRINGS = JSON.parse(fs.readFileSync('src/strings.json', 'utf8'));
+let lang = LANGS[0]; // the language being built
+let S = STRINGS.en;
+let nav = [];
+let ordered = [];
 const coords = JSON.parse(fs.readFileSync('src/coords.json', 'utf8'));
 const boxes = JSON.parse(fs.readFileSync('src/boxes.json', 'utf8'));
 const layout = fs.readFileSync('src/layout.html', 'utf8');
-const ordered = nav.flatMap((group) =>
-    group.pages.map((page) => ({ ...page, group: group.title })),
-);
 
 const escape = (s) =>
     s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
@@ -47,6 +58,9 @@ const stripTags = (s) =>
 const slugify = (s) =>
     stripTags(s)
         .toLowerCase()
+        .replace(/đ/g, 'd')
+        .normalize('NFD')
+        .replace(/\p{M}/gu, '')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '');
 const attrs = (s) =>
@@ -55,7 +69,7 @@ const attrs = (s) =>
     );
 
 function readPage(slug) {
-    const raw = fs.readFileSync(`src/pages/${slug}.html`, 'utf8');
+    const raw = fs.readFileSync(`${lang.src}/pages/${slug}.html`, 'utf8');
     const match = raw.match(/^<!--\s*(\{[\s\S]*?\})\s*-->\s*/);
     if (!match) throw new Error(`${slug}.html: missing metadata comment`);
     return { meta: JSON.parse(match[1]), body: raw.slice(match[0].length) };
@@ -140,17 +154,24 @@ function expandTour(_, inner) {
         </div>`;
 }
 
+// A recording in the page's language when there is one (videos/vi/<src>.mp4)
+function videoPath(src) {
+    const own = lang.dir && `videos/${lang.dir}/${src}`;
+    return own && fs.existsSync(`${own}.mp4`) ? own : `videos/${src}`;
+}
+
 function expandDemo(_, a) {
     const s = attrs(a);
-    const video = `<video src="videos/${s.src}.mp4" poster="videos/${s.src}.jpg" muted loop playsinline preload="none" aria-label="${escape(s.caption || 'Screen recording')}"></video>
-            <button type="button" class="demo-toggle" data-demo-toggle aria-label="Pause"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
+    const v = videoPath(s.src);
+    const video = `<video src="${v}.mp4" poster="${v}.jpg" muted loop playsinline preload="none" aria-label="${escape(s.caption || S.recording)}"></video>
+            <button type="button" class="demo-toggle" data-demo-toggle aria-label="${S.pause}"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
     const frame = s.phone
         ? `<div class="demo-phone">${video}</div>`
         : `<div class="demo-browser"><div class="demo-bar"><i></i><i></i><i></i><span>dictationdaily.com</span></div><div class="relative">${video}</div></div>`;
     return `
         <figure class="demo not-prose${s.phone ? ' demo-is-phone' : ''}" data-demo>
             <div class="relative">${frame}</div>
-            ${s.caption ? `<figcaption><span class="demo-badge">▶ Watch</span> ${s.caption}</figcaption>` : ''}
+            ${s.caption ? `<figcaption><span class="demo-badge">▶ ${S.watch}</span> ${s.caption}</figcaption>` : ''}
         </figure>`;
 }
 
@@ -161,15 +182,16 @@ function expandDemo(_, a) {
 //   <watch src="voice" title="Say the words instead of typing"></watch>  (phone for a phone recording)
 function expandWatch(_, a) {
     const s = attrs(a);
-    const meta = JSON.parse(fs.readFileSync(`videos/${s.src}.json`, 'utf8'));
+    const v = videoPath(s.src);
+    const meta = JSON.parse(fs.readFileSync(`${v}.json`, 'utf8'));
     const steps = meta.steps.map((st, i) => {
         const end = meta.steps[i + 1]?.t ?? meta.duration;
         return `<li><button type="button" class="watch-step${i === 0 ? ' is-active' : ''}" data-t="${st.t}" data-end="${end}">
                 <span class="watch-num" aria-hidden="true">${i + 1}</span><span class="watch-text">${escape(st.text)}</span>
                 <span class="watch-fill" aria-hidden="true"></span></button></li>`;
     }).join('');
-    const video = `<video src="videos/${s.src}.mp4" poster="videos/${s.src}.jpg" muted loop playsinline preload="metadata" aria-label="${escape(s.title || 'Screen recording')}"></video>
-            <button type="button" class="demo-toggle" data-demo-toggle aria-label="Pause"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
+    const video = `<video src="${v}.mp4" poster="${v}.jpg" muted loop playsinline preload="metadata" aria-label="${escape(s.title || S.recording)}"></video>
+            <button type="button" class="demo-toggle" data-demo-toggle aria-label="${S.pause}"><span class="demo-pause">❚❚</span><span class="demo-play">▶</span></button>`;
     const frame = s.phone
         ? `<div class="demo-phone">${video}</div>`
         : `<div class="demo-browser"><div class="demo-bar"><i></i><i></i><i></i><span>dictationdaily.com</span></div><div class="relative">${video}</div></div>`;
@@ -246,9 +268,20 @@ function sidebar(current) {
 function nextCard(index) {
     const next = ordered[index + 1];
     return `
-        <nav class="mt-16" aria-label="Next page">
-            ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">Next</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">You've read it all!</span><span class="mt-1 block text-lg font-bold text-white">🎉 Back to the guide home</span></a>`}
+        <nav class="mt-16" aria-label="${S.next_page}">
+            ${next ? `<a href="${next.slug}.html" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.next}</span><span class="mt-1 flex items-center justify-between gap-3 text-lg font-bold text-white"><span>${next.icon} ${next.title}</span><span class="pager-arrow" aria-hidden="true">→</span></span></a>` : `<a href="./" class="pager pager-next"><span class="text-xs uppercase tracking-wide text-red-100">${S.read_all}</span><span class="mt-1 block text-lg font-bold text-white">🎉 ${S.back_home}</span></a>`}
         </nav>`;
+}
+
+const pageUrl = (l, slug) =>
+    `${SITE_URL}/${l.dir ? l.dir + '/' : ''}${slug === 'index' ? '' : slug + '.html'}`;
+
+// The header link to this page in the other language
+function langSwitch(slug) {
+    const other = LANGS.find((l) => l !== lang);
+    const file = slug === 'index' || slug === '404' ? '' : `${slug}.html`;
+    const href = lang.dir ? `../${file}` : `${other.dir}/${file}`;
+    return `<a href="${href || './'}" hreflang="${other.code}" lang="${other.code}" class="lang-switch" data-lang-link title="${S.switch_label}" aria-label="${S.switch_label}"><svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><span class="sm:hidden">${other.code.toUpperCase()}</span><span class="hidden sm:inline">${S.switch}</span></a>`;
 }
 
 function render(slug, meta, body) {
@@ -259,12 +292,18 @@ function render(slug, meta, body) {
         ? { html: expand(body), headings: [] }
         : addAnchors(expand(body));
     const vars = {
-        title:
-            slug === 'index'
-                ? 'Dictation Daily Guide'
-                : `${meta.title} · Dictation Daily Guide`,
+        ...Object.fromEntries(Object.entries(S).map(([k, v]) => [`s_${k}`, v])),
+        lang: lang.code,
+        base: lang.dir ? `/${lang.dir}/` : '/',
+        root: lang.dir ? '../' : '',
+        title: slug === 'index' ? S.site : `${meta.title} · ${S.site}`,
         description: escape(meta.description || ''),
-        canonical: `${SITE_URL}/${slug === 'index' ? '' : slug + '.html'}`,
+        canonical: pageUrl(lang, slug),
+        alternates: slug === '404' ? '' : [
+            ...LANGS.map((l) => `<link rel="alternate" hreflang="${l.code}" href="${pageUrl(l, slug)}">`),
+            `<link rel="alternate" hreflang="x-default" href="${pageUrl(LANGS[0], slug)}">`,
+        ].join('\n    '),
+        langswitch: langSwitch(slug),
         sidebar: sidebar(slug),
         body_class: home ? 'layout-home' : 'layout-doc',
         content: home
@@ -283,8 +322,16 @@ function render(slug, meta, body) {
             <div class="prose prose-lg prose-gray mt-10 max-w-none dark:prose-invert">${html}</div>
             ${index >= 0 ? nextCard(index) : ''}`,
     };
+    let page = layout.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? '');
+    if (lang.dir) {
+        // plain <video> tags (the home page) play this language's recording too
+        page = page.replace(/"videos\/([\w-]+)\.(mp4|jpg|json)"/g, (all, name, ext) =>
+            fs.existsSync(`videos/${lang.dir}/${name}.${ext}`) ? `"videos/${lang.dir}/${name}.${ext}"` : all);
+        // pages under /vi/ share the root's images, videos and assets
+        page = page.replace(/(href|src|poster)="(?=(images|videos|assets)\/)/g, '$1="../');
+    }
     return {
-        page: layout.replace(/\{\{(\w+)\}\}/g, (_, key) => vars[key] ?? ''),
+        page,
         headings,
         text: stripTags(html),
     };
@@ -293,7 +340,17 @@ function render(slug, meta, body) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT);
 
-const slugs = ['index', ...ordered.map((p) => p.slug), '404'];
+const sitemap = [];
+for (lang of LANGS) {
+S = STRINGS[lang.code];
+nav = JSON.parse(fs.readFileSync(`${lang.src}/nav.json`, 'utf8'));
+ordered = nav.flatMap((group) =>
+    group.pages.map((page) => ({ ...page, group: group.title })),
+);
+const out = path.join(OUT, lang.dir);
+fs.mkdirSync(out, { recursive: true });
+// GitHub Pages serves only the root 404.html
+const slugs = ['index', ...ordered.map((p) => p.slug), ...(lang.dir ? [] : ['404'])];
 const search = [];
 for (const slug of slugs) {
     const { meta, body } = readPage(slug);
@@ -304,8 +361,10 @@ for (const slug of slugs) {
             .replace(/(href|src|poster)="(?!https?:|#|\/|mailto:)/g, '$1="/')
             .replace(/="\/\.\/"/g, '="/"');
     }
-    fs.writeFileSync(path.join(OUT, `${slug}.html`), page);
-    if (slug === 'index' || slug === '404') continue;
+    fs.writeFileSync(path.join(out, `${slug}.html`), page);
+    if (slug === '404') continue;
+    sitemap.push(pageUrl(lang, slug));
+    if (slug === 'index') continue;
     const entry = ordered.find((p) => p.slug === slug);
     search.push({
         url: `${slug}.html`,
@@ -317,16 +376,15 @@ for (const slug of slugs) {
         text,
     });
 }
-fs.writeFileSync(path.join(OUT, 'search-index.json'), JSON.stringify(search));
+fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(search));
+console.log(`built ${slugs.length} ${lang.code} pages into ${out}/`);
+}
 
 fs.writeFileSync(
     path.join(OUT, 'sitemap.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${slugs
-    .filter((s) => s !== '404')
-    .map((s) => `  <url><loc>${SITE_URL}/${s === 'index' ? '' : s + '.html'}</loc></url>`)
-    .join('\n')}
+${sitemap.map((u) => `  <url><loc>${u}</loc></url>`).join('\n')}
 </urlset>
 `,
 );
@@ -339,4 +397,3 @@ for (const dir of ['images', 'videos', 'assets']) {
     fs.cpSync(dir, path.join(OUT, dir), { recursive: true });
 }
 fs.copyFileSync('favicon.ico', path.join(OUT, 'favicon.ico'));
-console.log(`built ${slugs.length} pages into ${OUT}/`);

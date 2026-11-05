@@ -1,0 +1,21 @@
+{
+ "duration": 10.07,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Có gì sai? Mở nút bánh răng ⚙"
+  },
+  {
+   "t": 1.83,
+   "text": "Chọn Report a bug"
+  },
+  {
+   "t": 4.1,
+   "text": "Viết điều gì bị sai"
+  },
+  {
+   "t": 6.99,
+   "text": "Ảnh màn hình được gửi kèm. Nhấn SEND"
+  }
+ ]
+}

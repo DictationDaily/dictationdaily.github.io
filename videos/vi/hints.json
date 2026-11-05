@@ -1,0 +1,33 @@
+{
+ "duration": 18.3,
+ "steps": [
+  {
+   "t": 0.32,
+   "text": "Thiếu một từ"
+  },
+  {
+   "t": 2.71,
+   "text": "Chữ xanh là từ còn thiếu: gõ nó ở con trỏ"
+  },
+  {
+   "t": 5.54,
+   "text": "Thừa một từ"
+  },
+  {
+   "t": 8.07,
+   "text": "Bị gạch = thừa: nhấn Backspace"
+  },
+  {
+   "t": 10.88,
+   "text": "Một từ sai"
+  },
+  {
+   "t": 13.07,
+   "text": "Đỏ là sai, xanh là đúng. Gõ đè lên"
+  },
+  {
+   "t": 15.82,
+   "text": "✓ Đúng rồi!"
+  }
+ ]
+}

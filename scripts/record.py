@@ -6,6 +6,7 @@ Signed out, or (DD_SESSION, see pro_session.py) as a Pro learner with every
 write blocked and every lesson unstarted, so nothing is saved to any account.
 
 usage: [DD_BASE=http://localhost:8788] python3 scripts/record.py [scene ...]
+       python3 scripts/record.py --render [--lang vi] [scene ...]  (redraw kept takes)
 DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
@@ -116,9 +117,7 @@ class Recorder:
 
     def chapter(self, text):
         """A caption shown now: a step of the walkthrough (videos/<name>.json)."""
-        text = html.unescape(re.sub(r'<b>\d+</b>', '', text))
-        text = re.sub(r'<[^>]+>', '', text).strip()
-        text = re.sub(r'^\d+\.\s*', '', text)  # the list numbers its steps itself
+        text = _step_text(text)
         if text and (not self.chapters or self.chapters[-1][1] != text):
             self.chapters.append((time.time(), text))
 
@@ -157,16 +156,44 @@ class Recorder:
 TAKES = os.path.expanduser('~/.cache/dd-guide/takes')
 
 
-def render_take(name):
-    """Draw videos/<name>.mp4 and .jpg from the kept take."""
+def _step_text(text):
+    """A caption as a step of the list beside the video."""
+    text = html.unescape(re.sub(r'<b>\d+</b>', '', text))
+    text = re.sub(r'<[^>]+>', '', text).strip()
+    return re.sub(r'^\d+\.\s*', '', text)  # the list numbers its steps itself
+
+
+def render_take(name, lang=None):
+    """Draw videos/<name>.mp4 and .jpg from the kept take. With lang (vi), the
+    captions come from scripts/captions.<lang>.json and the video, poster and
+    steps go to videos/<lang>/ for the guide in that language."""
     take = os.path.join(TAKES, name)
     with open(os.path.join(take, 'take.json')) as f:
         d = json.load(f)
-    os.makedirs(OUT, exist_ok=True)
+    out, events = OUT, d['events']
+    if lang:
+        with open(os.path.join(os.path.dirname(__file__), f'captions.{lang}.json')) as f:
+            words = json.load(f)
+        out = f'{OUT}/{lang}'
+        events = [{**e, 'html': words[e['html']]} if e['k'] == 'cap' and e['html'] else e for e in events]
+    os.makedirs(out, exist_ok=True)
     frames = [(os.path.join(take, p), t) for p, t in d['frames']]
-    mp4 = f'{OUT}/{name}.mp4'
-    cap_render.render(frames, d['events'], mp4, d['out_width'], scale=d['scale'], touch=d['touch'],
-                      poster_at=d['poster_at'], poster_path=f'{OUT}/{name}.jpg')
+    mp4 = f'{out}/{name}.mp4'
+    cap_render.render(frames, events, mp4, d['out_width'], scale=d['scale'], touch=d['touch'],
+                      poster_at=d['poster_at'], poster_path=f'{out}/{name}.jpg')
+    if lang:
+        # the steps beside the video, at the times of the English ones
+        with open(f'{OUT}/{name}.json') as f:
+            meta = json.load(f)
+        texts = []
+        for e in events:
+            text = e['k'] == 'cap' and e['html'] and _step_text(e['html'])
+            if text and (not texts or texts[-1] != text):
+                texts.append(text)
+        assert len(texts) == len(meta['steps']), f'{name}: {len(texts)} captions, {len(meta["steps"])} steps'
+        meta['steps'] = [{**st, 'text': t} for st, t in zip(meta['steps'], texts)]
+        with open(f'{out}/{name}.json', 'w') as f:
+            json.dump(meta, f, ensure_ascii=False, indent=1)
     print('drew', mp4, f'{os.path.getsize(mp4) // 1024} KB', flush=True)
 
 
@@ -748,9 +775,13 @@ def fake_voice():
 
 if __name__ == '__main__':
     if sys.argv[1:2] == ['--render']:
-        # draw again from the kept takes, without recording
-        for name in sys.argv[2:] or sorted(os.listdir(TAKES)):
-            render_take(name)
+        # draw again from the kept takes, without recording;
+        # --render --lang vi [scene ...] draws the Vietnamese guide's videos
+        args, lang = sys.argv[2:], None
+        if args[:1] == ['--lang']:
+            lang, args = args[1], args[2:]
+        for name in args or sorted(os.listdir(TAKES)):
+            render_take(name, lang)
         sys.exit()
     wanted = sys.argv[1:] or [*SCENES, 'mobile']
     with sync_playwright() as p:

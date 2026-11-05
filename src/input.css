@@ -42,6 +42,10 @@
     .btn-chunky {
         @apply items-center justify-center whitespace-nowrap rounded-2xl bg-brand px-5 py-2.5 font-display text-base font-semibold text-white no-underline shadow-edge-red transition hover:bg-[#e0312f] active:translate-y-[3px] active:shadow-none;
     }
+    /* header link to the guide in the other language */
+    .lang-switch {
+        @apply flex h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg px-2 text-sm font-bold text-gray-600 hover:bg-gray-100 hover:text-ink sm:px-3 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
+    }
     .icon-btn {
         @apply rounded-lg p-2 text-gray-600 hover:bg-gray-100 hover:text-ink dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-white;
     }

@@ -1,0 +1,21 @@
+{
+ "duration": 15.34,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Nhấn START: một câu tiếng Pháp được phát"
+  },
+  {
+   "t": 3.16,
+   "text": "Gõ những gì bạn nghe"
+  },
+  {
+   "t": 6.04,
+   "text": "Đúng! Bản dịch tiếng Việt hiện ra"
+  },
+  {
+   "t": 8.86,
+   "text": "Nút bánh răng ⚙ ẩn hoặc hiện bản dịch"
+  }
+ ]
+}
