@@ -10,7 +10,7 @@ usage: [DD_BASE=http://localhost:8788] python3 scripts/record.py [scene ...]
 DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
-translation word voice shadow resume streak report
+translation word voice pronounce shadow resume streak report
 """
 import base64
 import html
@@ -633,6 +633,58 @@ def scene_voice(ctx):
     rec.stop(1280)
 
 
+
+FR_LINE = "Bonjour et bienvenue dans un nouvel épisode d'Easy French,".split()
+
+
+def scene_pronounce(ctx):
+    """Pro pronunciation check: the whole sentence after a right answer, then Say it on one word."""
+    page = ctx.new_page()
+    canned(page, 'shadow-check', heard(FR_LINE, missing=('nouvel',)))
+    canned(page, 'word-check', {'level': 'brown', 'sounds': [
+        {'ipa': 'n', 'score': 95}, {'ipa': 'u', 'score': 62}, {'ipa': 'v', 'score': 90},
+        {'ipa': 'ɛ', 'score': 41}, {'ipa': 'l', 'score': 93}]})
+    open_lesson(page, FR_VIDEO)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'pronounce', (1440, 900))
+    rec.start()
+    place(page, 900, 600)
+    caption('Get the sentence right first', 300)
+    click(page.get_by_text('START', exact=True))
+    wait_exercise(page)
+    page.wait_for_timeout(1500)
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
+    move_to(ta, 200)
+    type_(ta, FR_GAP, delay=35)
+    page.get_by_text('You are correct!').first.wait_for(timeout=8000)
+    page.wait_for_timeout(600)
+    caption('Tap the microphone and say the whole sentence', 300)
+    click(page.get_by_test_id('say-line-mic').first)
+    page.wait_for_timeout(2600)
+    click(page.get_by_test_id('say-line-mic').first, 300)
+    page.get_by_test_id('say-line-score').first.wait_for(timeout=10000)
+    caption('Green words came through, red ones did not', 3000)
+    rec.poster()
+    caption('Tap a word to practise it alone', 300)
+    click(page.locator('[data-word]:visible').filter(has_text=re.compile('^nouvel$')).first)
+    page.locator('[data-word-card]').first.wait_for(timeout=15000)
+    page.get_by_test_id('word-sense').first.wait_for(timeout=20000)
+    page.wait_for_timeout(800)
+    caption('Listen, then Say it: tap the microphone and say the word', 300)
+    click(page.get_by_test_id('word-listen').first)
+    page.wait_for_timeout(1500)
+    click(page.get_by_test_id('say-mic').first)
+    page.wait_for_timeout(1500)
+    click(page.get_by_test_id('say-word').get_by_role('button', name=re.compile('^Stop')).first, 200)
+    page.get_by_test_id('say-word-result').first.wait_for(timeout=10000)
+    move_to((1380, 840), 200)  # the pointer off the result
+    caption('Each sound gets a colour: work on the red one')
+    look(page, page.get_by_test_id('say-word-result').first, 3.6)
+    page.keyboard.press('Escape')
+    caption(None, 600)
+    rec.stop(1280)
+
+
 def scene_shadow(ctx):
     page = ctx.new_page()
     canned(page, 'shadow-check', heard(LINE1, missing=('tremendous',)))
@@ -759,6 +811,7 @@ def scene_report(ctx):
 SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library, 'speed': scene_speed,
           'navigate': scene_navigate, 'listen': scene_listen,
           'translation': scene_translation, 'word': scene_word, 'voice': scene_voice,
+          'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report}
 

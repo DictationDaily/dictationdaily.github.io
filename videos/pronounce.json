@@ -1,0 +1,29 @@
+{
+ "duration": 24.28,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Get the sentence right first"
+  },
+  {
+   "t": 5.14,
+   "text": "Tap the microphone and say the whole sentence"
+  },
+  {
+   "t": 9.26,
+   "text": "Green words came through, red ones did not"
+  },
+  {
+   "t": 12.47,
+   "text": "Tap a word to practise it alone"
+  },
+  {
+   "t": 14.39,
+   "text": "Listen, then Say it: tap the microphone and say the word"
+  },
+  {
+   "t": 19.77,
+   "text": "Each sound gets a colour: work on the red one"
+  }
+ ]
+}
