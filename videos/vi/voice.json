@@ -3,7 +3,7 @@
  "steps": [
   {
    "t": 0.02,
-   "text": "Chạm vào micro trong ô"
+   "text": "Bấm vào micro trong ô"
   },
   {
    "t": 1.14,
@@ -11,7 +11,7 @@
   },
   {
    "t": 3.51,
-   "text": "Chúng được viết vào ô và kiểm tra"
+   "text": "Lời bạn nói được viết vào ô và chấm luôn"
   },
   {
    "t": 6.13,
@@ -19,11 +19,11 @@
   },
   {
    "t": 10.04,
-   "text": "Từ xanh được nghe rõ, từ đỏ thì chưa"
+   "text": "Từ xanh lá máy nghe rõ, từ đỏ thì chưa"
   },
   {
    "t": 13.06,
-   "text": "Space: câu tiếp theo"
+   "text": "Space: sang câu tiếp"
   }
  ]
 }

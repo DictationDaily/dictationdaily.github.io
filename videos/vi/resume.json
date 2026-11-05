@@ -3,7 +3,7 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Khi đăng nhập, video của bạn nằm ở trên cùng"
+   "text": "Đã đăng nhập: video đang học nằm ngay trên cùng"
   },
   {
    "t": 2.0,
@@ -11,7 +11,7 @@
   },
   {
    "t": 24.35,
-   "text": "Học tiếp từ chỗ bạn dừng"
+   "text": "Học tiếp đúng chỗ bạn dừng lần trước"
   }
  ]
 }

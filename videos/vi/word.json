@@ -3,7 +3,7 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Chạm vào một từ bất kỳ trong câu"
+   "text": "Bấm vào một từ bất kỳ trong câu"
   },
   {
    "t": 1.43,
@@ -15,11 +15,11 @@
   },
   {
    "t": 6.46,
-   "text": "Say it: chạm micro và đọc từ đó"
+   "text": "Say it: bấm micro và tự đọc từ đó"
   },
   {
    "t": 9.84,
-   "text": "Xanh = dễ nghe. Mỗi âm có một màu"
+   "text": "Xanh lá là máy nghe rõ. Mỗi âm được tô một màu"
   }
  ]
 }

@@ -3,15 +3,15 @@
  "steps": [
   {
    "t": 0.85,
-   "text": "🎧 Phần “Just listen”: không cần gõ gì"
+   "text": "🎧 Đoạn “Just listen”: chỉ nghe, không cần gõ"
   },
   {
    "t": 3.67,
-   "text": "Nhấn Space để bỏ qua, hoặc chờ"
+   "text": "Nhấn Space để bỏ qua, hoặc đợi một chút"
   },
   {
    "t": 5.26,
-   "text": "Rồi câu tiếp theo bắt đầu"
+   "text": "Câu tiếp theo sẽ tự bắt đầu"
   }
  ]
 }

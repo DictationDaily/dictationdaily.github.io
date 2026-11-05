@@ -9,7 +9,7 @@
             },
             {
                 "slug": "hints",
-                "title": "Chữ đỏ và chữ xanh",
+                "title": "Sửa lỗi theo gợi ý",
                 "icon": "💡"
             },
             {
@@ -20,11 +20,11 @@
         ]
     },
     {
-        "title": "Khi thấy khó",
+        "title": "Khi gặp câu khó",
         "pages": [
             {
                 "slug": "too-hard",
-                "title": "Nghe lại, chậm hơn",
+                "title": "Nghe lại, nghe chậm hơn",
                 "icon": "🐢"
             },
             {
@@ -35,7 +35,7 @@
         ]
     },
     {
-        "title": "Ngôn ngữ của bạn",
+        "title": "Hiểu nghĩa",
         "pages": [
             {
                 "slug": "languages",
@@ -44,7 +44,7 @@
             },
             {
                 "slug": "look-up-a-word",
-                "title": "Tra một từ",
+                "title": "Tra từ",
                 "icon": "📖"
             }
         ]
@@ -54,7 +54,7 @@
         "pages": [
             {
                 "slug": "say-your-answer",
-                "title": "Nói câu trả lời",
+                "title": "Trả lời bằng giọng nói",
                 "icon": "🎙️"
             },
             {
@@ -65,16 +65,16 @@
         ]
     },
     {
-        "title": "Tiến độ của bạn",
+        "title": "Tiến độ",
         "pages": [
             {
                 "slug": "save-progress",
-                "title": "Học tiếp từ chỗ đã dừng",
+                "title": "Học tiếp chỗ đang dở",
                 "icon": "💾"
             },
             {
                 "slug": "streaks",
-                "title": "Chuỗi ngày và mục tiêu",
+                "title": "Chuỗi ngày học và mục tiêu",
                 "icon": "🔥"
             }
         ]
@@ -84,7 +84,7 @@
         "pages": [
             {
                 "slug": "phone",
-                "title": "Trên điện thoại",
+                "title": "Học trên điện thoại",
                 "icon": "📱"
             },
             {
@@ -94,17 +94,17 @@
             },
             {
                 "slug": "tips",
-                "title": "Mẹo hay",
+                "title": "Mẹo học",
                 "icon": "✨"
             },
             {
                 "slug": "faq",
-                "title": "Câu hỏi",
+                "title": "Câu hỏi thường gặp",
                 "icon": "❓"
             },
             {
                 "slug": "help",
-                "title": "Có gì đó không chạy",
+                "title": "Gặp trục trặc",
                 "icon": "🛟"
             }
         ]

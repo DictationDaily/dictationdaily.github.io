@@ -3,7 +3,7 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Khó quá? Nhấn Esc để bỏ qua"
+   "text": "Câu khó quá? Nhấn Esc để bỏ qua"
   },
   {
    "t": 3.32,
@@ -11,7 +11,7 @@
   },
   {
    "t": 7.61,
-   "text": "Nhấn UNDO để làm lại câu"
+   "text": "Bấm UNDO để làm lại câu đó"
   }
  ]
 }

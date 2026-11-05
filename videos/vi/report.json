@@ -3,7 +3,7 @@
  "steps": [
   {
    "t": 0.0,
-   "text": "Có gì sai? Mở nút bánh răng ⚙"
+   "text": "Thấy lỗi? Bấm nút bánh răng ⚙"
   },
   {
    "t": 1.83,
@@ -11,11 +11,11 @@
   },
   {
    "t": 4.1,
-   "text": "Viết điều gì bị sai"
+   "text": "Mô tả lỗi bạn gặp"
   },
   {
    "t": 6.99,
-   "text": "Ảnh màn hình được gửi kèm. Nhấn SEND"
+   "text": "Ảnh chụp màn hình được gửi kèm. Bấm SEND"
   }
  ]
 }

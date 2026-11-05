@@ -16,7 +16,7 @@
             none: (q) => `No results for “${q}”. Try the <a class="text-brand underline" href="faq.html">FAQ</a>.`,
         },
         vi: {
-            play: 'Phát', pause: 'Tạm dừng', try: 'Thử', or: 'hoặc', tryWords: ['chậm', 'bỏ qua', 'streak', 'điện thoại'],
+            play: 'Phát', pause: 'Tạm dừng', try: 'Thử', or: 'hoặc', tryWords: ['nghe chậm', 'bỏ qua', 'chuỗi ngày', 'điện thoại'],
             none: (q) => `Không tìm thấy “${q}”. Xem <a class="text-brand underline" href="faq.html">Câu hỏi thường gặp</a>.`,
         },
     };
@@ -312,10 +312,10 @@
         const items = $$('[data-faq]');
         const empty = $('[data-faq-empty]');
         filter.addEventListener('input', () => {
-            const words = filter.value.toLowerCase().split(/\s+/).filter(Boolean);
+            const words = fold(filter.value).split(/\s+/).filter(Boolean);
             let shown = 0;
             items.forEach((d) => {
-                const hit = words.every((w) => d.textContent.toLowerCase().includes(w));
+                const hit = words.every((w) => fold(d.textContent).includes(w));
                 d.classList.toggle('hidden', !hit);
                 if (hit) shown++;
                 d.open = words.length > 0 && hit && shown <= 3;
