@@ -47,6 +47,12 @@
                 "title": "Look up a word",
                 "icon": "📖",
                 "pro": true
+            },
+            {
+                "slug": "words",
+                "title": "Save words, flashcards",
+                "icon": "🃏",
+                "pro": true
             }
         ]
     },
