@@ -11,6 +11,7 @@ DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
 translation word voice pronounce shadow resume streak report
+words (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
 """
 import base64
 import html
@@ -821,12 +822,78 @@ def scene_report(ctx):
     rec.stop(1280)
 
 
+def scene_words(ctx):
+    """Save a word, then practise it as a flashcard. Every /api answer is canned (words_demo.py):
+    no account needed, nothing saved anywhere."""
+    import words_demo
+    page = ctx.new_page()
+    words_demo.Demo(B).install(page)
+    open_lesson(page, FR_VIDEO)
+    move_to, click, caption = helpers(page)
+    answer_first(page, FR_GAP)
+    page.get_by_test_id('translation').first.wait_for(timeout=30000)
+    page.wait_for_timeout(1500)
+    rec = Recorder(page, 'words', (1440, 900))
+    rec.start()
+    place(page, 1000, 600)
+    caption('Tap a word of the sentence', 300)
+    click(page.locator('[data-word]:visible').filter(has_text=re.compile('^épisode$')).first)
+    page.get_by_test_id('word-sense').first.wait_for(timeout=20000)
+    page.wait_for_timeout(1200)
+    save = page.get_by_test_id('word-save').first
+    assert save.get_attribute('aria-pressed') != 'true', 'already saved'
+    caption('Press Save', 300)
+    click(save)
+    page.get_by_test_id('word-save-note').first.wait_for(timeout=8000)
+    caption('Saved to Words, with its sentence', 2200)
+    caption('See words: every word you saved', 300)
+    see = page.get_by_test_id('word-save-note').get_by_role('link').first
+    see.evaluate('a => a.removeAttribute("target")')  # it opens a new tab; the recording stays in this one
+    click(see)
+    page.get_by_test_id('saved-word').first.wait_for(timeout=30000)
+    page.wait_for_timeout(1800)
+    caption('Press Practice', 300)
+    click(page.get_by_test_id('words-practice').first)
+    page.get_by_test_id('practice-card').first.wait_for(timeout=30000)
+    page.wait_for_timeout(600)
+    caption('The sentence from the video, your word missing', 2400)
+    rec.poster()
+    inp = page.get_by_test_id('practice-input').first
+    caption('Type it (or say it) and press Enter', 300)
+    move_to(inp, 300)
+    type_(inp, 'épisode', delay=90)
+    page.keyboard.press('Enter')
+    page.get_by_test_id('practice-result').first.wait_for(timeout=10000)
+    caption('Right! It comes back in a few days', 2600)
+    click(page.get_by_test_id('practice-continue').first, 300)
+    page.wait_for_timeout(1200)
+    inp = page.get_by_test_id('practice-input').first
+    caption('Wrong? Type it again to go on', 300)
+    move_to(inp, 300)
+    type_(inp, 'quartier', delay=90)
+    page.keyboard.press('Enter')
+    page.get_by_test_id('practice-retype').first.wait_for(timeout=10000)
+    page.wait_for_timeout(1600)
+    type_(page.get_by_test_id('practice-input').first, 'quartiers', delay=90)
+    page.get_by_test_id('practice-result').first.wait_for(timeout=10000)
+    # the screen is still now: a 1-px blink keeps the screencast sending frames
+    page.evaluate('''() => { const d = document.createElement('div');
+        d.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:.02;background:#000';
+        document.body.appendChild(d); let on = 0;
+        setInterval(() => { d.style.background = (on ^= 1) ? '#fff' : '#000'; }, 40); }''')
+    result = page.get_by_test_id('practice-result').first
+    caption('A missed word comes back soon', 300)
+    look(page, result, 2.4)
+    caption(None, 400)
+    rec.stop(1280)
+
+
 SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library, 'speed': scene_speed,
           'navigate': scene_navigate, 'listen': scene_listen,
           'translation': scene_translation, 'word': scene_word, 'voice': scene_voice,
           'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
-          'report': scene_report}
+          'report': scene_report, 'words': scene_words}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):
