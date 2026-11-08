@@ -1,28 +1,28 @@
 {
- "duration": 16.18,
+ "duration": 16.01,
  "steps": [
   {
-   "t": 0.01,
+   "t": 0.0,
    "text": "Bấm START"
   },
   {
-   "t": 1.29,
+   "t": 1.2,
    "text": "Nghe câu mẫu"
   },
   {
-   "t": 3.9,
+   "t": 3.79,
    "text": "Micro bật lên: nói lại câu đó"
   },
   {
-   "t": 6.56,
+   "t": 6.39,
    "text": "Xanh: nói tốt. Nâu: gần đúng. Đỏ: bị sót"
   },
   {
-   "t": 9.76,
+   "t": 9.6,
    "text": "Enter: nghe lại giọng mình. Esc: nói lại"
   },
   {
-   "t": 11.96,
+   "t": 11.8,
    "text": "Space: sang câu tiếp"
   }
  ]

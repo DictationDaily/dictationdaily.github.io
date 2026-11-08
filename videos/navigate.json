@@ -1,5 +1,5 @@
 {
- "duration": 12.28,
+ "duration": 12.03,
  "steps": [
   {
    "t": 0.0,
@@ -10,7 +10,7 @@
    "text": "Go back with the ◀ arrow"
   },
   {
-   "t": 7.61,
+   "t": 7.45,
    "text": "Press UNDO to try a sentence again"
   }
  ]

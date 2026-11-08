@@ -1,20 +1,20 @@
 {
- "duration": 12.05,
+ "duration": 11.79,
  "steps": [
   {
    "t": 0.0,
    "text": "Bấm nút bánh răng ⚙ trên video"
   },
   {
-   "t": 2.2,
+   "t": 2.23,
    "text": "Chọn Speed (tốc độ)"
   },
   {
-   "t": 4.35,
+   "t": 4.22,
    "text": "Chọn 0.5x"
   },
   {
-   "t": 6.35,
+   "t": 6.11,
    "text": "🐢 Câu được phát chậm lại một nửa"
   }
  ]

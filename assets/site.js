@@ -285,7 +285,7 @@
                     <li role="option" aria-selected="${i === 0}">
                         <a href="${base}${r.p.url}${r.heading ? '#' + r.heading.id : ''}" class="search-hit">
                             <span class="text-xs uppercase tracking-wide text-gray-400">${r.p.icon || ''} ${esc(r.p.group)}</span>
-                            <span class="block font-semibold text-ink dark:text-white">${mark(r.p.title, words)}${r.p.pro ? ' <span class="pro-tag">PRO</span>' : ''}${r.heading ? ` <span class="font-normal text-gray-500">› ${mark(r.heading.text, words)}</span>` : ''}</span>
+                            <span class="block font-semibold text-ink dark:text-white">${mark(r.p.title, words)}${r.heading ? ` <span class="font-normal text-gray-500">› ${mark(r.heading.text, words)}</span>` : ''}</span>
                             <span class="mt-0.5 block text-sm text-gray-500">${mark(snippet(r.heading?.body || r.p.text, words), words)}</span>
                         </a>
                     </li>`).join('')
