@@ -1,0 +1,45 @@
+{
+ "duration": 25.79,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Bấm vào một từ trong câu"
+  },
+  {
+   "t": 2.32,
+   "text": "Bấm Save để lưu"
+  },
+  {
+   "t": 3.42,
+   "text": "Đã lưu vào Words, kèm câu gốc"
+  },
+  {
+   "t": 5.62,
+   "text": "See words: mọi từ bạn đã lưu"
+  },
+  {
+   "t": 8.68,
+   "text": "Bấm Practice"
+  },
+  {
+   "t": 10.53,
+   "text": "Câu trong video, thiếu đúng từ bạn đã lưu"
+  },
+  {
+   "t": 13.13,
+   "text": "Gõ (hoặc nói) từ đó, rồi nhấn Enter"
+  },
+  {
+   "t": 14.44,
+   "text": "Đúng rồi! Vài ngày sau từ này mới quay lại"
+  },
+  {
+   "t": 18.57,
+   "text": "Sai? Gõ lại cho đúng để đi tiếp"
+  },
+  {
+   "t": 22.42,
+   "text": "Từ trả lời sai sẽ sớm quay lại"
+  }
+ ]
+}
