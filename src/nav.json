@@ -45,8 +45,7 @@
             {
                 "slug": "look-up-a-word",
                 "title": "Look up a word",
-                "icon": "📖",
-                "pro": true
+                "icon": "📖"
             }
         ]
     },
@@ -56,20 +55,17 @@
             {
                 "slug": "pronunciation",
                 "title": "Check your pronunciation",
-                "icon": "🗣️",
-                "pro": true
+                "icon": "🗣️"
             },
             {
                 "slug": "say-your-answer",
                 "title": "Say your answer",
-                "icon": "🎙️",
-                "pro": true
+                "icon": "🎙️"
             },
             {
                 "slug": "shadowing",
                 "title": "Shadowing",
-                "icon": "🎤",
-                "pro": true
+                "icon": "🎤"
             }
         ]
     },
