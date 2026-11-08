@@ -45,7 +45,8 @@
             {
                 "slug": "look-up-a-word",
                 "title": "Look up a word",
-                "icon": "📖"
+                "icon": "📖",
+                "pro": true
             },
             {
                 "slug": "words",
@@ -59,8 +60,9 @@
         "pages": [
             {
                 "slug": "pronunciation",
-                "title": "Check your pronunciation",
-                "icon": "🗣️"
+                "title": "Check a word’s pronunciation",
+                "icon": "🗣️",
+                "pro": true
             },
             {
                 "slug": "say-your-answer",
