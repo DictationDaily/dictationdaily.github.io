@@ -256,7 +256,7 @@ function sidebar(current) {
             <ul class="space-y-0.5">${group.pages
                 .map(
                     (p) => `
-                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}"><span class="nav-icon" aria-hidden="true">${p.icon}</span><span class="min-w-0">${p.title}</span></a></li>`,
+                <li><a href="${p.slug}.html" class="nav-link${p.slug === current ? ' active" aria-current="page' : ''}"><span class="nav-icon" aria-hidden="true">${p.icon}</span><span class="min-w-0">${p.title}</span>${p.pro ? '<span class="pro-badge">PRO</span>' : ''}</a></li>`,
                 )
                 .join('')}
             </ul>

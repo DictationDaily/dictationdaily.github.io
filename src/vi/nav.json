@@ -45,7 +45,8 @@
             {
                 "slug": "look-up-a-word",
                 "title": "Tra từ",
-                "icon": "📖"
+                "icon": "📖",
+                "pro": true
             },
             {
                 "slug": "words",
@@ -59,8 +60,9 @@
         "pages": [
             {
                 "slug": "pronunciation",
-                "title": "Kiểm tra phát âm",
-                "icon": "🗣️"
+                "title": "Kiểm tra phát âm từng từ",
+                "icon": "🗣️",
+                "pro": true
             },
             {
                 "slug": "say-your-answer",

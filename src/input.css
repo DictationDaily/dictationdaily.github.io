@@ -653,3 +653,9 @@ h3 {
     font-weight: 800;
     letter-spacing: 0;
 }
+
+@layer components {
+    .pro-badge {
+        @apply inline-flex shrink-0 items-center rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-bold tracking-wide text-orange-800;
+    }
+}
