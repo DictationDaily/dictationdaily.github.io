@@ -1,36 +1,36 @@
 {
- "duration": 20.67,
+ "duration": 20.35,
  "steps": [
   {
-   "t": 0.0,
+   "t": 0.01,
    "text": "Bấm START"
   },
   {
-   "t": 1.39,
+   "t": 1.42,
    "text": "Lắng nghe. Vạch đỏ chạy qua phần bạn cần gõ"
   },
   {
-   "t": 4.8,
+   "t": 4.82,
    "text": "Gõ những từ còn thiếu"
   },
   {
-   "t": 8.49,
+   "t": 8.37,
    "text": "Nhấn Enter để kiểm tra"
   },
   {
-   "t": 10.35,
+   "t": 10.19,
    "text": "Sửa từ bị báo đỏ"
   },
   {
-   "t": 12.74,
+   "t": 12.53,
    "text": "Gõ nốt phần còn lại"
   },
   {
-   "t": 14.03,
+   "t": 13.73,
    "text": "✓ Đúng rồi! Gõ đúng là dấu ✓ tự hiện"
   },
   {
-   "t": 16.43,
+   "t": 16.13,
    "text": "Nhấn Space để sang câu tiếp"
   }
  ]

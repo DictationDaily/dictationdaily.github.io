@@ -1,32 +1,32 @@
 {
- "duration": 18.3,
+ "duration": 17.57,
  "steps": [
   {
-   "t": 0.32,
+   "t": 0.31,
    "text": "A word is missing"
   },
   {
-   "t": 2.71,
+   "t": 2.31,
    "text": "Green shows the missing word: type it at the cursor"
   },
   {
-   "t": 5.54,
+   "t": 5.12,
    "text": "A word too many"
   },
   {
-   "t": 8.07,
+   "t": 7.29,
    "text": "Crossed out = extra: press Backspace"
   },
   {
-   "t": 10.88,
+   "t": 10.1,
    "text": "A wrong word"
   },
   {
-   "t": 13.07,
+   "t": 12.33,
    "text": "Red is wrong, green is right. Type over it"
   },
   {
-   "t": 15.82,
+   "t": 15.08,
    "text": "✓ Right!"
   }
  ]

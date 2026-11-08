@@ -1,20 +1,20 @@
 {
- "duration": 10.07,
+ "duration": 9.66,
  "steps": [
   {
    "t": 0.0,
    "text": "Something wrong? Open the ⚙ gear"
   },
   {
-   "t": 1.83,
+   "t": 1.78,
    "text": "Report a bug"
   },
   {
-   "t": 4.1,
+   "t": 3.97,
    "text": "Say what went wrong"
   },
   {
-   "t": 6.99,
+   "t": 6.66,
    "text": "A screenshot goes with it. Press SEND"
   }
  ]

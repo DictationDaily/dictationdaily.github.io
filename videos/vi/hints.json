@@ -1,32 +1,32 @@
 {
- "duration": 18.3,
+ "duration": 17.57,
  "steps": [
   {
-   "t": 0.32,
+   "t": 0.31,
    "text": "Thiếu một từ"
   },
   {
-   "t": 2.71,
+   "t": 2.31,
    "text": "Từ còn thiếu hiện màu xanh lá: gõ vào chỗ con trỏ"
   },
   {
-   "t": 5.54,
+   "t": 5.12,
    "text": "Thừa một từ"
   },
   {
-   "t": 8.07,
+   "t": 7.29,
    "text": "Từ bị gạch là từ thừa: nhấn Backspace để xoá"
   },
   {
-   "t": 10.88,
+   "t": 10.1,
    "text": "Sai một từ"
   },
   {
-   "t": 13.07,
+   "t": 12.33,
    "text": "Đỏ là sai, xanh lá là đáp án. Gõ đè lên từ sai"
   },
   {
-   "t": 15.82,
+   "t": 15.08,
    "text": "✓ Đúng rồi!"
   }
  ]

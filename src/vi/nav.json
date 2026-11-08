@@ -46,6 +46,11 @@
                 "slug": "look-up-a-word",
                 "title": "Tra từ",
                 "icon": "📖"
+            },
+            {
+                "slug": "words",
+                "title": "Lưu từ, flashcard",
+                "icon": "🃏"
             }
         ]
     },
