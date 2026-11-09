@@ -289,9 +289,9 @@
     .path-grid {
         @apply grid gap-5 sm:grid-cols-2 lg:grid-cols-4;
     }
-    /* five cards: three then two, or one row on wide screens */
-    .path-grid-5 {
-        @apply lg:grid-cols-3 xl:grid-cols-5;
+    /* Six features: two columns on tablets, three on larger screens. */
+    .path-grid-features {
+        @apply lg:grid-cols-3;
     }
     .path-card {
         @apply block rounded-3xl border-2 border-gray-200 bg-white p-3 pb-5 no-underline shadow-edge-card transition hover:-translate-y-1 hover:border-brand dark:border-gray-800 dark:bg-gray-900 dark:shadow-none;
