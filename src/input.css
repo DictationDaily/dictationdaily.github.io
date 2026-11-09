@@ -24,6 +24,25 @@
 }
 
 @layer components {
+    .plan-comparison {
+        @apply my-6;
+    }
+    .plan-comparison table {
+        @apply w-full table-fixed text-sm sm:text-base;
+    }
+    .plan-comparison th,
+    .plan-comparison td {
+        @apply break-words px-2 py-3 text-left align-top sm:px-4;
+    }
+    .plan-comparison thead th {
+        @apply bg-cream font-extrabold text-ink dark:bg-gray-800 dark:text-white;
+    }
+    .plan-comparison thead th:first-child {
+        @apply w-[44%];
+    }
+    .plan-comparison tbody th {
+        @apply font-semibold text-ink dark:text-gray-200;
+    }
     /* Page grids: docs have sidebar | content; home is full width */
     .layout-doc {
         @apply mx-auto max-w-[84rem] px-4 sm:px-6 lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12;

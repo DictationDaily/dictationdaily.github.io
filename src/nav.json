@@ -16,6 +16,11 @@
                 "slug": "find-a-video",
                 "title": "Find a video",
                 "icon": "🎬"
+            },
+            {
+                "slug": "free-vs-pro",
+                "title": "Free vs Pro",
+                "icon": "⭐"
             }
         ]
     },
