@@ -13,9 +13,14 @@
                 "icon": "💡"
             },
             {
-                "slug": "lesson-settings",
-                "title": "Lesson settings",
-                "icon": "⚙️"
+                "slug": "whole-answer",
+                "title": "See the whole answer",
+                "icon": "📝"
+            },
+            {
+                "slug": "cover-subtitles",
+                "title": "Hide the video's subtitles",
+                "icon": "🫥"
             },
             {
                 "slug": "find-a-video",

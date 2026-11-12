@@ -11,7 +11,7 @@ DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
 translation word voice pronounce shadow resume streak report
-words, settings (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
+words, whole, cover (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
 """
 import base64
 import html
@@ -888,26 +888,27 @@ def scene_words(ctx):
     rec.stop(1280)
 
 
-def scene_settings(ctx):
-    """The Dictation gear: Show the whole answer, then the subtitle cover. Every /api answer is
-    canned (words_demo.py, a demo Pro learner): no account needed, nothing saved anywhere."""
+def demo_lesson(ctx):
+    """Easy French 97 as a demo Pro learner, the first sentence played. Every /api answer is
+    canned (words_demo.py): no account needed, nothing saved anywhere."""
     import words_demo
     page = ctx.new_page()
     words_demo.Demo(B).install(page)
     open_lesson(page, FR_VIDEO)
-    move_to, click, caption = helpers(page)
     page.get_by_text('START', exact=True).click()
     wait_exercise(page)
+    return page
+
+
+def scene_whole(ctx):
+    """The Dictation gear's Show the whole answer: every mistake at once after Enter."""
+    page = demo_lesson(ctx)
+    move_to, click, caption = helpers(page)
     page.wait_for_timeout(3000)
-    cover = page.get_by_test_id('subtitle-cover').first
-    cover.wait_for(timeout=10000)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
-    rec = Recorder(page, 'settings', (1440, 900))
+    rec = Recorder(page, 'whole', (1440, 900))
     rec.start()
     place(page, 900, 620)
-    caption('The glass hides the subtitles in the video', 300)
-    move_to(cover, 300)
-    look(page, cover, 2.2)
     caption('Open the ⚙ gear', 300)
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
@@ -932,20 +933,48 @@ def scene_settings(ctx):
     page.keyboard.press('End')
     type_(ta, " d'Easy", delay=110)
     page.get_by_text('You are correct!').first.wait_for(timeout=8000)
-    caption('✓ Right!', 1600)
+    caption('✓ Right!', 1800)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_cover(ctx):
+    """The subtitle cover: the glass over burned-in subtitles, its switch, and moving it."""
+    page = demo_lesson(ctx)
+    move_to, click, caption = helpers(page)
+    cover = page.get_by_test_id('subtitle-cover').first
+    cover.wait_for(timeout=30000)
+    page.wait_for_timeout(6000)  # the sentence has played: the picture stays on its subtitle
+    rec = Recorder(page, 'cover', (1440, 900))
+    rec.start()
+    place(page, 900, 620)
+    caption('The glass hides the subtitles in the video', 300)
+    move_to(cover, 300)
+    spot = cover.bounding_box()
+    look(page, cover, 2.4)
+    rec.poster()
     caption('Want to read the subtitles? Turn off Cover subtitles', 300)
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
     click(page.get_by_test_id('lesson-settings-cover'), 400)
     page.wait_for_timeout(600)
     page.keyboard.press('Escape')
+    # the glass is gone now: point at where it was
+    move_to((spot['x'] + spot['width'] / 2, spot['y'] + spot['height'] / 2), 300)
+    t0 = time.time()
     page.wait_for_timeout(2200)
+    RECORDING.events.append({'k': 'focus', 't': t0, 't1': time.time(),
+                             'x': spot['x'] + spot['width'] / 2, 'y': spot['y'] + spot['height'] / 2})
     caption('Turn it on again to hide them', 300)
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
     click(page.get_by_test_id('lesson-settings-cover'), 400)
     page.wait_for_timeout(1200)
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(400)
     caption('Not over the words? Move or resize the cover', 300)
+    click(page.get_by_test_id('lesson-settings'))
+    page.wait_for_timeout(900)
     click(page.get_by_test_id('lesson-settings-cover-move'))
     page.get_by_test_id('cover-edit-bar').wait_for(timeout=8000)
     page.wait_for_timeout(900)
@@ -974,7 +1003,7 @@ SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library
           'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report, 'words': scene_words,
-          'settings': scene_settings}
+          'whole': scene_whole, 'cover': scene_cover}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):
