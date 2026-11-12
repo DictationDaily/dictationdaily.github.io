@@ -1,28 +1,28 @@
 {
- "duration": 15.55,
+ "duration": 16.83,
  "steps": [
   {
    "t": 0.0,
    "text": "Bấm nút bánh răng ⚙"
   },
   {
-   "t": 1.98,
+   "t": 1.97,
    "text": "Bật Show the whole answer"
   },
   {
-   "t": 4.41,
+   "t": 4.76,
    "text": "Gõ những gì bạn nghe, rồi nhấn Enter"
   },
   {
-   "t": 7.35,
+   "t": 8.17,
    "text": "Mọi lỗi hiện cùng lúc: đỏ là sai, xanh lá là đáp án"
   },
   {
-   "t": 11.06,
+   "t": 11.88,
    "text": "Sửa ngay trong ô. Từ sai đã được bôi đen sẵn"
   },
   {
-   "t": 13.07,
+   "t": 14.34,
    "text": "✓ Đúng rồi!"
   }
  ]

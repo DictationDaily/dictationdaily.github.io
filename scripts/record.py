@@ -155,6 +155,7 @@ class Recorder:
 
 
 TAKES = os.path.expanduser('~/.cache/dd-guide/takes')
+GLIDE = 0.7  # seconds the drawn pointer takes to glide to a new spot
 
 
 def _step_text(text):
@@ -234,19 +235,23 @@ def helpers(page, touch=False):
     if touch:
         TOUCH_PAGES.add(page)
 
-    def move_to(loc_or_xy, wait=750):
+    def move_to(loc_or_xy, wait=750, glide=GLIDE):
         if isinstance(loc_or_xy, tuple):
             x, y = loc_or_xy
         else:
             box = loc_or_xy.bounding_box()
             x, y = box['x'] + box['width'] / 2, box['y'] + box['height'] / 2
         page.evaluate(f'window.__move({x},{y})')
-        log('move', x=x, y=y, dur=0.7)
+        log('move', x=x, y=y, dur=glide)
+        # The drawn pointer takes `glide` seconds to get there (cap_render.py).
+        # Nothing may happen before it arrives: a click, a drag or a hover
+        # would show in the video while the pointer is still on its way.
+        page.wait_for_timeout(round(glide * 1000) + 50)
         # The real mouse follows the drawn pointer: a click leaves it where it
         # clicked, and a button that later appears there (CONTINUE where
         # START was) would open its tooltip in the recording
         page.mouse.move(x, y)
-        page.wait_for_timeout(wait)
+        page.wait_for_timeout(max(0, wait - round(glide * 1000) - 50))
         return x, y
 
     def click(loc_or_xy, wait=750):
@@ -956,8 +961,13 @@ def scene_cover(ctx):
     caption('Want to read the subtitles? Turn off Cover subtitles', 300)
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
-    click(page.get_by_test_id('lesson-settings-cover'), 400)
-    page.wait_for_timeout(600)
+    switch = page.get_by_test_id('lesson-settings-cover')
+    click(switch, 400)
+    # The menu opens upwards: "Move or resize" goes away and the rows above
+    # it drop one row. The pointer follows the switch, or the video shows it
+    # resting on Translation as if that had been clicked.
+    page.wait_for_timeout(60)
+    move_to(switch, 900, glide=0.25)
     page.keyboard.press('Escape')
     # the glass is gone now: point at where it was
     move_to((spot['x'] + spot['width'] / 2, spot['y'] + spot['height'] / 2), 300)
@@ -968,8 +978,10 @@ def scene_cover(ctx):
     caption('Turn it on again to hide them', 300)
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
-    click(page.get_by_test_id('lesson-settings-cover'), 400)
-    page.wait_for_timeout(1200)
+    click(switch, 400)
+    # "Move or resize" comes back below it and the rows rise one row
+    page.wait_for_timeout(60)
+    move_to(switch, 1100, glide=0.25)
     page.keyboard.press('Escape')
     page.wait_for_timeout(400)
     caption('Not over the words? Move or resize the cover', 300)
