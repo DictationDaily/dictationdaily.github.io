@@ -1,20 +1,20 @@
 {
- "duration": 14.61,
+ "duration": 16.48,
  "steps": [
   {
    "t": 0.0,
    "text": "Bấm START: một câu tiếng Pháp được phát"
   },
   {
-   "t": 3.02,
+   "t": 3.0,
    "text": "Gõ lại những gì bạn nghe"
   },
   {
-   "t": 5.45,
+   "t": 6.64,
    "text": "Đúng rồi! Bản dịch tiếng Việt hiện ra"
   },
   {
-   "t": 8.25,
+   "t": 9.44,
    "text": "Bật tắt bản dịch ở nút bánh răng ⚙"
   }
  ]

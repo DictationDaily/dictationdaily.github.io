@@ -1,5 +1,5 @@
 {
- "duration": 23.98,
+ "duration": 18.04,
  "steps": [
   {
    "t": 0.0,
@@ -10,20 +10,8 @@
    "text": "Muốn đọc phụ đề? Tắt Cover subtitles"
   },
   {
-   "t": 10.37,
+   "t": 10.31,
    "text": "Bật lại để che phụ đề"
-  },
-  {
-   "t": 14.72,
-   "text": "Kính lệch khỏi chữ? Bấm Move or resize the cover"
-  },
-  {
-   "t": 18.39,
-   "text": "Kéo mép trên/dưới, hoặc kéo cả tấm kính"
-  },
-  {
-   "t": 20.5,
-   "text": "Bấm DONE"
   }
  ]
 }
