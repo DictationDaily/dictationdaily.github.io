@@ -1,0 +1,29 @@
+{
+ "duration": 21.35,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "The glass hides the subtitles in the video"
+  },
+  {
+   "t": 3.22,
+   "text": "Want to read the subtitles? Turn off Cover subtitles"
+  },
+  {
+   "t": 8.78,
+   "text": "Turn it on again to hide them"
+  },
+  {
+   "t": 12.79,
+   "text": "Not over the words? Move or resize the cover"
+  },
+  {
+   "t": 16.46,
+   "text": "Pull an edge, or drag the glass"
+  },
+  {
+   "t": 18.22,
+   "text": "Press DONE"
+  }
+ ]
+}
