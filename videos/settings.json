@@ -1,0 +1,53 @@
+{
+ "duration": 33.26,
+ "steps": [
+  {
+   "t": 0.01,
+   "text": "The glass hides the subtitles in the video"
+  },
+  {
+   "t": 2.83,
+   "text": "Open the ⚙ gear"
+  },
+  {
+   "t": 4.83,
+   "text": "Turn on Show the whole answer"
+  },
+  {
+   "t": 7.26,
+   "text": "Type what you hear and press Enter"
+  },
+  {
+   "t": 10.23,
+   "text": "Every mistake at once: red is wrong, green is right"
+  },
+  {
+   "t": 13.94,
+   "text": "Fix them in the box. The wrong word is selected"
+  },
+  {
+   "t": 15.96,
+   "text": "✓ Right!"
+  },
+  {
+   "t": 17.56,
+   "text": "Want to read the subtitles? Turn off Cover subtitles"
+  },
+  {
+   "t": 22.77,
+   "text": "Turn it on again to hide them"
+  },
+  {
+   "t": 26.39,
+   "text": "Not over the words? Move or resize the cover"
+  },
+  {
+   "t": 28.38,
+   "text": "Pull an edge, or drag the glass"
+  },
+  {
+   "t": 30.14,
+   "text": "Press DONE"
+  }
+ ]
+}

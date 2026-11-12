@@ -11,7 +11,7 @@ DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
 translation word voice pronounce shadow resume streak report
-words (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
+words, settings (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
 """
 import base64
 import html
@@ -888,12 +888,93 @@ def scene_words(ctx):
     rec.stop(1280)
 
 
+def scene_settings(ctx):
+    """The Dictation gear: Show the whole answer, then the subtitle cover. Every /api answer is
+    canned (words_demo.py, a demo Pro learner): no account needed, nothing saved anywhere."""
+    import words_demo
+    page = ctx.new_page()
+    words_demo.Demo(B).install(page)
+    open_lesson(page, FR_VIDEO)
+    move_to, click, caption = helpers(page)
+    page.get_by_text('START', exact=True).click()
+    wait_exercise(page)
+    page.wait_for_timeout(3000)
+    cover = page.get_by_test_id('subtitle-cover').first
+    cover.wait_for(timeout=10000)
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
+    rec = Recorder(page, 'settings', (1440, 900))
+    rec.start()
+    place(page, 900, 620)
+    caption('The glass hides the subtitles in the video', 300)
+    move_to(cover, 300)
+    look(page, cover, 2.2)
+    caption('Open the ⚙ gear', 300)
+    click(page.get_by_test_id('lesson-settings'))
+    page.wait_for_timeout(900)
+    caption('Turn on Show the whole answer', 300)
+    click(page.get_by_test_id('lesson-settings-whole'), 400)
+    page.wait_for_timeout(1200)
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(500)
+    caption('Type what you hear and press Enter')
+    move_to(ta, 300)
+    type_(ta, 'et bienvenue dans un nouveau épisode', delay=60)
+    page.wait_for_timeout(300)
+    ta.press('Enter')
+    answer = page.get_by_test_id('whole-answer').first
+    answer.wait_for(timeout=8000)
+    caption('Every mistake at once: red is wrong, green is right', 300)
+    look(page, answer, 3.2)
+    rec.poster()
+    caption('Fix them in the box. The wrong word is selected')
+    move_to(ta, 300)
+    type_(ta, 'nouvel', delay=140)
+    page.keyboard.press('End')
+    type_(ta, " d'Easy", delay=110)
+    page.get_by_text('You are correct!').first.wait_for(timeout=8000)
+    caption('✓ Right!', 1600)
+    caption('Want to read the subtitles? Turn off Cover subtitles', 300)
+    click(page.get_by_test_id('lesson-settings'))
+    page.wait_for_timeout(900)
+    click(page.get_by_test_id('lesson-settings-cover'), 400)
+    page.wait_for_timeout(600)
+    page.keyboard.press('Escape')
+    page.wait_for_timeout(2200)
+    caption('Turn it on again to hide them', 300)
+    click(page.get_by_test_id('lesson-settings'))
+    page.wait_for_timeout(900)
+    click(page.get_by_test_id('lesson-settings-cover'), 400)
+    page.wait_for_timeout(1200)
+    caption('Not over the words? Move or resize the cover', 300)
+    click(page.get_by_test_id('lesson-settings-cover-move'))
+    page.get_by_test_id('cover-edit-bar').wait_for(timeout=8000)
+    page.wait_for_timeout(900)
+    caption('Pull an edge, or drag the glass')
+    edge = page.get_by_role('button', name='Drag to move the top edge').first
+    x, y = move_to(edge, 400)
+    page.mouse.down()
+    for i in range(1, 13):
+        page.evaluate(f'window.__move({x},{y - i * 2.5})')
+        page.mouse.move(x, y - i * 2.5)
+        log('pos', x=x, y=y - i * 2.5)
+        page.wait_for_timeout(40)
+    page.mouse.up()
+    page.wait_for_timeout(700)
+    caption('Press DONE', 300)
+    click(page.get_by_role('button', name=re.compile('^done$', re.I)).first, 400)
+    page.wait_for_timeout(300)
+    move_to((1000, 560), 1400)  # off the Close button that takes DONE's place
+    caption(None, 400)
+    rec.stop(1280)
+
+
 SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library, 'speed': scene_speed,
           'navigate': scene_navigate, 'listen': scene_listen,
           'translation': scene_translation, 'word': scene_word, 'voice': scene_voice,
           'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
-          'report': scene_report, 'words': scene_words}
+          'report': scene_report, 'words': scene_words,
+          'settings': scene_settings}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):
@@ -919,7 +1000,10 @@ if __name__ == '__main__':
     wanted = sys.argv[1:] or [*SCENES, 'mobile']
     with sync_playwright() as p:
         browser = p.chromium.launch(channel='chrome', headless=True,
+                                    # GPU: without it the subtitle cover's blur skips a playing video
                                     args=['--autoplay-policy=no-user-gesture-required',
+                                          '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=vulkan',
+                                          '--enable-features=Vulkan',
                                           '--use-fake-ui-for-media-stream',
                                           '--use-fake-device-for-media-stream',
                                           f'--use-file-for-fake-audio-capture={fake_voice()}'])

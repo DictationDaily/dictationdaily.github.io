@@ -13,6 +13,11 @@
                 "icon": "💡"
             },
             {
+                "slug": "lesson-settings",
+                "title": "Lesson settings",
+                "icon": "⚙️"
+            },
+            {
                 "slug": "find-a-video",
                 "title": "Find a video",
                 "icon": "🎬"
