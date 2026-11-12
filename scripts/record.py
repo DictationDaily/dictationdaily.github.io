@@ -221,6 +221,16 @@ def type_(loc, text, delay=60):
                                  'x': box['x'] + min(box['width'], 520) / 2, 'y': box['y'] + box['height'] / 2})
 
 
+def into_box(move_to, click, loc):
+    """Click an empty part of a text box, as a learner does before typing, then
+    rest the pointer low in the same column, above the bottom bar. Left on the
+    box it hides the words being typed; just under it, the hint, the whole
+    answer or a button that appears there after CHECK (CONTINUE, Éç)."""
+    b = loc.bounding_box()
+    click((b['x'] + b['width'] - 110, b['y'] + b['height'] * 0.7), 300)
+    move_to((b['x'] + b['width'] * 0.55, loc.page.viewport_size['height'] - 110), 300)
+
+
 def look(page, loc, secs):
     """Point at loc for secs: the video zooms in on it as for a click."""
     box = loc.bounding_box()
@@ -923,7 +933,7 @@ def scene_whole(ctx):
     page.keyboard.press('Escape')
     page.wait_for_timeout(500)
     caption('Type what you hear and press Enter')
-    move_to(ta, 300)
+    into_box(move_to, click, ta)
     type_(ta, 'et bienvenue dans un nouveau épisode', delay=60)
     page.wait_for_timeout(300)
     ta.press('Enter')
@@ -933,7 +943,7 @@ def scene_whole(ctx):
     look(page, answer, 3.2)
     rec.poster()
     caption('Fix them in the box. The wrong word is selected')
-    move_to(ta, 300)
+    page.wait_for_timeout(600)  # typing replaces the selected word; the pointer stays out of the way
     type_(ta, 'nouvel', delay=140)
     page.keyboard.press('End')
     type_(ta, " d'Easy", delay=110)
