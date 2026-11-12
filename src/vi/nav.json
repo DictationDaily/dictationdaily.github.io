@@ -13,6 +13,11 @@
                 "icon": "💡"
             },
             {
+                "slug": "lesson-settings",
+                "title": "Cài đặt bài học",
+                "icon": "⚙️"
+            },
+            {
                 "slug": "find-a-video",
                 "title": "Tìm video",
                 "icon": "🎬"
