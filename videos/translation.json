@@ -1,20 +1,20 @@
 {
- "duration": 14.61,
+ "duration": 16.48,
  "steps": [
   {
    "t": 0.0,
    "text": "Press START: a French sentence plays"
   },
   {
-   "t": 3.02,
+   "t": 3.0,
    "text": "Type what you hear"
   },
   {
-   "t": 5.45,
+   "t": 6.64,
    "text": "Right! The translation in your language appears"
   },
   {
-   "t": 8.25,
+   "t": 9.44,
    "text": "The ⚙ gear hides or shows it"
   }
  ]

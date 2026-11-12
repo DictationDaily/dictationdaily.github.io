@@ -556,7 +556,11 @@ def answer_first(page, gap):
 
 
 def scene_translation(ctx):
+    import words_demo
     page = ctx.new_page()
+    # a demo Pro learner, every /api answer canned (words_demo.py): the
+    # translation shows without anyone's account
+    words_demo.Demo(B).install(page)
     open_lesson(page, FR_VIDEO)
     move_to, click, caption = helpers(page)
     rec = Recorder(page, 'translation', (1440, 900))
@@ -568,7 +572,7 @@ def scene_translation(ctx):
     page.wait_for_timeout(1800)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
     caption('Type what you hear')
-    move_to(ta, 300)
+    into_box(move_to, click, ta)
     type_(ta, FR_GAP, delay=45)
     page.get_by_text('You are correct!').first.wait_for(timeout=8000)
     page.get_by_test_id('translation').first.wait_for(timeout=30000)
@@ -954,7 +958,7 @@ def scene_whole(ctx):
 
 
 def scene_cover(ctx):
-    """The subtitle cover: the glass over burned-in subtitles, its switch, and moving it."""
+    """The subtitle cover: the glass over burned-in subtitles and its switch."""
     page = demo_lesson(ctx)
     move_to, click, caption = helpers(page)
     cover = page.get_by_test_id('subtitle-cover').first
@@ -973,11 +977,7 @@ def scene_cover(ctx):
     page.wait_for_timeout(900)
     switch = page.get_by_test_id('lesson-settings-cover')
     click(switch, 400)
-    # The menu opens upwards: "Move or resize" goes away and the rows above
-    # it drop one row. The pointer follows the switch, or the video shows it
-    # resting on Translation as if that had been clicked.
-    page.wait_for_timeout(60)
-    move_to(switch, 900, glide=0.25)
+    page.wait_for_timeout(900)  # the menu stays open: the glass goes
     page.keyboard.press('Escape')
     # the glass is gone now: point at where it was
     move_to((spot['x'] + spot['width'] / 2, spot['y'] + spot['height'] / 2), 300)
@@ -989,32 +989,10 @@ def scene_cover(ctx):
     click(page.get_by_test_id('lesson-settings'))
     page.wait_for_timeout(900)
     click(switch, 400)
-    # "Move or resize" comes back below it and the rows rise one row
-    page.wait_for_timeout(60)
-    move_to(switch, 1100, glide=0.25)
+    page.wait_for_timeout(1100)  # the glass comes back
     page.keyboard.press('Escape')
-    page.wait_for_timeout(400)
-    caption('Not over the words? Move or resize the cover', 300)
-    click(page.get_by_test_id('lesson-settings'))
-    page.wait_for_timeout(900)
-    click(page.get_by_test_id('lesson-settings-cover-move'))
-    page.get_by_test_id('cover-edit-bar').wait_for(timeout=8000)
-    page.wait_for_timeout(900)
-    caption('Pull an edge, or drag the glass')
-    edge = page.get_by_role('button', name='Drag to move the top edge').first
-    x, y = move_to(edge, 400)
-    page.mouse.down()
-    for i in range(1, 13):
-        page.evaluate(f'window.__move({x},{y - i * 2.5})')
-        page.mouse.move(x, y - i * 2.5)
-        log('pos', x=x, y=y - i * 2.5)
-        page.wait_for_timeout(40)
-    page.mouse.up()
-    page.wait_for_timeout(700)
-    caption('Press DONE', 300)
-    click(page.get_by_role('button', name=re.compile('^done$', re.I)).first, 400)
-    page.wait_for_timeout(300)
-    move_to((1000, 560), 1400)  # off the Close button that takes DONE's place
+    move_to(cover, 300)
+    look(page, cover, 2.4)
     caption(None, 400)
     rec.stop(1280)
 

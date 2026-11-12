@@ -1,5 +1,5 @@
 {
- "duration": 23.98,
+ "duration": 18.04,
  "steps": [
   {
    "t": 0.0,
@@ -10,20 +10,8 @@
    "text": "Want to read the subtitles? Turn off Cover subtitles"
   },
   {
-   "t": 10.37,
+   "t": 10.31,
    "text": "Turn it on again to hide them"
-  },
-  {
-   "t": 14.72,
-   "text": "Not over the words? Move or resize the cover"
-  },
-  {
-   "t": 18.39,
-   "text": "Pull an edge, or drag the glass"
-  },
-  {
-   "t": 20.5,
-   "text": "Press DONE"
   }
  ]
 }

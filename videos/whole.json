@@ -1,28 +1,28 @@
 {
- "duration": 17.53,
+ "duration": 17.52,
  "steps": [
   {
    "t": 0.0,
    "text": "Open the ⚙ gear"
   },
   {
-   "t": 2.01,
+   "t": 1.98,
    "text": "Turn on Show the whole answer"
   },
   {
-   "t": 4.81,
+   "t": 4.76,
    "text": "Type what you hear and press Enter"
   },
   {
-   "t": 9.02,
+   "t": 8.98,
    "text": "Every mistake at once: red is wrong, green is right"
   },
   {
-   "t": 12.73,
+   "t": 12.7,
    "text": "Fix them in the box. The wrong word is selected"
   },
   {
-   "t": 15.03,
+   "t": 15.02,
    "text": "✓ Right!"
   }
  ]
