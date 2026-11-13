@@ -92,5 +92,10 @@
  "Every mistake at once: red is wrong, green is right": "Mọi lỗi hiện cùng lúc: đỏ là sai, xanh lá là đáp án",
  "Fix them in the box. The wrong word is selected": "Sửa ngay trong ô. Từ sai đã được bôi đen sẵn",
  "Want to read the subtitles? Turn off Cover subtitles": "Muốn đọc phụ đề? Tắt Cover subtitles",
- "Turn it on again to hide them": "Bật lại để che phụ đề"
+ "Turn it on again to hide them": "Bật lại để che phụ đề",
+ "Click your picture": "Bấm vào ảnh của bạn",
+ "Theme: choose Dark": "Theme: chọn Dark",
+ "Every page is dark now, lessons too": "Mọi trang đều tối, cả bài học",
+ "Device: dark when your phone or computer is dark": "Device: tối khi điện thoại, máy tính để chế độ tối",
+ "It is also in Settings, under Appearance": "Cũng có trong Settings, mục Appearance"
 }

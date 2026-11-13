@@ -120,6 +120,11 @@
                 "icon": "⌨️"
             },
             {
+                "slug": "dark-theme",
+                "title": "Dark theme",
+                "icon": "🌙"
+            },
+            {
                 "slug": "tips",
                 "title": "Tips",
                 "icon": "✨"
