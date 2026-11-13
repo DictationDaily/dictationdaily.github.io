@@ -1,0 +1,25 @@
+{
+ "duration": 16.8,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Click your picture"
+  },
+  {
+   "t": 1.79,
+   "text": "Theme: choose Dark"
+  },
+  {
+   "t": 3.8,
+   "text": "Every page is dark now, lessons too"
+  },
+  {
+   "t": 7.47,
+   "text": "Device: dark when your phone or computer is dark"
+  },
+  {
+   "t": 11.46,
+   "text": "It is also in Settings, under Appearance"
+  }
+ ]
+}

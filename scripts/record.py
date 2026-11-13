@@ -11,7 +11,7 @@ DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
 translation word voice pronounce shadow resume streak report
-words, whole, cover (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
+words, whole, cover, theme (Pro, every /api answer canned by words_demo.py: no DD_SESSION needed)
 """
 import base64
 import html
@@ -997,13 +997,59 @@ def scene_cover(ctx):
     rec.stop(1280)
 
 
+def scene_theme(ctx):
+    """Light or dark: the Theme switch in the account menu (and Settings › Appearance).
+    A demo Pro learner, every /api answer canned (words_demo.py); the device is light."""
+    import words_demo
+    page = ctx.new_page()
+    words_demo.Demo(B).install(page)
+    # History's started videos (the today block): none, so the page stays short
+    page.route(B + '/api/me/videos*', lambda r: r.fulfill(
+        status=200, content_type='application/json', body='[]'))
+    page.goto(f'{B}/videos', wait_until='load')
+    page.get_by_role('button', name='Account').wait_for(timeout=20000)
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'theme', (1440, 900))
+    rec.start()
+    place(page, 900, 500)
+    caption('Click your picture', 300)
+    click(page.get_by_role('button', name='Account'))
+    page.wait_for_timeout(700)
+    switch = page.get_by_role('radiogroup', name='Theme').first
+    caption('Theme: choose Dark', 300)
+    click(switch.get_by_role('radio', name='Dark'), 500)
+    page.wait_for_timeout(900)
+    page.keyboard.press('Escape')
+    caption('Every page is dark now, lessons too', 300)
+    move_to((760, 420), 300)
+    look(page, page.locator('main').first, 2.4)
+    rec.poster()
+    caption('Device: dark when your phone or computer is dark', 300)
+    click(page.get_by_role('button', name='Account'))
+    page.wait_for_timeout(700)
+    click(switch.get_by_role('radio', name='Device'), 500)
+    page.wait_for_timeout(1400)
+    page.keyboard.press('Escape')
+    caption('It is also in Settings, under Appearance', 300)
+    page.goto(f'{B}/settings', wait_until='load')
+    section = page.locator('section[aria-label="Appearance"]')
+    section.wait_for(timeout=20000)
+    section.scroll_into_view_if_needed()
+    page.wait_for_timeout(800)
+    move_to(section.get_by_role('radiogroup', name='Theme'), 300)
+    look(page, section, 2.6)
+    caption(None, 400)
+    rec.stop(1280)
+
+
 SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library, 'speed': scene_speed,
           'navigate': scene_navigate, 'listen': scene_listen,
           'translation': scene_translation, 'word': scene_word, 'voice': scene_voice,
           'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report, 'words': scene_words,
-          'whole': scene_whole, 'cover': scene_cover}
+          'whole': scene_whole, 'cover': scene_cover, 'theme': scene_theme}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):

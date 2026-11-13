@@ -120,6 +120,11 @@
                 "icon": "⌨️"
             },
             {
+                "slug": "dark-theme",
+                "title": "Giao diện tối",
+                "icon": "🌙"
+            },
+            {
                 "slug": "tips",
                 "title": "Mẹo học",
                 "icon": "✨"
