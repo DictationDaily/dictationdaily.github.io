@@ -1,53 +1,33 @@
 {
- "duration": 45.72,
+ "duration": 25.86,
  "steps": [
   {
    "t": 0.0,
    "text": "Playlist: các video xếp theo thứ tự, học từ đầu đến cuối"
   },
   {
-   "t": 3.07,
+   "t": 3.08,
    "text": "Chọn trình độ của bạn"
   },
   {
-   "t": 5.67,
+   "t": 5.69,
    "text": "Mở một playlist"
   },
   {
-   "t": 8.66,
+   "t": 8.82,
    "text": "Save để lưu vào Your playlists"
   },
   {
-   "t": 10.95,
+   "t": 11.13,
    "text": "Start: mở video đầu tiên"
   },
   {
-   "t": 14.83,
+   "t": 15.01,
    "text": "Thanh này cho biết bạn đang ở đâu: Video 1 of 39"
   },
   {
-   "t": 17.75,
+   "t": 17.92,
    "text": "Xem cả danh sách, hoặc bấm ⏭ sang video tiếp theo"
-  },
-  {
-   "t": 24.4,
-   "text": "Tự tạo playlist: bấm ⋯ ở bất kỳ video nào"
-  },
-  {
-   "t": 28.1,
-   "text": "Chọn Save to playlist, rồi New playlist"
-  },
-  {
-   "t": 30.51,
-   "text": "Đặt tên và chọn ai được xem"
-  },
-  {
-   "t": 34.86,
-   "text": "Đã lưu: video đã vào playlist mới của bạn"
-  },
-  {
-   "t": 39.61,
-   "text": "Cả hai playlist đều nằm trong Playlists"
   }
  ]
 }

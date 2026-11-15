@@ -11,7 +11,7 @@ DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
 scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
 translation word voice pronounce shadow resume streak report
-words, whole, cover, theme, playlist (Pro, every /api/me answer canned by words_demo.py
+words, whole, cover, theme, playlist, playlist-make (Pro, every /api/me answer canned by words_demo.py
 (+ playlists_demo.py): no DD_SESSION needed)
 """
 import base64
@@ -1044,10 +1044,9 @@ def scene_theme(ctx):
     rec.stop(1280)
 
 
-def scene_playlist(ctx):
-    """Playlists: Explore › a level › a playlist › Save › Start (the lesson's playlist bar), then
-    a playlist of your own from a video's ⋯ on Home. A demo Pro learner of French, every /api/me
-    answer canned (words_demo.py + playlists_demo.py); DictationDaily's playlists are the live ones."""
+def playlist_page(ctx, url):
+    """A demo Pro learner of French with no playlist yet: every /api/me answer canned (words_demo.py +
+    playlists_demo.py); DictationDaily's own playlists are the live ones."""
     import words_demo
     import playlists_demo
     page = ctx.new_page()
@@ -1056,8 +1055,14 @@ def scene_playlist(ctx):
     # History's started videos: none, so Home's video cards sit near the top
     page.route(B + '/api/me/videos*', lambda r: r.fulfill(
         status=200, content_type='application/json', body='[]'))
+    page.goto(f'{B}{url}', wait_until='load')
+    return page
+
+
+def scene_playlist(ctx):
+    """Follow a playlist: Explore › a level › a playlist › Save › Start, the lesson's playlist bar."""
     # no playlist yet: the page opens on Explore by itself
-    page.goto(f'{B}/playlists', wait_until='load')
+    page = playlist_page(ctx, '/playlists')
     page.get_by_text('French For Beginners (A1)').first.wait_for(timeout=20000)
     page.wait_for_timeout(2500)
     move_to, click, caption = helpers(page)
@@ -1092,14 +1097,24 @@ def scene_playlist(ctx):
     click(page.get_by_role('button', name='Hide the playlist').first, 300)
     page.wait_for_timeout(600)
     move_to(page.locator('[aria-label="Next video"]').first, 300)
-    page.wait_for_timeout(1200)
-    caption('Make your own: ⋯ on any video', 300)
-    page.goto(f'{B}/videos', wait_until='load')
+    page.wait_for_timeout(1800)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_playlist_make(ctx):
+    """Make your own playlist: a video's ⋯ › Save to playlist › New playlist, the "Saved to" note,
+    then the playlist in Playlists › Your playlists."""
+    page = playlist_page(ctx, '/videos')
     more = page.locator('[aria-label^="More for"]').first
     more.wait_for(state='attached', timeout=20000)
-    page.wait_for_timeout(1500)
-    thumb = more.locator('xpath=..')
-    move_to(thumb, 300)  # the ⋯ shows when the pointer is on the card
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'playlist-make', (1440, 900))
+    rec.start()
+    place(page, 900, 300)
+    caption('Press ⋯ on any video', 300)
+    move_to(more.locator('xpath=..'), 300)  # the ⋯ shows when the pointer is on the card
     click(more, 300)
     caption('Save to playlist, then New playlist', 300)
     click(page.get_by_role('menuitem', name='Save to playlist'), 300)
@@ -1109,6 +1124,7 @@ def scene_playlist(ctx):
     click(new, 300)
     name = page.locator('#pl-title')
     name.wait_for(timeout=10000)
+    rec.poster()
     caption('Give it a name and choose who can see it', 300)
     page.wait_for_timeout(300)
     type_(name, 'My French', delay=90)
@@ -1124,15 +1140,15 @@ def scene_playlist(ctx):
     look(page, toast, 2.2)
     click(page.get_by_role('button', name='Close'), 300)
     page.wait_for_timeout(700)
-    caption('Both are in Playlists now', 300)
+    caption('Find it in Playlists › Your playlists', 300)
     click(page.locator('nav a[href="/playlists"], a[href="/playlists"]').first, 300)
     page.get_by_text('My French').first.wait_for(timeout=20000)
     page.wait_for_timeout(800)
     move_to((560, 450), 300)
     t0 = time.time()
     page.wait_for_timeout(2600)
-    # zoom on Made by you and Saved (the left column), not the middle of the page
-    RECORDING.events.append({'k': 'focus', 't': t0, 't1': time.time(), 'x': 420, 'y': 470})
+    # zoom on Made by you (the left column), not the middle of the page
+    RECORDING.events.append({'k': 'focus', 't': t0, 't1': time.time(), 'x': 420, 'y': 400})
     caption(None, 400)
     rec.stop(1280)
 
@@ -1144,7 +1160,7 @@ SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report, 'words': scene_words,
           'whole': scene_whole, 'cover': scene_cover, 'theme': scene_theme,
-          'playlist': scene_playlist}
+          'playlist': scene_playlist, 'playlist-make': scene_playlist_make}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):

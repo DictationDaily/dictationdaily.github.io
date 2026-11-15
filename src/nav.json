@@ -29,8 +29,13 @@
             },
             {
                 "slug": "playlists",
-                "title": "Playlists",
+                "title": "Follow a playlist",
                 "icon": "🎞️"
+            },
+            {
+                "slug": "make-a-playlist",
+                "title": "Make your own playlist",
+                "icon": "➕"
             },
             {
                 "slug": "free-vs-pro",
