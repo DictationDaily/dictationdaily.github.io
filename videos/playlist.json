@@ -1,0 +1,53 @@
+{
+ "duration": 45.72,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Playlists: videos in order, from the first to the last"
+  },
+  {
+   "t": 3.07,
+   "text": "Pick your level"
+  },
+  {
+   "t": 5.67,
+   "text": "Open a playlist"
+  },
+  {
+   "t": 8.66,
+   "text": "Save keeps it in Your playlists"
+  },
+  {
+   "t": 10.95,
+   "text": "Start plays the first video"
+  },
+  {
+   "t": 14.83,
+   "text": "The bar shows where you are: Video 1 of 39"
+  },
+  {
+   "t": 17.75,
+   "text": "See the whole list, or ⏭ for the next video"
+  },
+  {
+   "t": 24.4,
+   "text": "Make your own: ⋯ on any video"
+  },
+  {
+   "t": 28.1,
+   "text": "Save to playlist, then New playlist"
+  },
+  {
+   "t": 30.51,
+   "text": "Give it a name and choose who can see it"
+  },
+  {
+   "t": 34.86,
+   "text": "Saved: the video is in your new playlist"
+  },
+  {
+   "t": 39.61,
+   "text": "Both are in Playlists now"
+  }
+ ]
+}

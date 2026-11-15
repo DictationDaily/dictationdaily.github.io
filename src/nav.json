@@ -28,6 +28,11 @@
                 "icon": "🎬"
             },
             {
+                "slug": "playlists",
+                "title": "Playlists",
+                "icon": "🎞️"
+            },
+            {
                 "slug": "free-vs-pro",
                 "title": "Free vs Pro",
                 "icon": "⭐"
