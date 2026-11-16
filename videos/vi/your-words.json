@@ -1,0 +1,29 @@
+{
+ "duration": 22.33,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Words, trong menu bên trái"
+  },
+  {
+   "t": 3.66,
+   "text": "Vốn từ của bạn tăng dần: New, Learning, Known"
+  },
+  {
+   "t": 7.34,
+   "text": "Trỏ vào một ngày để xem ngày đó"
+  },
+  {
+   "t": 10.88,
+   "text": "Xem tất cả các từ"
+  },
+  {
+   "t": 13.92,
+   "text": "Bấm vào một từ: xem câu gốc và mở bài học"
+  },
+  {
+   "t": 18.36,
+   "text": "Chọn New, Learning hoặc Known"
+  }
+ ]
+}

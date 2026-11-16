@@ -77,6 +77,11 @@
                 "slug": "words",
                 "title": "Lưu từ, flashcard",
                 "icon": "🃏"
+            },
+            {
+                "slug": "your-words",
+                "title": "Vốn từ của bạn",
+                "icon": "📈"
             }
         ]
     },

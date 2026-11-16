@@ -1,8 +1,8 @@
 {
- "duration": 26.49,
+ "duration": 27.83,
  "steps": [
   {
-   "t": 0.01,
+   "t": 0.0,
    "text": "Tap a word of the sentence"
   },
   {
@@ -10,35 +10,35 @@
    "text": "Press Save"
   },
   {
-   "t": 3.46,
+   "t": 3.47,
    "text": "Saved to Words, with its sentence"
   },
   {
-   "t": 5.66,
-   "text": "See words: every word you saved"
+   "t": 5.67,
+   "text": "See words: your saved words"
   },
   {
-   "t": 9.34,
+   "t": 8.72,
    "text": "Press Practice"
   },
   {
-   "t": 11.2,
+   "t": 11.18,
    "text": "The sentence from the video, your word missing"
   },
   {
-   "t": 13.8,
+   "t": 13.79,
    "text": "Type it (or say it) and press Enter"
   },
   {
-   "t": 15.12,
+   "t": 15.55,
    "text": "Right! It comes back in a few days"
   },
   {
-   "t": 19.26,
+   "t": 20.13,
    "text": "Wrong? Type it again to go on"
   },
   {
-   "t": 23.12,
+   "t": 24.45,
    "text": "A missed word comes back soon"
   }
  ]
