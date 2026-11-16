@@ -866,11 +866,11 @@ def scene_words(ctx):
     click(save)
     page.get_by_test_id('word-save-note').first.wait_for(timeout=8000)
     caption('Saved to Words, with its sentence', 2200)
-    caption('See words: every word you saved', 300)
+    caption('See words: your saved words', 300)
     see = page.get_by_test_id('word-save-note').get_by_role('link').first
     see.evaluate('a => a.removeAttribute("target")')  # it opens a new tab; the recording stays in this one
     click(see)
-    page.get_by_test_id('saved-word').first.wait_for(timeout=30000)
+    page.get_by_test_id('words-chart-hit').first.wait_for(timeout=30000)
     page.wait_for_timeout(1800)
     caption('Press Practice', 300)
     click(page.get_by_test_id('words-practice').first)
@@ -904,6 +904,48 @@ def scene_words(ctx):
     result = page.get_by_test_id('practice-result').first
     caption('A missed word comes back soon', 300)
     look(page, result, 2.4)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_your_words(ctx):
+    """Words: the chart of how the saved words grew, then See all, a word's sentence, a tab.
+    Every /api/me answer is canned (words_demo.py): no account needed, nothing saved anywhere."""
+    page = playlist_page(ctx, '/videos')
+    rail = page.locator('nav a[href="/words"]:visible').first
+    rail.wait_for(timeout=30000)
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'your-words', (1440, 900))
+    rec.start()
+    place(page, 700, 500)
+    caption('Words, in the menu on the left', 300)
+    click(rail, 300)
+    hit = page.get_by_test_id('words-chart-hit').first
+    hit.wait_for(timeout=30000)
+    page.wait_for_timeout(1800)
+    caption('How your words grow: New, Learning, Known', 300)
+    move_to((900, 640), 300)
+    look(page, hit, 2.6)
+    box = hit.bounding_box()
+    caption('Point at a day to see it', 300)
+    move_to((box['x'] + box['width'] * 0.45, box['y'] + box['height'] * 0.6), 1400)
+    rec.poster()
+    move_to((box['x'] + box['width'] * 0.8, box['y'] + box['height'] * 0.6), 1600)
+    caption('See all your words', 300)
+    click(page.get_by_test_id('words-see-all').first, 300)
+    page.get_by_test_id('saved-word').first.wait_for(timeout=30000)
+    page.wait_for_timeout(1500)
+    caption('Click a word: its sentence and the lesson', 300)
+    row = page.get_by_test_id('saved-word-row').filter(has_text='quartiers').first
+    click(row, 300)
+    detail = page.get_by_test_id('saved-word-detail').first
+    detail.wait_for(timeout=10000)
+    page.wait_for_timeout(500)
+    look(page, detail, 2.8)
+    caption('Pick New, Learning or Known', 300)
+    click(page.get_by_role('button', name='Known 11'), 300)
+    page.wait_for_timeout(2200)
     caption(None, 400)
     rec.stop(1280)
 
@@ -1160,7 +1202,8 @@ SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report, 'words': scene_words,
           'whole': scene_whole, 'cover': scene_cover, 'theme': scene_theme,
-          'playlist': scene_playlist, 'playlist-make': scene_playlist_make}
+          'playlist': scene_playlist, 'playlist-make': scene_playlist_make,
+          'your-words': scene_your_words}
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):

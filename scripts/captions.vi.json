@@ -78,7 +78,6 @@
  "Tap a word of the sentence": "Bấm vào một từ trong câu",
  "Press Save": "Bấm Save để lưu",
  "Saved to Words, with its sentence": "Đã lưu vào Words, kèm câu gốc",
- "See words: every word you saved": "See words: mọi từ bạn đã lưu",
  "Press Practice": "Bấm Practice",
  "The sentence from the video, your word missing": "Câu trong video, thiếu đúng từ bạn đã lưu",
  "Type it (or say it) and press Enter": "Gõ (hoặc nói) từ đó, rồi nhấn Enter",
@@ -109,5 +108,12 @@
  "Give it a name and choose who can see it": "Đặt tên và chọn ai được xem",
  "Saved: the video is in your new playlist": "Đã lưu: video đã vào playlist mới của bạn",
  "Press ⋯ on any video": "Bấm ⋯ ở bất kỳ video nào",
- "Find it in Playlists › Your playlists": "Xem lại trong Playlists › Your playlists"
+ "Find it in Playlists › Your playlists": "Xem lại trong Playlists › Your playlists",
+ "See words: your saved words": "See words: các từ bạn đã lưu",
+ "Words, in the menu on the left": "Words, trong menu bên trái",
+ "How your words grow: New, Learning, Known": "Vốn từ của bạn tăng dần: New, Learning, Known",
+ "Point at a day to see it": "Trỏ vào một ngày để xem ngày đó",
+ "See all your words": "Xem tất cả các từ",
+ "Click a word: its sentence and the lesson": "Bấm vào một từ: xem câu gốc và mở bài học",
+ "Pick New, Learning or Known": "Chọn New, Learning hoặc Known"
 }

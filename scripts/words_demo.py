@@ -23,6 +23,38 @@ WORDS = [
     ('vécu', 17, 'known', 4, 'In 2 weeks', 'đã sống', 'Participe passé de « vivre ».'),
     ('énormément', 18, 'known', 4, 'In 3 weeks', 'rất nhiều', 'Beaucoup, en très grande quantité.'),
 ]
+# More saved words for the Words page's chart and list (the practice cards stay the two above):
+# word, segment, Vietnamese meaning, simple French definition
+MORE = [
+    ('bienvenue', 0, 'chào mừng', "Mot pour accueillir quelqu'un."),
+    ('arrondissement', 1, 'quận', "Partie d'une grande ville."),
+    ('demander', 3, 'hỏi', 'Poser une question.'),
+    ('décidé', 3, 'đã quyết định', 'Participe passé de « décider ».'),
+    ('aimeriez', 13, 'muốn, thích', 'Forme de « aimer ».'),
+    ('études', 17, 'việc học', "Le temps où l'on étudie."),
+    ('vraiment', 18, 'thật sự', "Pour dire que c'est vrai."),
+    ('culturelle', 18, 'văn hóa', 'Qui concerne la culture.'),
+    ('tellement', 19, 'rất, quá', 'Très, beaucoup.'),
+    ('choses', 19, 'những điều', 'Objets ou faits.'),
+    ('rigolo', 28, 'vui, buồn cười', 'Amusant, drôle.'),
+    ('ville', 34, 'thành phố', 'Grande agglomération.'),
+    ('particulièrement', 36, 'đặc biệt', "Surtout, plus que d'habitude."),
+    ('belle', 36, 'đẹp', 'Jolie, agréable à voir.'),
+    ('saisons', 37, 'mùa', 'Printemps, été, automne, hiver.'),
+    ('toujours', 39, 'luôn luôn', 'Tout le temps.'),
+    ('lumière', 39, 'ánh sáng', 'Ce qui éclaire.'),
+    ('exceptionnelle', 39, 'đặc biệt, xuất sắc', 'Très rare, remarquable.'),
+    ('complètement', 41, 'hoàn toàn', 'Tout à fait.'),
+    ('différents', 41, 'khác nhau', 'Pas pareils.'),
+    ('voyage', 42, 'đi du lịch', "Fait d'aller loin."),
+    ('endroit', 42, 'nơi, chỗ', 'Un lieu.'),
+    ('heure', 38, 'giờ', 'Soixante minutes.'),
+]
+# kind, level, when it comes back, of each MORE word (in order)
+MORE_KIND = ['known', 'learning', 'known', 'learning', 'new', 'known', 'learning', 'known', 'learning',
+             'known', 'new', 'learning', 'known', 'learning', 'learning', 'known', 'learning', 'new',
+             'known', 'learning', 'learning', 'known', 'learning']
+DUE = {'new': (0, 'New'), 'learning': (2, 'In 3 days'), 'known': (5, 'In 1 month')}
 PRACTICE = ('épisode', 'quartiers')  # the practice page orders cards itself: only these two
 
 SENSE = {'word': 'épisode', 'src': 'fr', 'lemma': 'épisode', 'pos': 'noun', 'gender': 'masculine',
@@ -57,12 +89,26 @@ class Demo:
                 'transLang': 'vi', 'title': TITLE}
 
     def saved(self):
-        words = [{'id': 100 + n, 'word': w, 'kind': kind, 'level': level, 'due': self.now + n * 3600,
-                  'dueLabel': label, 'sentence': self.sentence(200 + n, seg, w), 'meaning': {'gloss': g, 'def': d}}
-                 for n, (w, seg, kind, level, label, g, d) in enumerate(WORDS)]
+        rows = list(WORDS) + [(w, seg, kind, DUE[kind][0], DUE[kind][1], g, d)
+                              for (w, seg, g, d), kind in zip(MORE, MORE_KIND)]
+        words, reviews = [], []
+        for n, (w, seg, kind, level, label, g, d) in enumerate(rows):
+            # saved over the last month: new words lately, known ones longest ago; the
+            # history the chart draws (when it was saved, its reviews and what they left)
+            days = {'new': n % 3, 'learning': 2 + (n * 7) % 19, 'known': 12 + (n * 5) % 18}[kind]
+            created = self.now - days * 86400 - (n * 2917) % 30000 - 60
+            first = None if kind == 'new' else created + 3600
+            if first:
+                reviews.append([100 + n, first, 1])
+            if kind == 'known':
+                reviews.append([100 + n, min(self.now - 600, first + (8 + n % 5) * 86400), 2])
+            words.append({'id': 100 + n, 'word': w, 'kind': kind, 'level': level, 'due': self.now + n * 3600,
+                          'dueLabel': label, 'created': created, 'firstReview': first,
+                          'sentence': self.sentence(200 + n, seg, w), 'meaning': {'gloss': g, 'def': d}})
+        words.sort(key=lambda x: -x['created'])
         counts = {k: sum(1 for x in words if x['kind'] == k) for k in ('new', 'learning', 'known')}
-        return {'lang': 'fr', 'words': words, 'counts': counts, 'due': 2, 'newLeft': 9, 'now': self.now,
-                'next': 'In 8 min'}
+        return {'lang': 'fr', 'words': words, 'reviews': sorted(reviews, key=lambda r: r[1]), 'counts': counts,
+                'due': 2, 'newLeft': 9, 'now': self.now, 'next': 'In 8 min'}
 
     def practice(self):
         return {'lang': 'fr', 'cards': [

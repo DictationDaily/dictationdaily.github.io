@@ -77,6 +77,11 @@
                 "slug": "words",
                 "title": "Save words, flashcards",
                 "icon": "🃏"
+            },
+            {
+                "slug": "your-words",
+                "title": "Your words",
+                "icon": "📈"
             }
         ]
     },
