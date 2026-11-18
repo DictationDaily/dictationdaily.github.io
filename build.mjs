@@ -315,7 +315,6 @@ function render(slug, meta, body) {
         ].join('\n    '),
         langswitch: langSwitch(slug),
         // Baloo 2 for Vietnamese headings (src/input.css)
-        font_extra: lang.code === 'vi' ? '&family=Baloo+2:wght@600;700;800' : '',
         sidebar: sidebar(slug),
         body_class: home ? 'layout-home' : 'layout-doc',
         content: home
