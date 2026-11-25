@@ -1,24 +1,24 @@
 {
- "duration": 13.38,
+ "duration": 14.53,
  "steps": [
   {
-   "t": 0.0,
+   "t": 0.03,
    "text": "Bấm vào một từ bất kỳ trong câu"
   },
   {
-   "t": 1.11,
+   "t": 1.29,
    "text": "Nghĩa của từ, bằng tiếng Việt"
   },
   {
-   "t": 3.52,
+   "t": 3.7,
    "text": "Nghe cách đọc"
   },
   {
-   "t": 6.09,
+   "t": 6.32,
    "text": "Say it: bấm micro và tự đọc từ đó"
   },
   {
-   "t": 9.27,
+   "t": 10.32,
    "text": "Xanh lá là máy nghe rõ. Mỗi âm được tô một màu"
   }
  ]

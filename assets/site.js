@@ -189,14 +189,6 @@
         blocks.forEach((el) => io.observe(el));
     }
 
-    // "When does my streak day change?" in the reader's own time zone
-    $$('[data-utc-midnight]').forEach((el) => {
-        const d = new Date();
-        d.setUTCHours(24, 0, 0, 0);
-        // in the page's language: 07:00 on the Vietnamese guide, not 07:00 AM
-        el.textContent = d.toLocaleTimeString(document.documentElement.lang === 'vi' ? 'vi-VN' : [], { hour: '2-digit', minute: '2-digit' });
-    });
-
     // Search, in the page's language: /search-index.json or /vi/search-index.json
     const search = $('#search');
     const base = document.documentElement.dataset.base || '/';

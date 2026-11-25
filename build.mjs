@@ -348,6 +348,9 @@ function render(slug, meta, body) {
     };
 }
 
+// Old page → new page. The subtitle cover went in November 2026; the small player took its place.
+const REDIRECTS = { 'cover-subtitles': 'small-player' };
+
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT);
 
@@ -391,6 +394,13 @@ for (const slug of slugs) {
     });
 }
 fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(search));
+// Pages that moved: the old address forwards to the new page (and its #section)
+for (const [from, to] of Object.entries(REDIRECTS)) {
+    fs.writeFileSync(
+        path.join(out, `${from}.html`),
+        `<!doctype html><meta charset="utf-8"><title>${to}</title><link rel="canonical" href="${pageUrl(lang, to)}"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=${to}.html"><script>location.replace('${to}.html' + location.hash)</script><a href="${to}.html">${to}.html</a>\n`,
+    );
+}
 console.log(`built ${slugs.length} ${lang.code} pages into ${out}/`);
 }
 

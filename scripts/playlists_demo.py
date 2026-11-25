@@ -48,7 +48,7 @@ class Playlists:
                             'level': body.get('level'), 'levelTo': body.get('levelTo'),
                             'visibility': 'link' if body.get('visibility') == 'public' else body.get('visibility', 'private'),
                             'featured': False, 'by': None, 'videoCount': 1 if body.get('videoId') else 0,
-                            'seconds': self.length(body['videoId']) if body.get('videoId') else 0, 'firstVideo': body.get('videoId'), 'saves': 0, 'updatedAt': n, 'done': 0}
+                            'seconds': self.length(body['videoId']) if body.get('videoId') else 0, 'firstVideo': body.get('videoId'), 'saves': 0, 'updatedAt': n, 'done': 0, 'studied': 0, **({'later': True} if body.get('later') else {})}
                     self.mine.insert(0, card)
                     if body.get('videoId'):
                         self.has.add(card['id'])

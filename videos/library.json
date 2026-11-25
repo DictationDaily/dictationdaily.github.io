@@ -1,25 +1,25 @@
 {
- "duration": 18.08,
+ "duration": 19.89,
  "steps": [
   {
    "t": 0.01,
    "text": "Pick a topic"
   },
   {
-   "t": 2.87,
-   "text": "Short on time? Quick win"
+   "t": 2.81,
+   "text": "Filters: level, length, speed"
   },
   {
-   "t": 5.62,
+   "t": 8.13,
    "text": "Sort: Slowest speaker first"
   },
   {
-   "t": 10.28,
+   "t": 12.83,
    "text": "Click a video"
   },
   {
-   "t": 13.68,
-   "text": "The lesson opens. Press START!"
+   "t": 15.8,
+   "text": "Bizzy asks: Listening or Speaking?"
   }
  ]
 }

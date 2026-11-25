@@ -1,24 +1,24 @@
 {
- "duration": 21.29,
+ "duration": 23.39,
  "steps": [
   {
    "t": 0.0,
    "text": "Press ⋯ on any video"
   },
   {
-   "t": 1.86,
+   "t": 1.97,
    "text": "Save to playlist, then New playlist"
   },
   {
-   "t": 4.52,
+   "t": 4.99,
    "text": "Give it a name and choose who can see it"
   },
   {
-   "t": 10.4,
+   "t": 11.72,
    "text": "Saved: the video is in your new playlist"
   },
   {
-   "t": 15.17,
+   "t": 16.64,
    "text": "Find it in Playlists › Your playlists"
   }
  ]

@@ -1,28 +1,28 @@
 {
- "duration": 14.5,
+ "duration": 15.49,
  "steps": [
   {
    "t": 0.02,
-   "text": "Chạm START"
+   "text": "Chạm Listening"
   },
   {
-   "t": 1.23,
+   "t": 1.45,
    "text": "Chạm vào ô, gõ những từ còn thiếu"
   },
   {
-   "t": 4.61,
+   "t": 5.09,
    "text": "Chạm CHECK để kiểm tra"
   },
   {
-   "t": 6.31,
+   "t": 6.88,
    "text": "Sửa từ bị báo đỏ"
   },
   {
-   "t": 8.33,
+   "t": 8.96,
    "text": "Gõ nốt phần còn lại"
   },
   {
-   "t": 9.7,
+   "t": 10.55,
    "text": "✓ Đúng rồi! Chạm CONTINUE"
   }
  ]

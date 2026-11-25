@@ -1,18 +1,17 @@
 """Record short screen recordings of the app for the guide (videos/*.mp4).
 
-A fake pointer and a caption bar are drawn into the page so learners can follow
-each step. Frames come from Chrome's screencast and are encoded with ffmpeg.
-Signed out, or (DD_SESSION, see pro_session.py) as a Pro learner with every
-write blocked and every lesson unstarted, so nothing is saved to any account.
+A fake pointer and a caption bar are drawn over the frames (cap_render.py) so learners can follow
+each step. Frames come from Chrome's screencast and are encoded with ffmpeg. Every scene is signed
+in as the Demo Learner (words_demo.py, learner_demo.py, playlists_demo.py): a Pro learner of French
+whose every /api answer is made up in the browser, so nothing is read from or written to any
+account (or, with DD_SESSION, a real Pro account read-only, see pro_session.py).
 
 usage: [DD_BASE=http://localhost:8788] python3 scripts/record.py [scene ...]
        python3 scripts/record.py --render [--lang vi] [scene ...]  (redraw kept takes)
 DD_BASE records a local build instead of production, e.g. before a UI change
 is deployed (dictationdaily.com: tests/e2e/local_worker.sh).
-scenes: lesson library speed navigate listen mobile, and with DD_SESSION (Pro):
-translation word voice pronounce shadow resume streak report
-words, whole, cover, theme, playlist, playlist-make (Pro, every /api/me answer canned by words_demo.py
-(+ playlists_demo.py): no DD_SESSION needed)
+scenes: see SCENES at the end (and mobile). Every lesson opens on Bizzy's question
+(Listening or Speaking): scenes press it where they used to press START.
 """
 import base64
 import html
@@ -285,11 +284,22 @@ def helpers(page, touch=False):
     return move_to, click, caption
 
 
-def open_lesson(page, video=VIDEO):
-    page.goto(f'{B}/videos/{video}', wait_until='load')
-    page.wait_for_selector('text=START', timeout=20000)
+def open_lesson(page, video=VIDEO, query=''):
+    """Open a lesson on Bizzy's start question (Listening or Speaking), the video loaded behind it."""
+    page.goto(f'{B}/videos/{video}{query}', wait_until='load')
+    pick_button(page, 'Listening').wait_for(timeout=20000)
     page.wait_for_selector('iframe[src*="youtube"]', timeout=20000)
     page.wait_for_timeout(4000)
+
+
+def pick_button(page, mode='Listening'):
+    """A card of Bizzy's start question: Listening (Dictation) or Speaking (Shadowing)."""
+    return page.get_by_role('button', name=re.compile(rf'\b{mode}\b')).first
+
+
+def pick(page, mode='Listening'):
+    """Answer Bizzy's start question without the pointer (before a recording starts)."""
+    pick_button(page, mode).click()
 
 
 def wait_exercise(page):
@@ -303,8 +313,8 @@ def scene_lesson(ctx):
     rec = Recorder(page, 'lesson', (1440, 900))
     rec.start()
     place(page, 900, 600)
-    caption('<b>1</b>Press START', 600)
-    click(page.get_by_text('START', exact=True))
+    caption('<b>1</b>Bizzy asks: pick Listening', 900)
+    click(pick_button(page))
     wait_exercise(page)
     caption('<b>2</b>Listen. The red line shows your words', 3400)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
@@ -337,7 +347,7 @@ def scene_hints(ctx):
     page = ctx.new_page()
     open_lesson(page)
     move_to, click, caption = helpers(page)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     page.wait_for_timeout(3500)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
@@ -369,46 +379,11 @@ def scene_hints(ctx):
     rec.stop(1280)
 
 
-def scene_library(ctx):
-    page = ctx.new_page()
-    # English, like the library screenshots (a signed-in learner sees their learning language)
-    page.goto(f'{B}/videos?lang=en', wait_until='load')
-    page.wait_for_selector('img[src*="ytimg.com"]', timeout=20000)
-    page.wait_for_timeout(3000)
-    move_to, click, caption = helpers(page)
-    rec = Recorder(page, 'library', (1440, 900))
-    rec.start()
-    place(page, 700, 500)
-    caption('<b>1</b>Pick a topic', 400)
-    click(page.get_by_role('button', name=re.compile('^Mind & psychology')))
-    page.wait_for_timeout(1600)
-    caption('<b>2</b>Short on time? Quick win', 300)
-    click(page.get_by_role('button', name=re.compile('^Quick win')))
-    page.wait_for_timeout(1600)
-    caption('<b>3</b>Sort: Slowest speaker first', 300)
-    click(page.get_by_role('button', name=re.compile('^Sort')))
-    page.wait_for_timeout(700)
-    click(page.get_by_role('menuitemradio', name=re.compile('^Slowest')))
-    page.wait_for_timeout(1800)
-    rec.poster()
-    caption('<b>4</b>Click a video', 300)
-    # the first card of the filtered list (signed in, "Pick up where you left off" comes first)
-    card = page.locator('xpath=//*[contains(normalize-space(.), "Find your next video")][not(*)]'
-                        '/following::a[starts-with(@href, "/videos/")][1]')
-    move_to(card, 900)
-    page.wait_for_timeout(500)
-    click(card, 200)
-    page.wait_for_selector('text=START', timeout=20000)
-    caption('The lesson opens. Press START!', 3500)
-    caption(None, 600)
-    rec.stop(1280)
-
-
 def scene_speed(ctx):
     page = ctx.new_page()
     open_lesson(page)
     move_to, click, caption = helpers(page)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     page.wait_for_timeout(800)
     rec = Recorder(page, 'speed', (1440, 900))
@@ -436,7 +411,7 @@ def scene_navigate(ctx):
     page = ctx.new_page()
     open_lesson(page)
     move_to, click, caption = helpers(page)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
     ta.fill(CLIP1)
@@ -473,7 +448,7 @@ def scene_listen(ctx):
     rec = Recorder(page, 'listen', (1440, 900))
     rec.start()
     place(page, 900, 600)
-    click(page.get_by_text('START', exact=True))
+    click(pick_button(page))
     page.get_by_role('heading', name='Just listen').wait_for(timeout=20000)
     caption('🎧 “Just listen” parts: nothing to type', 1300)
     rec.poster()
@@ -489,7 +464,7 @@ def scene_listen(ctx):
 def scene_mobile(browser):
     ctx = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True,
                               device_scale_factor=2)
-    pro_session.apply(ctx, B)
+    sign_in(ctx)
     ctx.add_init_script(OVERLAY)
     page = ctx.new_page()
     open_lesson(page)
@@ -498,8 +473,8 @@ def scene_mobile(browser):
     rec = Recorder(page, 'mobile', (780, 1688))
     rec.start()
     place(page, 195, 600)
-    caption('Tap START', 400, small=True)
-    click(page.get_by_text('START', exact=True))
+    caption('Tap Listening', 400, small=True)
+    click(pick_button(page))
     wait_exercise(page)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
     caption('Tap the box. Type the missing words', 300, small=True)
@@ -549,7 +524,7 @@ def heard(words, missing=()):
 
 
 def answer_first(page, gap):
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     page.wait_for_timeout(1500)
     page.get_by_placeholder(re.compile('what you hear')).first.fill(gap)
@@ -557,18 +532,14 @@ def answer_first(page, gap):
 
 
 def scene_translation(ctx):
-    import words_demo
     page = ctx.new_page()
-    # a demo Pro learner, every /api answer canned (words_demo.py): the
-    # translation shows without anyone's account
-    words_demo.Demo(B).install(page)
     open_lesson(page, FR_VIDEO)
     move_to, click, caption = helpers(page)
     rec = Recorder(page, 'translation', (1440, 900))
     rec.start()
     place(page, 900, 600)
-    caption('Press START: a French sentence plays', 400)
-    click(page.get_by_text('START', exact=True))
+    caption('Pick Listening: a French sentence plays', 400)
+    click(pick_button(page))
     wait_exercise(page)
     page.wait_for_timeout(1800)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
@@ -629,7 +600,7 @@ def scene_voice(ctx):
     canned(page, 'shadow-check', heard(LINE1, missing=('tremendous',)))
     open_lesson(page)
     move_to, click, caption = helpers(page)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     page.wait_for_timeout(3500)
     rec = Recorder(page, 'voice', (1440, 900))
@@ -671,11 +642,11 @@ def scene_pronounce(ctx):
     rec.start()
     place(page, 900, 600)
     caption('Get the sentence right first', 300)
-    click(page.get_by_text('START', exact=True))
+    click(pick_button(page))
     wait_exercise(page)
     page.wait_for_timeout(1500)
     ta = page.get_by_placeholder(re.compile('what you hear')).first
-    move_to(ta, 200)
+    into_box(move_to, click, ta)  # the pointer below the box: resting on a word opens its hover card
     type_(ta, FR_GAP, delay=35)
     page.get_by_text('You are correct!').first.wait_for(timeout=8000)
     page.wait_for_timeout(600)
@@ -716,73 +687,6 @@ def pronounced(words, scores):
     return out
 
 
-def scene_shadow(ctx):
-    page = ctx.new_page()
-    # green / brown / red words (since 2026-11-05): "contention" close,
-    # "tremendous" left out
-    canned(page, 'shadow-check', {**heard(LINE1, missing=('tremendous',)),
-                                  'pronunciation': pronounced(LINE1, {'contention': 70, 'tremendous': 0})})
-    page.goto(f'{B}/videos/{VIDEO}?mode=shadowing', wait_until='load')
-    page.wait_for_selector('iframe[src*="youtube"]', timeout=20000)
-    page.wait_for_timeout(1500)
-    if not page.get_by_text('START', exact=True).count():
-        page.get_by_role('button', name=re.compile('^Shadowing')).first.click()
-    page.get_by_text('START', exact=True).first.wait_for(timeout=15000)
-    page.wait_for_timeout(2500)
-    move_to, click, caption = helpers(page)
-    rec = Recorder(page, 'shadow', (1440, 900))
-    rec.start()
-    place(page, 900, 600)
-    caption('Press START', 400)
-    click(page.get_by_text('START', exact=True).first)
-    caption('1. Listen to the line', 300)
-    result = page.get_by_role('region', name='Shadowing result').first
-    page.get_by_text(re.compile('Say it now')).or_(result).first.wait_for(timeout=30000)
-    caption('2. The microphone opens: say it', 2200)
-    if not result.is_visible():
-        # it stops by itself after a quiet moment; if not yet, tap it
-        rec_btn = page.get_by_test_id('record').first
-        if rec_btn.is_visible():
-            click(rec_btn, 300)
-    result.wait_for(timeout=10000)
-    caption('3. Green: well said. Brown: close. Red: missed', 3000)
-    rec.poster()
-    caption('Enter: hear your take. Esc: try again', 2200)
-    caption('Space: next line', 1000)
-    page.keyboard.press('Space')
-    page.wait_for_timeout(2500)
-    caption(None, 400)
-    rec.stop(1280)
-
-
-def scene_resume(ctx):
-    page = ctx.new_page()
-    # this recording's started video resumes 2 minutes in
-    page.route('**/api/me/progress?id=*', lambda r: r.fulfill(
-        status=200, content_type='application/json', body='{"progress":120,"date":null}'))
-    page.goto(f'{B}/videos', wait_until='load')
-    page.get_by_text('Pick up where you left off').wait_for(timeout=20000)
-    page.wait_for_selector('img[src*="ytimg.com"]', timeout=20000)
-    page.wait_for_timeout(2500)
-    move_to, click, caption = helpers(page)
-    rec = Recorder(page, 'resume', (1440, 900))
-    rec.start()
-    place(page, 700, 500)
-    caption('Signed in, your videos wait at the top', 1800)
-    rec.poster()
-    caption('Click one', 300)
-    card = page.locator('xpath=//*[normalize-space(.)="Pick up where you left off"][not(*)]'
-                        '/following::a[starts-with(@href, "/videos/")][1]')
-    click(card)
-    page.get_by_text('START', exact=True).first.wait_for(timeout=20000)
-    page.wait_for_timeout(1500)
-    click(page.get_by_text('START', exact=True).first, 300)
-    wait_exercise(page)
-    caption('It goes on where you stopped', 2600)
-    caption(None, 400)
-    rec.stop(1280)
-
-
 def scene_streak(ctx):
     page = ctx.new_page()
     page.goto(f'{B}/videos', wait_until='load')
@@ -818,7 +722,7 @@ def scene_report(ctx):
     page = ctx.new_page()
     open_lesson(page)
     move_to, click, caption = helpers(page)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     page.wait_for_timeout(1500)
     rec = Recorder(page, 'report', (1440, 900))
@@ -845,9 +749,7 @@ def scene_report(ctx):
 def scene_words(ctx):
     """Save a word, then practise it as a flashcard. Every /api answer is canned (words_demo.py):
     no account needed, nothing saved anywhere."""
-    import words_demo
     page = ctx.new_page()
-    words_demo.Demo(B).install(page)
     open_lesson(page, FR_VIDEO)
     move_to, click, caption = helpers(page)
     answer_first(page, FR_GAP)
@@ -953,11 +855,9 @@ def scene_your_words(ctx):
 def demo_lesson(ctx):
     """Easy French 97 as a demo Pro learner, the first sentence played. Every /api answer is
     canned (words_demo.py): no account needed, nothing saved anywhere."""
-    import words_demo
     page = ctx.new_page()
-    words_demo.Demo(B).install(page)
     open_lesson(page, FR_VIDEO)
-    page.get_by_text('START', exact=True).click()
+    pick(page)
     wait_exercise(page)
     return page
 
@@ -1000,52 +900,10 @@ def scene_whole(ctx):
     rec.stop(1280)
 
 
-def scene_cover(ctx):
-    """The subtitle cover: the glass over burned-in subtitles and its switch."""
-    page = demo_lesson(ctx)
-    move_to, click, caption = helpers(page)
-    cover = page.get_by_test_id('subtitle-cover').first
-    cover.wait_for(timeout=30000)
-    page.wait_for_timeout(6000)  # the sentence has played: the picture stays on its subtitle
-    rec = Recorder(page, 'cover', (1440, 900))
-    rec.start()
-    place(page, 900, 620)
-    caption('The glass hides the subtitles in the video', 300)
-    move_to(cover, 300)
-    spot = cover.bounding_box()
-    look(page, cover, 2.4)
-    rec.poster()
-    caption('Want to read the subtitles? Turn off Cover subtitles', 300)
-    click(page.get_by_test_id('lesson-settings'))
-    page.wait_for_timeout(900)
-    switch = page.get_by_test_id('lesson-settings-cover')
-    click(switch, 400)
-    page.wait_for_timeout(900)  # the menu stays open: the glass goes
-    page.keyboard.press('Escape')
-    # the glass is gone now: point at where it was
-    move_to((spot['x'] + spot['width'] / 2, spot['y'] + spot['height'] / 2), 300)
-    t0 = time.time()
-    page.wait_for_timeout(2200)
-    RECORDING.events.append({'k': 'focus', 't': t0, 't1': time.time(),
-                             'x': spot['x'] + spot['width'] / 2, 'y': spot['y'] + spot['height'] / 2})
-    caption('Turn it on again to hide them', 300)
-    click(page.get_by_test_id('lesson-settings'))
-    page.wait_for_timeout(900)
-    click(switch, 400)
-    page.wait_for_timeout(1100)  # the glass comes back
-    page.keyboard.press('Escape')
-    move_to(cover, 300)
-    look(page, cover, 2.4)
-    caption(None, 400)
-    rec.stop(1280)
-
-
 def scene_theme(ctx):
     """Light or dark: the Theme switch in the account menu (and Settings › Appearance).
     A demo Pro learner, every /api answer canned (words_demo.py); the device is light."""
-    import words_demo
     page = ctx.new_page()
-    words_demo.Demo(B).install(page)
     # History's started videos (the today block): none, so the page stays short
     page.route(B + '/api/me/videos*', lambda r: r.fulfill(
         status=200, content_type='application/json', body='[]'))
@@ -1089,10 +947,8 @@ def scene_theme(ctx):
 def playlist_page(ctx, url):
     """A demo Pro learner of French with no playlist yet: every /api/me answer canned (words_demo.py +
     playlists_demo.py); DictationDaily's own playlists are the live ones."""
-    import words_demo
     import playlists_demo
     page = ctx.new_page()
-    words_demo.Demo(B).install(page)
     playlists_demo.Playlists(B).install(page)
     # History's started videos: none, so Home's video cards sit near the top
     page.route(B + '/api/me/videos*', lambda r: r.fulfill(
@@ -1126,20 +982,14 @@ def scene_playlist(ctx):
     caption('Save keeps it in Your playlists', 300)
     click(save, 300)
     page.wait_for_timeout(1200)
-    caption('Start plays the first video', 300)
-    click(page.get_by_role('link', name='Start', exact=True).first, 300)
-    bar = page.get_by_role('button', name='Show the playlist').first
-    bar.wait_for(timeout=30000)
-    page.wait_for_timeout(2500)
-    caption('The bar shows where you are: Video 1 of 39', 300)
-    look(page, bar.locator('xpath=ancestor::div[3]'), 2.6)
-    caption('See the whole list, or ⏭ for the next video', 300)
-    click(bar, 300)
-    page.wait_for_timeout(2200)
-    click(page.get_by_role('button', name='Hide the playlist').first, 300)
-    page.wait_for_timeout(600)
-    move_to(page.locator('[aria-label="Next video"]').first, 300)
-    page.wait_for_timeout(1800)
+    caption('Continue plays the video you are on', 300)
+    click(page.get_by_role('link', name=re.compile('^(Start|Continue)$')).first, 300)
+    pick_button(page).wait_for(timeout=30000)
+    page.wait_for_timeout(1000)
+    caption('Pick Listening', 300)
+    click(pick_button(page), 300)
+    wait_exercise(page)
+    caption('At the end of the video: Next video in the playlist', 2600)
     caption(None, 400)
     rec.stop(1280)
 
@@ -1195,15 +1045,514 @@ def scene_playlist_make(ctx):
     rec.stop(1280)
 
 
+# ---- New in November 2026: the practice card, lesson parts, Your skills, likes and comments,
+# Add a video, the small player and the hover card. All as the Demo Learner (sign_in()).
+
+def segments(video):
+    """The lesson's sentences (the public transcript file), to answer them before a recording."""
+    import urllib.request
+    req = urllib.request.Request(f'{B}/transcripts/{video}.json', headers={'User-Agent': 'Mozilla/5.0 dd-guide-capture'})
+    return json.load(urllib.request.urlopen(req))['segments']
+
+
+def answer_now(page, text):
+    """Answer the sentence on screen at once (off camera), then go on to the next one."""
+    wait_exercise(page)
+    page.get_by_placeholder(re.compile('what you hear')).first.fill(text)
+    page.locator('button').filter(has_text=re.compile('^continue$', re.I)).wait_for(timeout=8000)
+    page.keyboard.press('Space')
+
+
+def scene_practice(ctx):
+    """/videos: the practice card picks the next video; Another one; START opens it on Bizzy's question."""
+    page = ctx.new_page()
+    page.goto(f'{B}/videos', wait_until='load')
+    start = page.get_by_role('button', name=re.compile('^START$')).first
+    start.wait_for(timeout=30000)
+    page.wait_for_timeout(3000)
+    move_to, click, caption = helpers(page)
+    card = start.locator('xpath=ancestor::section[1]')
+    rec = Recorder(page, 'practice', (1440, 900))
+    rec.start()
+    place(page, 900, 520)
+    caption('Your practice card: the next video, picked for you', 300)
+    move_to((560, 160), 300)
+    look(page, card, 2.6)
+    caption('Which part is next, and about how long it takes', 300)
+    move_to((520, 205), 300)
+    look(page, page.get_by_text(re.compile(r'^(Part \d+ of \d+|Whole video)')).first, 2.4)
+    rec.poster()
+    caption('Not this one? Another one', 300)
+    click(page.get_by_role('button', name=re.compile('another one', re.I)).first, 300)
+    page.wait_for_timeout(2600)
+    caption('START: Bizzy asks Listening or Speaking', 300)
+    click(page.get_by_role('button', name=re.compile('^START$')).first, 300)
+    pick_button(page).wait_for(timeout=30000)
+    page.wait_for_timeout(1800)
+    click(pick_button(page), 300)
+    wait_exercise(page)
+    caption('It starts at once, part after part', 2600)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_parts(ctx):
+    """A lesson part ends: the Part done card, then KEEP GOING."""
+    page = ctx.new_page()
+    segs = [s for s in segments(VIDEO)]
+    open_lesson(page)
+    move_to, click, caption = helpers(page)
+    pick(page)
+    # Answer the part's sentences off camera, but the last one (and skip one, to show a dash)
+    label = page.get_by_text(re.compile(r'Part 1 of \d+ · \d+/\d+'))
+    label.first.wait_for(timeout=30000)
+    total = int(re.search(r'/(\d+)', label.first.inner_text()).group(1))
+    exercises = [s for s in segs if not s.get('ignore')]
+    for n in range(total - 1):
+        if n == 2:
+            wait_exercise(page)
+            page.get_by_placeholder(re.compile('what you hear')).first.press('Escape')  # skipped
+            page.wait_for_timeout(600)
+            continue
+        if page.get_by_role('heading', name='Just listen').count():
+            page.keyboard.press('Space')
+        if n in (4, 7):
+            # a word missed first: it shows under Words you missed
+            words = exercises[n]['text'].split()
+            k = max(range(len(words)), key=lambda i: len(words[i].strip(',.?!')))
+            words[k] = words[k][:-2] + 'x'
+            wait_exercise(page)
+            box = page.get_by_placeholder(re.compile('what you hear')).first
+            box.fill(' '.join(words))
+            box.press('Enter')
+            page.wait_for_timeout(700)
+        answer_now(page, exercises[n]['text'])
+        page.wait_for_timeout(500)
+    wait_exercise(page)
+    page.wait_for_timeout(2500)
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
+    rec = Recorder(page, 'parts', (1440, 900))
+    rec.start()
+    place(page, 900, 640)
+    caption('The last sentence of a part', 300)
+    into_box(move_to, click, ta)
+    type_(ta, exercises[total - 1]['text'], delay=45)
+    # right: the part's last sentence goes straight on to Part done
+    done = page.get_by_text(re.compile('Part \\d+ done', re.I)).first
+    done.wait_for(timeout=15000)
+    page.wait_for_timeout(1200)
+    caption('Part done: how the part went', 300)
+    look(page, done, 2.4)
+    rec.poster()
+    caption('A square per sentence: ✓ first try, 2 checks, – skipped', 300)
+    move_to((1250, 330), 300)
+    look(page, page.get_by_text(re.compile('right on the first try')).first, 2.4)
+    missed = page.get_by_text(re.compile('Words you missed', re.I)).first
+    if missed.count():
+        caption('Words you missed: rest the mouse on one for its meaning', 300)
+        look(page, missed, 2.4)
+    caption('The hardest sentence: hear it again', 300)
+    look(page, page.get_by_text(re.compile('^Hardest')).first, 2.2)
+    caption('KEEP GOING: the next part starts', 300)
+    click(page.get_by_role('button', name=re.compile('keep going', re.I)).first, 300)
+    wait_exercise(page)
+    page.wait_for_timeout(1800)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_skills(ctx):
+    """My progress › Your skills: speaking and listening, 7 or 30 days."""
+    page = ctx.new_page()
+    page.goto(f'{B}/my-learning', wait_until='load')
+    title = page.get_by_text(re.compile('your skills', re.I)).first
+    title.wait_for(timeout=30000)
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'skills', (1440, 900))
+    rec.start()
+
+    def show(loc, block='start'):
+        loc.evaluate(f"e => e.scrollIntoView({{behavior: 'smooth', block: '{block}'}})")
+        page.wait_for_timeout(1300)
+
+    place(page, 900, 500)
+    caption('My progress: You, in the menu on the left', 1600)
+    caption('Your skills: speaking and listening', 300)
+    show(title)
+    speaking = page.get_by_text(re.compile('^Speaking$')).first
+    move_to((760, 560), 300)
+    look(page, speaking, 2.6)
+    rec.poster()
+    caption('Sounds to work on, and words to say again', 300)
+    show(page.get_by_text('Sounds to work on').first, 'center')
+    look(page, page.get_by_text('Words to say again').first, 2.4)
+    caption('Listening: right on the first try, by speed', 300)
+    show(page.get_by_text(re.compile('^Listening$')).first, 'center')
+    look(page, page.get_by_text(re.compile('Where it gets hard')).first, 2.6)
+    caption('Last 7 days or Last 30 days', 300)
+    show(title, 'center')
+    seven = page.get_by_role('button', name='Last 7 days').or_(page.get_by_role('tab', name='Last 7 days')).first
+    click(seven, 1800)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_social(ctx):
+    """The lesson's 👍 / 👎, Save (Practise later) and comments."""
+    page = demo_lesson(ctx)
+    move_to, click, caption = helpers(page)
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
+    page.wait_for_timeout(1500)
+    ta.fill(FR_GAP)
+    page.get_by_text('You are correct!').first.wait_for(timeout=8000)
+    page.wait_for_timeout(1500)
+    rec = Recorder(page, 'social', (1440, 900))
+    rec.start()
+    place(page, 900, 600)
+    caption('Like the video? 👍', 300)
+    click(page.get_by_role('button', name=re.compile('^I like this')), 1400)
+    caption('Save: keep it in Practise later', 300)
+    click(page.get_by_role('button', name='Save to playlist'), 300)
+    later = page.get_by_role('dialog').locator('text="Practise later" >> visible=true').first
+    later.wait_for(timeout=10000)
+    page.wait_for_timeout(600)
+    click(later, 1200)
+    click(page.get_by_role('dialog').get_by_role('button', name=re.compile('^close$', re.I)).first, 300)
+    page.wait_for_timeout(600)
+    rec.poster()
+    caption('Comments: questions and tips about this video', 300)
+    click(page.get_by_role('button', name=re.compile('^Comments')), 300)
+    box = page.get_by_role('textbox', name='Your comment')
+    box.wait_for(timeout=10000)
+    page.wait_for_timeout(1500)
+    caption('Write one. Quote the line you mean', 300)
+    click(box, 300)
+    type_(box, "C'est quoi « Easy French » en français ?", delay=50)
+    quote = page.get_by_text(re.compile('^Quote the line')).first
+    if quote.count():
+        click(quote, 600)
+    send = page.get_by_role('button', name='Post comment')
+    click(send, 1600)
+    caption('Close it with ‹ or a click on the lesson', 300)
+    click((1200, 450), 1200)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_addvideo(ctx):
+    """＋ Create: paste a YouTube link, check the language, Make the lesson; it waits its turn."""
+    vid = 'EAX8mc_ovDk'  # What Do The French Have For Breakfast? | Easy French 218
+    info = DEMO.learner.videos[vid]
+    made = []
+
+    def preview(route, req, body):
+        route.fulfill(status=200, content_type='application/json', body=json.dumps(
+            {'id': vid, 'title': info['title'], 'channel': 'Easy French', 'seconds': info['duration'],
+             'lesson': False, 'added': False, 'problem': None}))
+        return True
+
+    def make(route, req, body):
+        if req.method != 'POST':
+            data = DEMO.learner.added()
+            data['items'] = made + data['items']
+            data['quota']['usedToday'] += sum(x['seconds'] for x in made)
+            route.fulfill(status=200, content_type='application/json', body=json.dumps(data))
+            return True
+        item = {'id': vid, 'title': info['title'], 'channel': 'Easy French', 'language': 'fr',
+                'seconds': info['duration'], 'state': 'waiting', 'place': 2, 'reason': None,
+                'createdAt': int(time.time()), 'existing': False}
+        made.insert(0, item)
+        route.fulfill(status=200, content_type='application/json', body=json.dumps({'item': item}))
+        return True
+
+    DEMO.on(r'^/api/me/added-videos/preview$', preview)
+    DEMO.on(r'^/api/me/added-videos$', make)
+    page = ctx.new_page()
+    page.goto(f'{B}/videos', wait_until='load')
+    create = page.get_by_role('link', name=re.compile('Create')).first
+    create.wait_for(timeout=30000)
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'addvideo', (1440, 900))
+    rec.start()
+    place(page, 900, 500)
+    caption('Pro: make a lesson from any YouTube video. ＋ Create', 300)
+    click(create, 300)
+    link = page.get_by_placeholder(re.compile('paste', re.I)).first
+    link.wait_for(timeout=20000)
+    page.wait_for_timeout(1200)
+    caption('Paste the link of one video', 300)
+    click(link, 300)
+    type_(link, f'https://www.youtube.com/watch?v={vid}', delay=25)
+    page.get_by_text(info['title']).first.wait_for(timeout=20000)
+    page.wait_for_timeout(1200)
+    caption('Check the language, then Make the lesson', 300)
+    rec.poster()
+    make_btn = page.get_by_role('button', name=re.compile('make the lesson', re.I)).first
+    click(make_btn, 300)
+    page.get_by_text(re.compile('In line', re.I)).first.wait_for(timeout=20000)
+    page.wait_for_timeout(800)
+    row = page.get_by_text(re.compile('^In line')).first
+    row.evaluate("e => e.scrollIntoView({behavior: 'smooth', block: 'center'})")
+    page.wait_for_timeout(1200)
+    caption('It waits its turn. We email you when it is ready', 300)
+    look(page, row, 3.0)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_layout(ctx):
+    """⚙ › Video layout: Small player (the subtitles in the picture too small to read) or Side by side."""
+    page = demo_lesson(ctx)
+    move_to, click, caption = helpers(page)
+    player = page.get_by_test_id('player-box').first
+    page.wait_for_timeout(3000)
+    rec = Recorder(page, 'layout', (1440, 900))
+    rec.start()
+    place(page, 900, 620)
+    caption('Words written in the video? It plays small', 300)
+    move_to(player, 300)
+    look(page, player, 2.4)
+    rec.poster()
+    caption('Want it big? ⚙ › Video layout › Side by side', 300)
+    click(page.get_by_test_id('lesson-settings'), 300)
+    page.wait_for_timeout(700)
+    click(page.get_by_test_id('lesson-settings-layout-side'), 600)
+    page.wait_for_timeout(1200)
+    page.keyboard.press('Escape')
+    move_to((380, 420), 300)
+    page.wait_for_timeout(2200)
+    caption('Small player puts it back', 300)
+    click(page.get_by_test_id('lesson-settings'), 300)
+    page.wait_for_timeout(700)
+    click(page.get_by_test_id('lesson-settings-layout-small'), 600)
+    page.wait_for_timeout(1200)
+    page.keyboard.press('Escape')
+    move_to(player, 300)
+    look(page, player, 2.0)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+PHRASE_SEG = 19  # "et il y a tellement de choses qui se passent tout le temps," (se passer, tout le temps)
+
+
+def scene_hover(ctx):
+    """Rest the mouse on a word: its meaning and Save; a phrase shows in orange, and saves too."""
+    segs = segments(FR_VIDEO)
+    line = segs[PHRASE_SEG]
+    words = [w['text'] if isinstance(w, dict) else w for w in line['words']]
+    wi = words.index('passent')
+    vi_word = {'word': 'passent', 'src': 'fr', 'lemma': 'passer', 'pos': 'verb', 'gender': '', 'ipa': '/pas/',
+               'form': 'ils, présent', 'gloss': 'đi qua, trôi qua', 'def': "Aller d'un endroit à un autre ; s'écouler."}
+    vi_phrase = {'word': 'se passer', 'src': 'fr', 'lemma': 'se passer', 'pos': 'phrase', 'gender': '',
+                 'ipa': '/sə pa.se/', 'form': '', 'gloss': 'xảy ra, diễn ra', 'def': 'Avoir lieu, arriver.'}
+
+    def word(route, req, body):
+        b = body()
+        sense = vi_phrase if b.get('phrase') is not None else (vi_word if b.get('seg') == PHRASE_SEG and b.get('wi') == wi else None)
+        if not sense:
+            return False
+        route.fulfill(status=200, content_type='application/json', body=json.dumps(
+            {'state': 'ready', 'native': 'vi', 'sense': sense, 'ipaSource': 'wiktionary',
+             'headwordIpa': [{'accent': '', 'ipa': '/pa.se/'}], 'entry': {'state': 'none', 'url': None},
+             'audio': {'state': 'none', 'url': None}, 'sound': {'state': 'none', 'url': None}}))
+        return True
+
+    DEMO.on(r'^/api/me/word$', word)
+    page = ctx.new_page()
+    # the lesson opens at this sentence: the place is the end of the one before
+    page.route('**/api/me/progress?id=*', lambda r: r.fulfill(
+        status=200, content_type='application/json',
+        body=json.dumps({'progress': segs[PHRASE_SEG - 1]['end'], 'date': int(time.time()) - 86400, 'partSize': 10})))
+    open_lesson(page, FR_VIDEO)
+    move_to, click, caption = helpers(page)
+    pick(page)
+    wait_exercise(page)
+    page.wait_for_timeout(1500)
+    ta = page.get_by_placeholder(re.compile('what you hear')).first
+    ta.fill(line['text'])
+    page.get_by_text('You are correct!').first.wait_for(timeout=8000)
+    page.wait_for_timeout(2000)
+    target = page.locator('[data-word]:visible').filter(has_text=re.compile('^passent$')).first
+    rec = Recorder(page, 'hover', (1440, 900))
+    rec.start()
+    place(page, 1000, 650)
+    caption('Rest the mouse on a word', 300)
+    move_to(target, 300)
+    hover = page.locator('[role="tooltip"]').filter(has_text='passent').first
+    hover.wait_for(timeout=15000)
+    page.wait_for_timeout(900)
+    caption('Its meaning, in your language and in French', 300)
+    look(page, hover, 2.6)
+    rec.poster()
+    caption('Part of a phrase? Its words turn orange', 300)
+    look(page, hover.get_by_text('se passer').first, 2.6)
+    caption('The bookmark saves the word', 300)
+    save = hover.get_by_role('button', name=re.compile('save', re.I)).first
+    click(save, 1500)
+    caption('The phrase: Everything about this word', 300)
+    click(hover.get_by_text(re.compile('Everything about this word')).first, 300)
+    box = page.locator('[data-word-card]').get_by_text(re.compile('Part of a phrase', re.I)).first
+    box.wait_for(timeout=15000)
+    page.wait_for_timeout(1200)
+    phrase = box.locator('xpath=ancestor::*[.//button][1]')
+    look(page, phrase, 2.0)
+    caption('Its bookmark saves the phrase to Words', 300)
+    click(phrase.get_by_role('button', name=re.compile('save', re.I)).last, 2000)
+    page.keyboard.press('Escape')
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def first_card(page):
+    """The first video card of the list (under the topics, not the practice card)."""
+    row = page.get_by_role('button', name='All', exact=True).first.bounding_box()
+    for a in page.locator('a[href^="/videos/"]:visible').all():
+        box = a.bounding_box()
+        if box and box['y'] > row['y'] + 20 and a.locator('img').count():
+            return a
+    raise AssertionError('no video card')
+
+
+def scene_library(ctx):
+    page = ctx.new_page()
+    page.goto(f'{B}/videos', wait_until='load')
+    page.wait_for_selector('img[src*="ytimg.com"]', timeout=20000)
+    page.get_by_role('button', name=re.compile('^Filters')).wait_for(timeout=20000)
+    page.wait_for_timeout(3000)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'library', (1440, 900))
+    rec.start()
+    place(page, 700, 500)
+    caption('<b>1</b>Pick a topic', 400)
+    click(page.get_by_role('button', name='Daily life', exact=True))
+    page.wait_for_timeout(1500)
+    caption('<b>2</b>Filters: level, length, speed', 300)
+    click(page.get_by_role('button', name=re.compile('^Filters')))
+    panel = page.get_by_role('dialog').first
+    panel.wait_for(timeout=10000)
+    page.wait_for_timeout(700)
+    click(panel.get_by_role('button', name=re.compile('^A1')), 700)
+    rec.poster()
+    click(panel.get_by_role('button', name=re.compile(r'^Show \d+ videos?$')), 300)
+    page.wait_for_timeout(1400)
+    caption('<b>3</b>Sort: Slowest speaker first', 300)
+    click(page.get_by_role('button', name=re.compile('^Sort')))
+    page.wait_for_timeout(700)
+    click(page.get_by_role('menuitemradio', name=re.compile('^Slowest')))
+    page.wait_for_timeout(1800)
+    caption('<b>4</b>Click a video', 300)
+    card = first_card(page)
+    move_to(card, 900)
+    click(card, 200)
+    pick_button(page).wait_for(timeout=30000)
+    page.wait_for_timeout(800)
+    caption('Bizzy asks: Listening or Speaking?', 3200)
+    caption(None, 600)
+    rec.stop(1280)
+
+
+def scene_resume(ctx):
+    """History › Up next › Continue: the lesson goes on where you stopped."""
+    page = ctx.new_page()
+    segs = segments('16-01J9ybPE')
+    stop = [s for s in segs if not s.get('ignore')][19]['end']  # stopped after part 2 (20 sentences)
+    page.route('**/api/me/progress?id=16-01J9ybPE*', lambda r: r.fulfill(
+        status=200, content_type='application/json',
+        body=json.dumps({'progress': stop, 'date': int(time.time()) - 3600, 'partSize': 10})))
+    page.goto(f'{B}/videos', wait_until='load')
+    rail = page.locator('nav a[href="/my-videos"]:visible').first
+    rail.wait_for(timeout=30000)
+    page.wait_for_timeout(2500)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'resume', (1440, 900))
+    rec.start()
+    place(page, 700, 500)
+    caption('History, in the menu on the left', 300)
+    click(rail, 300)
+    cont = page.get_by_role('link', name=re.compile('^Continue$')).or_(page.get_by_role('button', name=re.compile('^Continue$'))).first
+    cont.wait_for(timeout=30000)
+    page.wait_for_timeout(1500)
+    caption('Up next: the video you did last', 300)
+    look(page, cont.locator('xpath=ancestor::section[1]'), 2.2)
+    rec.poster()
+    caption('Press Continue', 300)
+    click(cont, 300)
+    pick_button(page).wait_for(timeout=30000)
+    page.wait_for_timeout(1200)
+    caption('Pick Listening', 300)
+    click(pick_button(page), 300)
+    caption('It goes on where you stopped', 300)
+    wait_exercise(page)
+    look(page, page.get_by_text(re.compile(r'Part \d+ of \d+')).first, 2.6)
+    caption(None, 400)
+    rec.stop(1280)
+
+
+def scene_shadow(ctx):
+    page = ctx.new_page()
+    # green / brown / red words: "contention" close, "tremendous" left out
+    canned(page, 'shadow-check', {**heard(LINE1, missing=('tremendous',)),
+                                  'pronunciation': pronounced(LINE1, {'contention': 70, 'tremendous': 0})})
+    open_lesson(page)
+    move_to, click, caption = helpers(page)
+    rec = Recorder(page, 'shadow', (1440, 900))
+    rec.start()
+    place(page, 900, 600)
+    caption('Bizzy asks: pick Speaking', 500)
+    click(pick_button(page, 'Speaking'))
+    caption('1. Listen to the line', 300)
+    result = page.get_by_role('region', name='Shadowing result').first
+    page.get_by_text(re.compile('Say it now')).or_(result).first.wait_for(timeout=30000)
+    caption('2. The microphone opens: say it', 2200)
+    if not result.is_visible():
+        # it stops by itself after a quiet moment; if not yet, tap it
+        rec_btn = page.get_by_test_id('record').first
+        if rec_btn.is_visible():
+            click(rec_btn, 300)
+    result.wait_for(timeout=10000)
+    move_to((1180, 760), 300)  # off the ear button: its tooltip would cover the result
+    caption('3. Green: well said. Brown: close. Red: missed', 3000)
+    rec.poster()
+    caption('Enter: hear your take. Esc: try again', 2200)
+    caption('Space: next line', 1000)
+    page.keyboard.press('Space')
+    page.wait_for_timeout(2500)
+    caption(None, 400)
+    rec.stop(1280)
+
+
 SCENES = {'lesson': scene_lesson, 'hints': scene_hints, 'library': scene_library, 'speed': scene_speed,
           'navigate': scene_navigate, 'listen': scene_listen,
           'translation': scene_translation, 'word': scene_word, 'voice': scene_voice,
           'pronounce': scene_pronounce,
           'shadow': scene_shadow, 'resume': scene_resume, 'streak': scene_streak,
           'report': scene_report, 'words': scene_words,
-          'whole': scene_whole, 'cover': scene_cover, 'theme': scene_theme,
+          'whole': scene_whole, 'theme': scene_theme,
           'playlist': scene_playlist, 'playlist-make': scene_playlist_make,
-          'your-words': scene_your_words}
+          'your-words': scene_your_words,
+          'practice': scene_practice, 'parts': scene_parts, 'skills': scene_skills, 'social': scene_social,
+          'addvideo': scene_addvideo, 'layout': scene_layout, 'hover': scene_hover}
+
+def sign_in(ctx):
+    """The Demo Learner (words_demo.py: a Pro learner of French whose every /api answer is
+    canned, so nothing is read from or written to any account), or with DD_SESSION a real
+    Pro account, read-only (pro_session.py)."""
+    global DEMO
+    if pro_session.active():
+        pro_session.apply(ctx, B)
+        return
+    import words_demo
+    if DEMO is None:
+        DEMO = words_demo.Demo(B)
+    DEMO.reset()
+    DEMO.install(ctx)
+
+
+DEMO = None
+
 
 def fake_voice():
     """A voice-like sound for the fake microphone (a tone pulsing like syllables):
@@ -1242,7 +1591,7 @@ if __name__ == '__main__':
                 continue
             ctx = browser.new_context(viewport={'width': 1440, 'height': 900},
                                       permissions=['microphone'])
-            pro_session.apply(ctx, B)
+            sign_in(ctx)
             ctx.add_init_script(OVERLAY)
             try:
                 SCENES[name](ctx)

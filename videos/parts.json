@@ -1,0 +1,29 @@
+{
+ "duration": 20.9,
+ "steps": [
+  {
+   "t": 0.01,
+   "text": "The last sentence of a part"
+  },
+  {
+   "t": 5.54,
+   "text": "Part done: how the part went"
+  },
+  {
+   "t": 8.45,
+   "text": "A square per sentence: ✓ first try, 2 checks, – skipped"
+  },
+  {
+   "t": 12.0,
+   "text": "Words you missed: rest the mouse on one for its meaning"
+  },
+  {
+   "t": 14.75,
+   "text": "The hardest sentence: hear it again"
+  },
+  {
+   "t": 17.3,
+   "text": "KEEP GOING: the next part starts"
+  }
+ ]
+}

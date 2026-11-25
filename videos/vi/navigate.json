@@ -1,16 +1,16 @@
 {
- "duration": 12.03,
+ "duration": 12.86,
  "steps": [
   {
    "t": 0.0,
    "text": "Câu khó quá? Nhấn Esc để bỏ qua"
   },
   {
-   "t": 3.32,
+   "t": 3.41,
    "text": "Quay lại bằng mũi tên ◀"
   },
   {
-   "t": 7.45,
+   "t": 8.13,
    "text": "Bấm UNDO để làm lại câu đó"
   }
  ]

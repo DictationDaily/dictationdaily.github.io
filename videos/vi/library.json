@@ -1,25 +1,25 @@
 {
- "duration": 18.08,
+ "duration": 19.89,
  "steps": [
   {
    "t": 0.01,
    "text": "Chọn một chủ đề"
   },
   {
-   "t": 2.87,
-   "text": "Ít thời gian? Chọn Quick win"
+   "t": 2.81,
+   "text": "Filters: trình độ, độ dài, tốc độ"
   },
   {
-   "t": 5.62,
+   "t": 8.13,
    "text": "Xếp người nói chậm nhất lên đầu"
   },
   {
-   "t": 10.28,
+   "t": 12.83,
    "text": "Bấm vào một video"
   },
   {
-   "t": 13.68,
-   "text": "Bài học mở ra. Bấm START là bắt đầu!"
+   "t": 15.8,
+   "text": "Bizzy hỏi: Listening hay Speaking?"
   }
  ]
 }

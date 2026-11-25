@@ -1,36 +1,36 @@
 {
- "duration": 20.35,
+ "duration": 22.2,
  "steps": [
   {
-   "t": 0.01,
-   "text": "Press START"
+   "t": 0.0,
+   "text": "Bizzy asks: pick Listening"
   },
   {
-   "t": 1.42,
+   "t": 2.07,
    "text": "Listen. The red line shows your words"
   },
   {
-   "t": 4.82,
+   "t": 5.48,
    "text": "Type the missing words"
   },
   {
-   "t": 8.37,
+   "t": 9.8,
    "text": "Press Enter to check"
   },
   {
-   "t": 10.19,
+   "t": 11.65,
    "text": "Fix the red word"
   },
   {
-   "t": 12.53,
+   "t": 14.07,
    "text": "Type the rest"
   },
   {
-   "t": 13.73,
+   "t": 15.62,
    "text": "✓ Right! It checks by itself"
   },
   {
-   "t": 16.13,
+   "t": 18.03,
    "text": "Press Space for the next sentence"
   }
  ]

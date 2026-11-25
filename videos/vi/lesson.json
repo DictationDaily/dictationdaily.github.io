@@ -1,36 +1,36 @@
 {
- "duration": 20.35,
+ "duration": 22.2,
  "steps": [
   {
-   "t": 0.01,
-   "text": "Bấm START"
+   "t": 0.0,
+   "text": "Bizzy hỏi: chọn Listening"
   },
   {
-   "t": 1.42,
+   "t": 2.07,
    "text": "Lắng nghe. Vạch đỏ chạy qua phần bạn cần gõ"
   },
   {
-   "t": 4.82,
+   "t": 5.48,
    "text": "Gõ những từ còn thiếu"
   },
   {
-   "t": 8.37,
+   "t": 9.8,
    "text": "Nhấn Enter để kiểm tra"
   },
   {
-   "t": 10.19,
+   "t": 11.65,
    "text": "Sửa từ bị báo đỏ"
   },
   {
-   "t": 12.53,
+   "t": 14.07,
    "text": "Gõ nốt phần còn lại"
   },
   {
-   "t": 13.73,
+   "t": 15.62,
    "text": "✓ Đúng rồi! Gõ đúng là dấu ✓ tự hiện"
   },
   {
-   "t": 16.13,
+   "t": 18.03,
    "text": "Nhấn Space để sang câu tiếp"
   }
  ]

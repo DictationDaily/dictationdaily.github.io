@@ -1,28 +1,28 @@
 {
- "duration": 14.5,
+ "duration": 15.49,
  "steps": [
   {
    "t": 0.02,
-   "text": "Tap START"
+   "text": "Tap Listening"
   },
   {
-   "t": 1.23,
+   "t": 1.45,
    "text": "Tap the box. Type the missing words"
   },
   {
-   "t": 4.61,
+   "t": 5.09,
    "text": "Tap CHECK"
   },
   {
-   "t": 6.31,
+   "t": 6.88,
    "text": "Fix the red word"
   },
   {
-   "t": 8.33,
+   "t": 8.96,
    "text": "Type the rest"
   },
   {
-   "t": 9.7,
+   "t": 10.55,
    "text": "✓ Right! Tap CONTINUE"
   }
  ]
