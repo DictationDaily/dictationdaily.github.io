@@ -11,6 +11,8 @@ from PIL import Image
 HINT_BOX = (750, 260, 1440, 660)
 CROPS = {'lesson-hint': 'crop-hint', 'lesson-hint-missing': 'crop-missing',
          'lesson-hint-extra': 'crop-extra', 'lesson-almost': 'crop-almost'}
+# Of those, kept whole too: lesson-hint is also the site's preview picture (layout.html)
+WHOLE = {'lesson-hint'}
 
 for path in glob.glob('images/*.png'):
     image = Image.open(path).convert('RGB')
@@ -18,6 +20,9 @@ for path in glob.glob('images/*.png'):
     if name in CROPS:
         image.crop(HINT_BOX).save(f'images/{CROPS[name]}.webp', 'WEBP', quality=86, method=6)
         print('cropped', name)
+    if name in CROPS and name not in WHOLE:
+        os.remove(path)  # only its close-up is shown
+        continue
     image.save(path[:-4] + '.webp', 'WEBP', quality=82, method=6)
     os.remove(path)
     print('converted', path)

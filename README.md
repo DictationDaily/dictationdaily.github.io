@@ -12,7 +12,7 @@ follows the step you are reading), looping screen recordings of the app, search 
 | Path | What |
 |---|---|
 | `src/pages/<slug>.html` | Page content. Starts with `<!-- {"title": …, "description": …, "time": …} -->`. Can use `<tour>`/`<step>`, `<demo>` and `<shot>` (see `build.mjs`) |
-| `src/coords.json` | Measured button positions in the lesson shots, used by `<step at="…">` (written by `scripts/capture.py`) |
+| `src/coords.json`, `src/boxes.json` | Button positions and highlight boxes for `<tour>`/`<step>` (empty: no page uses tours now) |
 | `src/nav.json` | Sidebar groups, page icons and order (also sets the Next card) |
 | `src/layout.html` | Header, sidebar, contents column, footer, search and lightbox |
 | `src/input.css` | Tailwind entry and the content components (`callout`, `figure`, `steps`, `faq`, …) |
@@ -46,7 +46,7 @@ python3 scripts/to_webp.py               # PNG -> WebP, and the crop-* hint clos
 
 `lesson-finished-streak` spends about a minute on each of the video's last 6 sentences, so the finish screen shows the minutes of a real pass (about 7 minutes to take). `lesson-no-transcript` serves the page a lesson text with every line marked "just listen", which is what a lesson without exercises is.
 
-The older `capture.py`, `capture_signed_in.py`, `capture_pro.py` and `boxes.py` took the pictures of the October 2026 app (a START button, no Bizzy, no parts); they no longer match the lesson screen and the images they made that no page uses are kept only for history. Never use screenshots that show a real learner's name, email or avatar.
+Since 2026-11-26 `images/` holds only these 12 pictures: the older capture scripts (`capture.py`, `capture_signed_in.py`, `capture_pro.py`, `boxes.py`), which took the October 2026 app, and the 66 pictures no page used were removed. Never use screenshots that show a real learner's name, email or avatar.
 
 ### The Demo Learner
 

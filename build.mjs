@@ -14,11 +14,12 @@
 // Pages can use three shorthand tags, expanded here so the pages stay short:
 //   <tour><step img="lesson-intro" x="95.9" y="53.6" title="Press START">Text</step>…</tour>
 //       numbered steps, each with a screenshot and a highlight on the target
-//       at x%/y%, fitted to it by scripts/boxes.py or box="l,t,w,h" (add phone
+//       at x%/y%, a box="l,t,w,h" or one from src/boxes.json (add phone
 //       to <step> for a phone screenshot; the shot zooms in on the target,
 //       zoom="1" turns that off). Instead of x/y, at="replay" (and
 //       at2="…" for a second marker) uses the measured position of that button
-//       in src/coords.json, written by scripts/capture.py. A step you click
+//       in src/coords.json (both measured by hand: no page uses <tour> since
+//       2026-11, and the scripts that measured them are gone). A step you click
 //       ("Click …", "Tap …", "Press START") shows a clicking pointer on x/y
 //       instead of the box; cursor forces it on, cursor="0" off
 //   <demo src="lesson" caption="…"></demo>  (add phone for a phone recording)
@@ -83,8 +84,8 @@ function imageSize(name) {
 }
 
 // The zoomed screenshot for one step, with a highlight fitted to each target:
-// box="left,top,width,height" on the step, else the box scripts/boxes.py
-// found around the point (src/boxes.json), else a small box on the point.
+// box="left,top,width,height" on the step, else a box from src/boxes.json
+// (keyed "<img>@<x>,<y>"), else a small box on the point.
 // A click step gets a pointer on the point instead of the first box
 const isClick = (s) =>
     s.cursor ? s.cursor !== '0'
