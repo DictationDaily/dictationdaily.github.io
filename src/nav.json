@@ -8,6 +8,11 @@
                 "icon": "🚀"
             },
             {
+                "slug": "parts",
+                "title": "Lessons in short parts",
+                "icon": "🧩"
+            },
+            {
                 "slug": "hints",
                 "title": "Red and green words",
                 "icon": "💡"
@@ -18,14 +23,19 @@
                 "icon": "📝"
             },
             {
-                "slug": "cover-subtitles",
-                "title": "Hide the video's subtitles",
-                "icon": "🫥"
+                "slug": "small-player",
+                "title": "Small player",
+                "icon": "🖼️"
             },
             {
                 "slug": "find-a-video",
                 "title": "Find a video",
                 "icon": "🎬"
+            },
+            {
+                "slug": "practice-card",
+                "title": "Your practice card",
+                "icon": "🎯"
             },
             {
                 "slug": "playlists",
@@ -74,6 +84,11 @@
                 "pro": true
             },
             {
+                "slug": "hover-a-word",
+                "title": "Point at a word",
+                "icon": "🖱️"
+            },
+            {
                 "slug": "words",
                 "title": "Save words, flashcards",
                 "icon": "🃏"
@@ -118,12 +133,28 @@
                 "slug": "streaks",
                 "title": "Streak and daily goal",
                 "icon": "🔥"
+            },
+            {
+                "slug": "your-skills",
+                "title": "Your skills",
+                "icon": "📊"
             }
         ]
     },
     {
         "title": "More",
         "pages": [
+            {
+                "slug": "like-save-comment",
+                "title": "Like, save, comment",
+                "icon": "👍"
+            },
+            {
+                "slug": "add-a-video",
+                "title": "Add your own video",
+                "icon": "📥",
+                "pro": true
+            },
             {
                 "slug": "phone",
                 "title": "On your phone",

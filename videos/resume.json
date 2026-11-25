@@ -1,16 +1,24 @@
 {
- "duration": 8.99,
+ "duration": 21.34,
  "steps": [
   {
-   "t": 0.0,
-   "text": "Signed in, your videos wait at the top"
+   "t": 0.02,
+   "text": "History, in the menu on the left"
   },
   {
-   "t": 1.99,
-   "text": "Click one"
+   "t": 3.56,
+   "text": "Up next: the video you did last"
   },
   {
-   "t": 5.71,
+   "t": 6.33,
+   "text": "Press Continue"
+  },
+  {
+   "t": 9.68,
+   "text": "Pick Listening"
+  },
+  {
+   "t": 10.89,
    "text": "It goes on where you stopped"
   }
  ]

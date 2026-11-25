@@ -1,28 +1,28 @@
 {
- "duration": 16.01,
+ "duration": 18.01,
  "steps": [
   {
-   "t": 0.0,
-   "text": "Press START"
+   "t": 0.01,
+   "text": "Bizzy asks: pick Speaking"
   },
   {
-   "t": 1.2,
+   "t": 1.58,
    "text": "Listen to the line"
   },
   {
-   "t": 3.79,
+   "t": 4.35,
    "text": "The microphone opens: say it"
   },
   {
-   "t": 6.39,
+   "t": 8.24,
    "text": "Green: well said. Brown: close. Red: missed"
   },
   {
-   "t": 9.6,
+   "t": 11.47,
    "text": "Enter: hear your take. Esc: try again"
   },
   {
-   "t": 11.8,
+   "t": 13.67,
    "text": "Space: next line"
   }
  ]

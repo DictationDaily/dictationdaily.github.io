@@ -60,6 +60,15 @@ PRACTICE = ('épisode', 'quartiers')  # the practice page orders cards itself: o
 SENSE = {'word': 'épisode', 'src': 'fr', 'lemma': 'épisode', 'pos': 'noun', 'gender': 'masculine',
          'ipa': '/e.pi.zɔd/', 'form': '', 'gloss': 'tập, hồi', 'def': "Partie d'une série ou d'une histoire."}
 ENTRY_URL = '/dictionary/v4/fr/vi/épisode~noun.json'
+NOUVEL = {'word': 'nouvel', 'src': 'fr', 'lemma': 'nouveau', 'pos': 'adjective', 'gender': 'masculine',
+          'ipa': '/nu.vɛl/', 'form': 'devant une voyelle', 'gloss': 'mới', 'def': "Qui vient d'apparaître, récent."}
+NOUVEL_SOUND = {'state': 'ready',
+                'url': 'https://upload.wikimedia.org/wikipedia/commons/4/4d/LL-Q150_%28fra%29-Pamputt-nouvel.wav',
+                'credit': {'speaker': 'Pamputt', 'license': 'CC0', 'file': 'LL-Q150 (fra)-Pamputt-nouvel.wav'}}
+# A native speaker's recording of the word (Lingua Libre on Wikimedia Commons), as the live card plays it
+SOUND = {'state': 'ready',
+         'url': 'https://upload.wikimedia.org/wikipedia/commons/2/27/LL-Q150_%28fra%29-WikiLucas00-%C3%A9pisode.wav',
+         'credit': {'speaker': 'WikiLucas00', 'license': 'CC BY-SA 4.0', 'file': 'LL-Q150 (fra)-WikiLucas00-épisode.wav'}}
 ENTRY = {'headword': 'épisode', 'pos': 'noun', 'gender': 'masculine', 'ipa': [{'accent': '', 'ipa': '/e.pi.zɔd/'}],
          'forms': 'épisode, épisodes',
          'senses': [
@@ -74,12 +83,16 @@ ENTRY = {'headword': 'épisode', 'pos': 'noun', 'gender': 'masculine', 'ipa': [{
 class Demo:
     def __init__(self, base):
         self.base = base
+        self.learning = 'fr'  # the language the demo learner learns (the header's flag, /videos)
+        self.extra = []  # (path regex, handler(route, req, body) -> bool) tried before the canned answers
         self.now = int(time.time())
         get = lambda path: json.load(urllib.request.urlopen(urllib.request.Request(base + path, headers=UA)))
         tr = get(f'/transcripts/{VIDEO}.json')
         self.lines = [' '.join(w['text'] if isinstance(w, dict) else w for w in s['words']) for s in tr['segments']]
         self.starts = [s['start'] for s in tr['segments']]
         self.trans = {l['i']: l['t'] for l in get(f'/translations/{VIDEO}/vi.json?v=3')['lines']}
+        import learner_demo
+        self.learner = learner_demo.Learner(base, self.now)
 
     def sentence(self, sid, seg, word):
         text = self.lines[seg]
@@ -116,11 +129,21 @@ class Demo:
              'meaning': {'gloss': g, 'def': d}}
             for n, (w, seg, kind, level, label, g, d) in enumerate(WORDS) if w in PRACTICE]}
 
+    def reset(self):
+        """Back to the defaults (each recording starts from the same demo learner)."""
+        self.learning = 'fr'
+        self.extra = []
+        self.learner.rating, self.learner.comments = {}, {}
+
+    def on(self, pattern, handler):
+        """Answer /api paths matching pattern with handler(route, req, body) first (a falsy return falls through)."""
+        self.extra.append((re.compile(pattern), handler))
+
     def install(self, page):
-        """Answer every /api call of this page (and the made-up dictionary entry)."""
+        """Answer every /api call of this page or browser context (and the made-up dictionary entry)."""
         today = {'streak': {'count': 19, 'startDate': (self.now - 18 * 86400) * 1000, 'endDate': self.now * 1000},
-                 'goal': None, 'plan': {'plan': 'pro', 'proUntil': None, 'waitlisted': False},
-                 'langs': {'native': 'vi', 'learning': 'fr', 'translations': 'after'},
+                 'goal': 10, 'plan': {'plan': 'pro', 'proUntil': None}, 'freeSecondsLeft': None, 'freeMinutes': 10,
+                 'langs': {'native': 'vi', 'learning': 'fr', 'translations': 'after'}, 'words': 2,
                  'week': [600, 540, 720, 480, 660, 600, 420]}
         session = {'user': {'name': 'Demo Learner', 'email': 'demo@example.com'},
                    'expires': '2030-01-01T00:00:00.000Z'}
@@ -130,12 +153,18 @@ class Demo:
             p, m = path.split('?')[0], req.method
             body = lambda: json.loads(req.post_data or '{}')
             reply = lambda x: route.fulfill(status=200, content_type='application/json', body=json.dumps(x))
+            for pattern, handler in self.extra:
+                if pattern.search(p) and handler(route, req, body):
+                    return
             if p == '/api/auth/session':
                 return reply(session)
+            q = path.split('?', 1)[1] if '?' in path else ''
+            if self.learner.answer(p, q, m, body, reply, route, self.learning) is not False:
+                return
             if p.startswith('/api/auth/'):
                 return route.continue_()
             if p == '/api/me/today':
-                return reply(today)
+                return reply({**today, 'langs': {**today['langs'], 'learning': self.learning}})
             if p == '/api/me/progress' and m == 'GET':
                 return reply({'progress': None, 'date': None})
             if p == '/api/me/translation':
@@ -144,7 +173,11 @@ class Demo:
                 if (body().get('word') or '').lower() == 'épisode':
                     return reply({'state': 'ready', 'native': 'vi', 'sense': SENSE, 'ipaSource': 'wiktionary',
                                   'headwordIpa': ENTRY['ipa'], 'entry': {'state': 'ready', 'url': ENTRY_URL},
-                                  'audio': {'state': 'none', 'url': None}, 'sound': {'state': 'none', 'url': None}})
+                                  'audio': {'state': 'ready', 'url': SOUND['url']}, 'sound': SOUND})
+                if (body().get('word') or '').lower() == 'nouvel':
+                    return reply({'state': 'ready', 'native': 'vi', 'sense': NOUVEL, 'ipaSource': 'wiktionary',
+                                  'headwordIpa': [{'accent': '', 'ipa': '/nu.vo/'}], 'entry': {'state': 'none', 'url': None},
+                                  'audio': {'state': 'none', 'url': None}, 'sound': NOUVEL_SOUND})
                 return reply({'state': 'none'})
             if p.startswith('/api/me/word/'):
                 return reply({'state': 'ready', 'url': ENTRY_URL} if p.endswith('/entry') else {'state': 'none'})
@@ -164,5 +197,7 @@ class Demo:
             return reply({})
 
         page.route(self.base + '/api/**', api)
+        import playlists_demo  # Playlists, and the lesson's Save (registered last: it answers first)
+        playlists_demo.Playlists(self.base, self.learning).install(page)
         page.route('**/dictionary/v4/fr/vi/*noun.json', lambda r: r.fulfill(
             status=200, content_type='application/json', body=json.dumps(ENTRY)))

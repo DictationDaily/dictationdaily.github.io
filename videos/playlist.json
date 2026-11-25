@@ -1,5 +1,5 @@
 {
- "duration": 25.86,
+ "duration": 18.41,
  "steps": [
   {
    "t": 0.0,
@@ -10,24 +10,24 @@
    "text": "Pick your level"
   },
   {
-   "t": 5.69,
+   "t": 5.71,
    "text": "Open a playlist"
   },
   {
-   "t": 8.82,
+   "t": 9.54,
    "text": "Save keeps it in Your playlists"
   },
   {
-   "t": 11.13,
-   "text": "Start plays the first video"
+   "t": 11.86,
+   "text": "Continue plays the video you are on"
   },
   {
-   "t": 15.01,
-   "text": "The bar shows where you are: Video 1 of 39"
+   "t": 13.96,
+   "text": "Pick Listening"
   },
   {
-   "t": 17.92,
-   "text": "See the whole list, or ⏭ for the next video"
+   "t": 15.13,
+   "text": "At the end of the video: Next video in the playlist"
   }
  ]
 }

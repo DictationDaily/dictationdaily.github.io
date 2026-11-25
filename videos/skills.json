@@ -1,0 +1,25 @@
+{
+ "duration": 19.31,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "My progress: You, in the menu on the left"
+  },
+  {
+   "t": 1.6,
+   "text": "Your skills: speaking and listening"
+  },
+  {
+   "t": 6.85,
+   "text": "Sounds to work on, and words to say again"
+  },
+  {
+   "t": 10.89,
+   "text": "Listening: right on the first try, by speed"
+  },
+  {
+   "t": 15.18,
+   "text": "Last 7 days or Last 30 days"
+  }
+ ]
+}

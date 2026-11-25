@@ -1,28 +1,28 @@
 {
- "duration": 15.5,
+ "duration": 16.92,
  "steps": [
   {
-   "t": 0.01,
+   "t": 0.0,
    "text": "Bấm vào micro trong ô"
   },
   {
-   "t": 1.09,
+   "t": 1.15,
    "text": "Nói những từ bạn nghe được"
   },
   {
-   "t": 3.3,
+   "t": 3.84,
    "text": "Lời bạn nói được viết vào ô và chấm luôn"
   },
   {
-   "t": 5.9,
+   "t": 6.46,
    "text": "Giờ hãy nói cả câu"
   },
   {
-   "t": 9.77,
+   "t": 11.1,
    "text": "Từ xanh lá máy nghe rõ, từ đỏ thì chưa"
   },
   {
-   "t": 12.77,
+   "t": 14.1,
    "text": "Space: sang câu tiếp"
   }
  ]

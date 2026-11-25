@@ -1,20 +1,20 @@
 {
- "duration": 9.66,
+ "duration": 10.97,
  "steps": [
   {
-   "t": 0.0,
+   "t": 0.01,
    "text": "Thấy lỗi? Bấm nút bánh răng ⚙"
   },
   {
-   "t": 1.78,
+   "t": 1.95,
    "text": "Chọn Report a bug"
   },
   {
-   "t": 3.97,
+   "t": 4.26,
    "text": "Mô tả lỗi bạn gặp"
   },
   {
-   "t": 6.66,
+   "t": 7.94,
    "text": "Ảnh chụp màn hình được gửi kèm. Bấm SEND"
   }
  ]

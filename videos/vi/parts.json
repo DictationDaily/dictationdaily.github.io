@@ -1,0 +1,29 @@
+{
+ "duration": 20.9,
+ "steps": [
+  {
+   "t": 0.01,
+   "text": "Câu cuối cùng của một phần"
+  },
+  {
+   "t": 5.54,
+   "text": "Part done: phần vừa rồi bạn làm thế nào"
+  },
+  {
+   "t": 8.45,
+   "text": "Mỗi câu một ô: ✓ đúng ngay lần đầu, 2 là kiểm tra 2 lần, – là câu đã bỏ qua"
+  },
+  {
+   "t": 12.0,
+   "text": "Words you missed: đặt chuột lên một từ để xem nghĩa"
+  },
+  {
+   "t": 14.75,
+   "text": "Câu khó nhất: nghe lại lần nữa"
+  },
+  {
+   "t": 17.3,
+   "text": "KEEP GOING: phần tiếp theo bắt đầu"
+  }
+ ]
+}

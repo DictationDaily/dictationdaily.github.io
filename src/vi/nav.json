@@ -8,6 +8,11 @@
                 "icon": "🚀"
             },
             {
+                "slug": "parts",
+                "title": "Học từng phần ngắn",
+                "icon": "🧩"
+            },
+            {
                 "slug": "hints",
                 "title": "Sửa lỗi theo gợi ý",
                 "icon": "💡"
@@ -18,14 +23,19 @@
                 "icon": "📝"
             },
             {
-                "slug": "cover-subtitles",
-                "title": "Che phụ đề trong video",
-                "icon": "🫥"
+                "slug": "small-player",
+                "title": "Trình phát nhỏ",
+                "icon": "🖼️"
             },
             {
                 "slug": "find-a-video",
                 "title": "Tìm video",
                 "icon": "🎬"
+            },
+            {
+                "slug": "practice-card",
+                "title": "Thẻ luyện tập của bạn",
+                "icon": "🎯"
             },
             {
                 "slug": "playlists",
@@ -74,6 +84,11 @@
                 "pro": true
             },
             {
+                "slug": "hover-a-word",
+                "title": "Trỏ chuột vào từ",
+                "icon": "🖱️"
+            },
+            {
                 "slug": "words",
                 "title": "Lưu từ, flashcard",
                 "icon": "🃏"
@@ -118,12 +133,28 @@
                 "slug": "streaks",
                 "title": "Chuỗi ngày học và mục tiêu",
                 "icon": "🔥"
+            },
+            {
+                "slug": "your-skills",
+                "title": "Kỹ năng của bạn",
+                "icon": "📊"
             }
         ]
     },
     {
         "title": "Thêm",
         "pages": [
+            {
+                "slug": "like-save-comment",
+                "title": "Thích, lưu, bình luận",
+                "icon": "👍"
+            },
+            {
+                "slug": "add-a-video",
+                "title": "Thêm video của bạn",
+                "icon": "📥",
+                "pro": true
+            },
             {
                 "slug": "phone",
                 "title": "Học trên điện thoại",

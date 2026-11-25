@@ -1,28 +1,28 @@
 {
- "duration": 22.33,
+ "duration": 22.68,
  "steps": [
   {
    "t": 0.0,
    "text": "Words, in the menu on the left"
   },
   {
-   "t": 3.66,
+   "t": 3.2,
    "text": "How your words grow: New, Learning, Known"
   },
   {
-   "t": 7.34,
+   "t": 6.94,
    "text": "Point at a day to see it"
   },
   {
-   "t": 10.88,
+   "t": 10.5,
    "text": "See all your words"
   },
   {
-   "t": 13.92,
+   "t": 13.97,
    "text": "Click a word: its sentence and the lesson"
   },
   {
-   "t": 18.36,
+   "t": 18.57,
    "text": "Pick New, Learning or Known"
   }
  ]

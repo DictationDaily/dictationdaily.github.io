@@ -1,0 +1,29 @@
+{
+ "duration": 22.29,
+ "steps": [
+  {
+   "t": 0.0,
+   "text": "Rest the mouse on a word"
+  },
+  {
+   "t": 2.86,
+   "text": "Its meaning, in your language and in French"
+  },
+  {
+   "t": 5.99,
+   "text": "Part of a phrase? Its words turn orange"
+  },
+  {
+   "t": 8.93,
+   "text": "The bookmark saves the word"
+  },
+  {
+   "t": 10.85,
+   "text": "The phrase: Everything about this word"
+  },
+  {
+   "t": 19.19,
+   "text": "Its bookmark saves the phrase to Words"
+  }
+ ]
+}
