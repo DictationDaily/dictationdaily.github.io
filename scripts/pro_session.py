@@ -1,6 +1,6 @@
 """Sign the capture browser in as a real Pro learner on production, read-only.
 
-    DD_SESSION=/path/to/cookie.txt python3 scripts/capture.py images ...
+    DD_SESSION=/path/to/cookie.txt python3 scripts/record.py [scene ...]
 
 The file holds the value of a Pro account's `__Secure-authjs.session-token`
 cookie (from the browser's dev tools; never commit it). With it:
